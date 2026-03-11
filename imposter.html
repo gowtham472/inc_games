@@ -606,8 +606,13 @@
       warn: ico('<path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>'),
       refresh: ico('<polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/>'),
       arrow: ico('<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>'),
+      music: ico('<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>'),
+      travel: ico('<path d="M22 10V6a2 2 0 00-2-2h-4"/><path d="M2 14v4a2 2 0 002 2h4"/><line x1="18" y1="9" x2="6" y2="15"/>'),
+      science: ico('<path d="M6 3v12"/><path d="M10 5a4 4 0 11-8 0 4 4 0 018 0zM20 5a4 4 0 11-8 0 4 4 0 018 0z"/><line x1="8" y1="17" x2="16" y2="17"/><line x1="12" y1="15" x2="12" y2="19"/>'),
+      history: ico('<path d="M12 20h9"/><path d="M12 4h9"/><path d="M3.51 9a9 9 0 101.13-5.36L1.42 5"/><line x1="12" y1="20" x2="12" y2="4"/>'),
+      superheroes: ico('<path d="M12 22s8-4.44 8-10V5l-8-3-8 3v7c0 5.56 8 10 8 10z"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/>')
     };
-
+      
     // ── Word Bank by Genre ──
     const wordBank = {
       food: [
@@ -616,7 +621,18 @@
         ['Pancake', 'Waffle'], ['Ice Cream', 'Frozen Yogurt'], ['Soup', 'Stew'],
         ['Bread', 'Toast'], ['Salad', 'Coleslaw'], ['Cheese', 'Butter'],
         ['Chocolate', 'Candy'], ['Coffee', 'Tea'], ['Milk', 'Juice'],
-        ['Egg', 'Omelette'], ['Rice', 'Quinoa'], ['Popcorn', 'Nachos']
+        ['Egg', 'Omelette'], ['Rice', 'Quinoa'], ['Popcorn', 'Nachos'],
+        // NEW
+        ['Kebab', 'Shawarma'], ['Dim Sum', 'Dumplings'], ['Croissant', 'Muffin'],
+        ['Hot Dog', 'Corn Dog'], ['Lasagna', 'Moussaka'], ['Curry', 'Stir Fry'],
+        ['Brownie', 'Fudge'], ['Pretzel', 'Breadstick'], ['Gelato', 'Sorbet'],
+        ['Bacon', 'Sausage'], ['Peanut Butter', 'Nutella'], ['Lemonade', 'Iced Tea'],
+        ['Smoothie', 'Milkshake'], ['Cereal', 'Granola'], ['Tofu', 'Tempeh'],
+        ['Mango', 'Papaya'], ['Avocado', 'Guacamole'], ['Hummus', 'Tzatziki'],
+        ['Lobster', 'Crab'], ['Clam Chowder', 'Bisque'], ['Crepe', 'Blini'],
+        ['Empanada', 'Samosa'], ['Falafel', 'Shawarma'], ['Bao Bun', 'Spring Roll'],
+        ['Churro', 'Funnel Cake'], ['S\'more', 'Rice Crispy Treat'], ['Quiche', 'Frittata'],
+        ['Tiramisu', 'Panna Cotta'], ['Cheesecake', 'Mousse'], ['Fried Rice', 'Biryani']
       ],
       tech: [
         ['Python', 'Java'], ['iPhone', 'Android'], ['WiFi', 'Bluetooth'], ['Google', 'Bing'],
@@ -624,7 +640,18 @@
         ['GitHub', 'GitLab'], ['React', 'Angular'], ['Bitcoin', 'Ethereum'],
         ['RAM', 'SSD'], ['Docker', 'Kubernetes'], ['AI', 'Machine Learning'],
         ['VPN', 'Proxy'], ['Pixel', 'Resolution'], ['Cloud', 'Server'],
-        ['Firewall', 'Antivirus'], ['API', 'SDK'], ['Debug', 'Compile']
+        ['Firewall', 'Antivirus'], ['API', 'SDK'], ['Debug', 'Compile'],
+        // NEW
+        ['ChatGPT', 'Gemini'], ['Tesla', 'SpaceX'], ['PlayStation', 'Xbox'],
+        ['Keyboard', 'Monitor'], ['JavaScript', 'TypeScript'], ['Swift', 'Kotlin'],
+        ['Rust', 'Go'], ['CSS', 'HTML'], ['MySQL', 'PostgreSQL'], ['NoSQL', 'MongoDB'],
+        ['AWS', 'Azure'], ['Raspberry Pi', 'Arduino'], ['Drone', 'Robot'],
+        ['Smartwatch', 'Fitness Tracker'], ['Headset', 'Earbuds'], ['Router', 'Modem'],
+        ['Podcast App', 'Music App'], ['Dark Mode', 'Light Mode'], ['App Store', 'Play Store'],
+        ['Notification', 'Reminder'], ['Encryption', 'Decryption'], ['Algorithm', 'Data Structure'],
+        ['Cache', 'Cookie'], ['Frontend', 'Backend'], ['Sprint', 'Backlog'],
+        ['Open Source', 'Proprietary'], ['Binary', 'Hexadecimal'], ['Laptop', 'Desktop'],
+        ['Chatbot', 'Virtual Assistant'], ['Neural Network', 'Deep Learning']
       ],
       web: [
         ['Instagram', 'TikTok'], ['YouTube', 'Twitch'], ['Twitter', 'Threads'],
@@ -633,7 +660,19 @@
         ['Wikipedia', 'Google'], ['Snapchat', 'BeReal'], ['LinkedIn', 'Indeed'],
         ['Meme', 'GIF'], ['Blog', 'Vlog'], ['Podcast', 'Audiobook'],
         ['Emoji', 'Sticker'], ['Hashtag', 'Trending'], ['DM', 'Email'],
-        ['Subscribe', 'Follow'], ['Viral', 'Trending']
+        ['Subscribe', 'Follow'], ['Viral', 'Trending'],
+        // NEW
+        ['Pinterest', 'Tumblr'], ['Slack', 'Discord'], ['Dropbox', 'Google Drive'],
+        ['PayPal', 'Venmo'], ['Uber', 'Lyft'], ['Airbnb', 'Booking.com'],
+        ['Duolingo', 'Babbel'], ['Notion', 'Trello'], ['Canva', 'Figma'],
+        ['Shopify', 'Etsy'], ['Patreon', 'Ko-fi'], ['Substack', 'Medium'],
+        ['Roblox', 'Minecraft'], ['Steam', 'Epic Games'], ['Twitch', 'Kick'],
+        ['Google Maps', 'Waze'], ['Grammarly', 'QuillBot'], ['ChatGPT', 'Claude'],
+        ['Wayback Machine', 'Archive.org'], ['Linktree', 'Carrd'],
+        ['Clubhouse', 'Twitter Spaces'], ['Kahoot', 'Quizlet'],
+        ['iMessage', 'Signal'], ['Google Forms', 'Typeform'], ['Calendly', 'Doodle'],
+        ['Unsplash', 'Pexels'], ['Font Awesome', 'Google Fonts'],
+        ['Bootstrap', 'Tailwind'], ['Webflow', 'Squarespace'], ['Chrome', 'Firefox']
       ],
       funny: [
         ['Fart', 'Burp'], ['Clown', 'Mime'], ['Banana Peel', 'Whoopee Cushion'],
@@ -643,7 +682,22 @@
         ['Pigeon', 'Seagull'], ['Sneeze', 'Yawn'], ['Karaoke', 'Air Guitar'],
         ['Pickle', 'Olive'], ['Bubble Wrap', 'Fidget Spinner'],
         ['Unicorn', 'Bigfoot'], ['Ninja', 'Pirate'], ['Robot Dance', 'Moonwalk'],
-        ['Toilet', 'Plunger'], ['Pajamas', 'Bathrobe']
+        ['Toilet', 'Plunger'], ['Pajamas', 'Bathrobe'],
+        // NEW
+        ['Couch Potato', 'Gym Rat'], ['Man Bun', 'Ponytail'], ['Selfie Stick', 'Tripod'],
+        ['Autocorrect', 'Typo'], ['Reply All', 'Wrong Number'], ['Diet', 'Cheat Day'],
+        ['5 Second Rule', 'Expiry Date'], ['Nap', 'Oversleeping'], ['Procrastinate', 'Deadline'],
+        ['Spin Class', 'Parking Lot Walk'], ['Flat Earth', 'Moon Landing'],
+        ['Astrology', 'Horoscope'], ['Conspiracy Theory', 'Wikipedia'],
+        ['Seagull Manager', 'Micromanager'], ['Empty Fridge', 'Takeout Menu'],
+        ['WiFi Password', 'Guest Mode'], ['Skip Intro', 'Autoplay'],
+        ['Online Shopping Cart', 'Wishlist'], ['Snooze Button', 'Alarm Off'],
+        ['Pet Names', 'Baby Talk'], ['Zoom Pants', 'Business Casual'],
+        ['Spoiler', 'Plot Twist'], ['Jump Scare', 'Cliffhanger'],
+        ['Loading Screen', 'Buffering'], ['Low Battery', 'No Charger'],
+        ['Out of Office', 'Sick Day'], ['Work From Home', 'Pajama Meeting'],
+        ['Gym Selfie', 'Progress Photo'], ['Tongue Twister', 'Riddle'],
+        ['April Fools', 'Rickroll']
       ],
       movies: [
         ['Batman', 'Superman'], ['Star Wars', 'Star Trek'], ['Harry Potter', 'Lord of the Rings'],
@@ -654,7 +708,22 @@
         ['Popcorn', 'Movie Ticket'], ['Horror', 'Comedy'],
         ['Sequel', 'Remake'], ['Director', 'Producer'],
         ['Oscar', 'Grammy'], ['Pixar', 'DreamWorks'],
-        ['Zombie', 'Vampire'], ['Jedi', 'Sith']
+        ['Zombie', 'Vampire'], ['Jedi', 'Sith'],
+        // NEW
+        ['Spiderman', 'Batman'], ['Gollum', 'Dobby'], ['Katniss', 'Tris'],
+        ['Sherlock Holmes', 'Hercule Poirot'], ['Indiana Jones', 'Lara Croft'],
+        ['Jack Sparrow', 'Barbossa'], ['Forrest Gump', 'Cast Away'],
+        ['The Matrix', 'Inception'], ['Interstellar', 'Gravity'],
+        ['John Wick', 'The Equalizer'], ['Fast & Furious', 'Mission Impossible'],
+        ['Minions', 'Despicable Me'], ['The Simpsons', 'Family Guy'],
+        ['Stranger Things', 'Dark'], ['Breaking Bad', 'Better Call Saul'],
+        ['Game of Thrones', 'House of the Dragon'], ['The Witcher', 'Shadow and Bone'],
+        ['Black Mirror', 'Westworld'], ['Squid Game', 'Alice in Borderland'],
+        ['The Office', 'Parks and Recreation'], ['Friends', 'How I Met Your Mother'],
+        ['Haunted House', 'Haunted Mansion'], ['Time Machine', 'Teleporter'],
+        ['Robot', 'Cyborg'], ['Alien', 'Predator'], ['Werewolf', 'Vampire'],
+        ['Knight', 'Samurai'], ['Spy', 'Assassin'], ['Superhero', 'Supervillain'],
+        ['Origin Story', 'Backstory']
       ],
       sports: [
         ['Football', 'Soccer'], ['Basketball', 'Volleyball'], ['Tennis', 'Badminton'],
@@ -663,7 +732,19 @@
         ['Skateboard', 'Surfboard'], ['Gym', 'Yoga'], ['Referee', 'Coach'],
         ['Trophy', 'Medal'], ['Penalty', 'Free Kick'], ['Dunk', 'Slam'],
         ['Olympics', 'World Cup'], ['Touchdown', 'Home Run'],
-        ['Helmet', 'Shin Guard'], ['Goalkeeper', 'Striker'], ['Racket', 'Bat']
+        ['Helmet', 'Shin Guard'], ['Goalkeeper', 'Striker'], ['Racket', 'Bat'],
+        // NEW
+        ['Foul', 'Flagrant'], ['Overtime', 'Sudden Death'], ['Dribble', 'Pivot'],
+        ['Ace', 'Smash'], ['Corner Kick', 'Throw-in'], ['Offside', 'Onside'],
+        ['Slam Dunk', 'Alley-Oop'], ['Pitch', 'Mound'], ['Jab', 'Uppercut'],
+        ['Kayak', 'Canoe'], ['Triathlon', 'Pentathlon'], ['Discus', 'Javelin'],
+        ['Pommel Horse', 'Balance Beam'], ['Halfpipe', 'Quarter Pipe'],
+        ['Moguls', 'Slalom'], ['Luge', 'Bobsled'], ['Fencing', 'Archery'],
+        ['Rowing', 'Sailing'], ['Rock Climbing', 'Bouldering'],
+        ['Cheerleader', 'Mascot'], ['Draft Pick', 'Trade'], ['Season', 'Playoffs'],
+        ['MVP', 'All-Star'], ['Transfer', 'Loan'], ['Yellow Card', 'Red Card'],
+        ['Birdie', 'Bogey'], ['Strike', 'Spare'], ['Checkmate', 'Stalemate'],
+        ['Rally', 'Serve'], ['Bench', 'Starting Lineup']
       ],
       animals: [
         ['Cat', 'Dog'], ['Eagle', 'Hawk'], ['Shark', 'Dolphin'], ['Lion', 'Tiger'],
@@ -672,7 +753,148 @@
         ['Owl', 'Bat'], ['Horse', 'Donkey'], ['Whale', 'Seal'],
         ['Parrot', 'Toucan'], ['Spider', 'Scorpion'], ['Ant', 'Termite'],
         ['Crab', 'Lobster'], ['Deer', 'Moose'], ['Panda', 'Koala'],
-        ['Chicken', 'Turkey']
+        ['Chicken', 'Turkey'],
+        // NEW
+        ['Wolf', 'Fox'], ['Bear', 'Wolverine'], ['Crocodile', 'Alligator'],
+        ['Jellyfish', 'Octopus'], ['Flamingo', 'Crane'], ['Peacock', 'Pheasant'],
+        ['Narwhal', 'Beluga'], ['Platypus', 'Echidna'], ['Meerkat', 'Mongoose'],
+        ['Cheetah', 'Leopard'], ['Hyena', 'Wild Dog'], ['Bison', 'Buffalo'],
+        ['Camel', 'Llama'], ['Alpaca', 'Vicuna'], ['Sloth', 'Anteater'],
+        ['Chameleon', 'Gecko'], ['Axolotl', 'Salamander'], ['Firefly', 'Moth'],
+        ['Dragonfly', 'Damselfly'], ['Stingray', 'Manta Ray'],
+        ['Piranha', 'Barracuda'], ['Pelican', 'Albatross'], ['Hummingbird', 'Sunbird'],
+        ['Wombat', 'Tasmanian Devil'], ['Capybara', 'Nutria'],
+        ['Mandrill', 'Baboon'], ['Okapi', 'Giraffe'], ['Tapir', 'Rhino'],
+        ['Manatee', 'Dugong'], ['Fennec Fox', 'Arctic Fox']
+      ],
+    
+      // ── 5 NEW CATEGORIES ──
+      music: [
+        ['Guitar', 'Bass'], ['Drums', 'Bongos'], ['Piano', 'Keyboard'],
+        ['Violin', 'Viola'], ['Trumpet', 'Trombone'], ['Flute', 'Clarinet'],
+        ['Hip Hop', 'Rap'], ['Rock', 'Metal'], ['Pop', 'K-Pop'],
+        ['Jazz', 'Blues'], ['Classical', 'Opera'], ['EDM', 'Techno'],
+        ['Reggae', 'Ska'], ['Country', 'Folk'], ['R&B', 'Soul'],
+        ['Chorus', 'Bridge'], ['Verse', 'Hook'], ['Album', 'EP'],
+        ['Tour', 'Concert'], ['DJ', 'Producer'], ['Remix', 'Cover'],
+        ['Music Video', 'Lyric Video'], ['Playlist', 'Mixtape'],
+        ['Grammy', 'Billboard'], ['Sample', 'Loop'],
+        ['Acapella', 'Instrumental'], ['Vinyl', 'Cassette'],
+        ['Microphone', 'Headphones'], ['Stage', 'Studio'], ['Fan', 'Groupie'],
+        ['Boyband', 'Girl Group'], ['Solo', 'Duet'], ['Collab', 'Feature'],
+        ['Streaming', 'Download'], ['Pitch', 'Tone'], ['Riff', 'Solo'],
+        ['Backstage', 'Front Row'], ['Autotune', 'Vocoder'],
+        ['Music Festival', 'Open Mic'], ['Setlist', 'Encore'],
+        ['Bass Drop', 'Beat Drop'], ['Musician', 'Performer'],
+        ['Record Label', 'Indie Artist'], ['Chart', 'Billboard 100'],
+        ['Songwriter', 'Lyricist'], ['Synthesizer', 'Theremin'],
+        ['Harmonica', 'Accordion'], ['Ukulele', 'Banjo'],
+        ['Cello', 'Double Bass'], ['Oboe', 'Bassoon']
+      ],
+      travel: [
+        ['Passport', 'Visa'], ['Flight', 'Train'], ['Hotel', 'Hostel'],
+        ['Backpack', 'Suitcase'], ['Tourist', 'Traveler'], ['Map', 'GPS'],
+        ['Beach', 'Mountain'], ['City Break', 'Road Trip'],
+        ['First Class', 'Economy'], ['Window Seat', 'Aisle Seat'],
+        ['Layover', 'Direct Flight'], ['Airbnb', 'Resort'],
+        ['Souvenir', 'Postcard'], ['Currency Exchange', 'ATM'],
+        ['Travel Insurance', 'Travel Agent'], ['Safari', 'Cruise'],
+        ['Camping', 'Glamping'], ['Jet Lag', 'Time Zone'],
+        ['Landmarks', 'Hidden Gems'], ['Local Food', 'Fast Food'],
+        ['Budget Travel', 'Luxury Travel'], ['Hostel', 'Boutique Hotel'],
+        ['Tour Guide', 'Self-Guided'], ['Solo Travel', 'Group Tour'],
+        ['Sunrise Hike', 'Sunset Cruise'], ['Museum', 'Art Gallery'],
+        ['Night Market', 'Farmer\'s Market'], ['Gondola', 'Cable Car'],
+        ['Tuk Tuk', 'Rickshaw'], ['Rental Car', 'Taxi'],
+        ['Boarding Pass', 'E-Ticket'], ['Carry-On', 'Checked Bag'],
+        ['Duty Free', 'Customs'], ['Hostel Dorm', 'Private Room'],
+        ['Travel Blog', 'Travel Vlog'], ['Bucket List', 'Itinerary'],
+        ['Eurail Pass', 'Bus Pass'], ['Backpacker', 'Digital Nomad'],
+        ['Snorkeling', 'Scuba Diving'], ['Paragliding', 'Bungee Jumping'],
+        ['Camping Tent', 'Sleeping Bag'], ['Trailhead', 'Summit'],
+        ['Island', 'Peninsula'], ['Volcano', 'Glacier'],
+        ['Desert', 'Rainforest'], ['Fjord', 'Canyon'],
+        ['Lighthouse', 'Castle'], ['Ancient Ruins', 'UNESCO Site'],
+        ['Street Art', 'Graffiti'], ['Locals', 'Expats'],
+        ['Culture Shock', 'Reverse Culture Shock'], ['Travel Buddy', 'Travel Partner']
+      ],
+      science: [
+        ['Atom', 'Molecule'], ['DNA', 'RNA'], ['Black Hole', 'Neutron Star'],
+        ['Photosynthesis', 'Respiration'], ['Gravity', 'Magnetism'],
+        ['Proton', 'Electron'], ['Acid', 'Base'], ['Telescope', 'Microscope'],
+        ['Hypothesis', 'Theory'], ['Experiment', 'Observation'],
+        ['Fossil', 'Artifact'], ['Volcano', 'Earthquake'],
+        ['Solar System', 'Galaxy'], ['Big Bang', 'Steady State'],
+        ['Evolution', 'Natural Selection'], ['Vaccine', 'Antibody'],
+        ['Bacteria', 'Virus'], ['Cell', 'Nucleus'], ['Blood Type', 'DNA Test'],
+        ['Periodic Table', 'Chemical Formula'], ['Newton', 'Einstein'],
+        ['Lab Coat', 'Safety Goggles'], ['Bunsen Burner', 'Test Tube'],
+        ['Centrifuge', 'Spectrometer'], ['Prism', 'Lens'],
+        ['Sound Wave', 'Light Wave'], ['Conductor', 'Insulator'],
+        ['Kinetic Energy', 'Potential Energy'], ['Friction', 'Momentum'],
+        ['Oxidation', 'Reduction'], ['Catalyst', 'Inhibitor'],
+        ['Ecosystem', 'Biome'], ['Predator', 'Prey'], ['Symbiosis', 'Parasitism'],
+        ['Continental Drift', 'Plate Tectonics'], ['Aurora', 'Eclipse'],
+        ['Tidal Wave', 'Tsunami'], ['Thermal', 'Geothermal'],
+        ['Photon', 'Quark'], ['Plasma', 'Antimatter'],
+        ['Lab Rat', 'Guinea Pig'], ['Clone', 'Mutation'],
+        ['Gene Editing', 'CRISPR'], ['Stem Cell', 'Embryo'],
+        ['Black Hole', 'Wormhole'], ['Parallel Universe', 'Multiverse'],
+        ['Radioactive', 'Nuclear'], ['Fission', 'Fusion'],
+        ['Supernova', 'Pulsar'], ['Comet', 'Asteroid']
+      ],
+      history: [
+        ['Roman Empire', 'Greek Empire'], ['World War I', 'World War II'],
+        ['Napoleon', 'Caesar'], ['Vikings', 'Knights'],
+        ['Pyramids', 'Colosseum'], ['Renaissance', 'Industrial Revolution'],
+        ['Cold War', 'Space Race'], ['French Revolution', 'American Revolution'],
+        ['Feudalism', 'Monarchy'], ['Silk Road', 'Spice Trade'],
+        ['Pharaoh', 'Emperor'], ['Gladiator', 'Warrior'],
+        ['Scroll', 'Manuscript'], ['Catapult', 'Trebuchet'],
+        ['Medieval', 'Ancient'], ['Colonialism', 'Imperialism'],
+        ['Magna Carta', 'Constitution'], ['Declaration of Independence', 'Bill of Rights'],
+        ['Slavery', 'Civil Rights'], ['Holocaust', 'Genocide'],
+        ['Stonehenge', 'Easter Island'], ['Trojan Horse', 'Trojan War'],
+        ['Marco Polo', 'Christopher Columbus'], ['Joan of Arc', 'Cleopatra'],
+        ['Genghis Khan', 'Attila the Hun'], ['Plato', 'Aristotle'],
+        ['Socrates', 'Confucius'], ['Darwin', 'Galileo'],
+        ['Thomas Edison', 'Nikola Tesla'], ['Einstein', 'Oppenheimer'],
+        ['Moon Landing', 'Sputnik'], ['Berlin Wall', 'Iron Curtain'],
+        ['Apartheid', 'Segregation'], ['Mahatma Gandhi', 'Nelson Mandela'],
+        ['Martin Luther King', 'Malcolm X'], ['Abraham Lincoln', 'George Washington'],
+        ['Queen Victoria', 'Queen Elizabeth'], ['Henry VIII', 'Louis XIV'],
+        ['Samurai', 'Shogun'], ['Ninja', 'Shinobi'],
+        ['Aztec', 'Inca'], ['Maya', 'Olmec'],
+        ['Hieroglyphics', 'Cuneiform'], ['Papyrus', 'Parchment'],
+        ['Chariot', 'Battering Ram'], ['Moat', 'Drawbridge'],
+        ['Plague', 'Famine'], ['Crusades', 'Inquisition'],
+        ['Trade Route', 'Merchant Ship'], ['Colony', 'Frontier']
+      ],
+      superheroes: [
+        ['Superman', 'Supergirl'], ['Batman', 'Nightwing'], ['Spider-Man', 'Venom'],
+        ['Iron Man', 'War Machine'], ['Captain America', 'Falcon'],
+        ['Thor', 'Loki'], ['Hulk', 'She-Hulk'], ['Black Widow', 'Hawkeye'],
+        ['Wonder Woman', 'Aquaman'], ['The Flash', 'Quicksilver'],
+        ['Green Lantern', 'Green Arrow'], ['Doctor Strange', 'Scarlet Witch'],
+        ['Black Panther', 'Storm'], ['Professor X', 'Magneto'],
+        ['Wolverine', 'Deadpool'], ['Cyclops', 'Jean Grey'],
+        ['Daredevil', 'Punisher'], ['Luke Cage', 'Iron Fist'],
+        ['Ant-Man', 'Wasp'], ['Vision', 'Ultron'],
+        ['Thanos', 'Darkseid'], ['Galactus', 'Apocalypse'],
+        ['Joker', 'Riddler'], ['Lex Luthor', 'Brainiac'],
+        ['Green Goblin', 'Doctor Octopus'], ['Magneto', 'Red Skull'],
+        ['Kryptonite', 'Vibranium'], ['Adamantium', 'Mjolnir'],
+        ['Infinity Gauntlet', 'Cosmic Cube'], ['Web Shooter', 'Utility Belt'],
+        ['Cape', 'Cowl'], ['Mask', 'Helmet'], ['X-Men', 'Avengers'],
+        ['Justice League', 'Teen Titans'], ['S.H.I.E.L.D.', 'A.R.G.U.S.'],
+        ['Gotham', 'Metropolis'], ['Wakanda', 'Asgard'],
+        ['Daily Bugle', 'Daily Planet'], ['Secret Identity', 'Alter Ego'],
+        ['Superpower', 'Ability'], ['Origin Story', 'Backstory'],
+        ['Sidekick', 'Ally'], ['Arch-Nemesis', 'Villain'],
+        ['Hero', 'Anti-Hero'], ['Mutant', 'Enhanced Human'],
+        ['Telekinesis', 'Telepathy'], ['Invisibility', 'Intangibility'],
+        ['Super Speed', 'Super Strength'], ['Flight', 'Levitation'],
+        ['Laser Vision', 'X-Ray Vision'], ['Time Travel', 'Dimension Hopping']
       ]
     };
 
@@ -756,6 +978,11 @@
                   <option value="movies">&nbsp;&nbsp; Movies & TV</option>
                   <option value="sports">&nbsp;&nbsp; Sports</option>
                   <option value="animals">&nbsp;&nbsp; Animals</option>
+                  <option value="music">&nbsp;&nbsp; Music</option>
+                  <option value="travel">&nbsp;&nbsp; Travel</option>
+                  <option value="science">&nbsp;&nbsp; Science</option>
+                  <option value="history">&nbsp;&nbsp; History</option>
+                  <option value="superheroes">&nbsp;&nbsp; Superheroes</option>
                 </select>
                 <span id="genreIcon" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);pointer-events:none;line-height:0;"></span>
                 <button type="button" class="btn-gen" id="generateBtn">${icons.dice} RANDOM</button>
