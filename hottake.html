@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOT TAKE TRIBUNAL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --orange: #FF8C00;
+            --teal: #006B5A;
+            --teal-light: #00897B;
+            --black: #0A0A0A;
+            --white: #FAFAFA;
+            --cream: #FFF8F0;
+            --border: 3px solid var(--black);
+            --shadow: 6px 6px 0px var(--black);
+            --shadow-lg: 10px 10px 0px var(--black);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--orange);
+            background-image: radial-gradient(circle, rgba(0, 0, 0, 0.06) 1px, transparent 1px);
+            background-size: 28px 28px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Mono', monospace;
+            padding: 24px;
+        }
+
+        #app {
+            width: 100%;
+            max-width: 480px;
+            position: relative;
+        }
+
+        .card {
+            background: var(--cream);
+            border: var(--border);
+            box-shadow: var(--shadow-lg);
+            padding: 40px 36px;
+            position: relative;
+            animation: slideIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pop {
+            0% {
+                transform: scale(0.7);
+                opacity: 0;
+            }
+
+            70% {
+                transform: scale(1.08);
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .game-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 62px;
+            line-height: 1;
+            color: var(--cream);
+            letter-spacing: 2px;
+        }
+
+        .game-title span {
+            color: var(--orange);
+        }
+
+        .subtitle {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--orange);
+            font-weight: 700;
+            margin-top: 4px;
+        }
+
+        .header-bar {
+            background: var(--teal);
+            margin: -40px -36px 32px;
+            padding: 28px 36px 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            animation: fadeUp 0.4s ease both;
+        }
+
+        label {
+            display: block;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--black);
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            border: var(--border);
+            background: var(--white);
+            padding: 12px 16px;
+            font-family: 'Space Mono', monospace;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--black);
+            outline: none;
+            box-shadow: 4px 4px 0px var(--black);
+            transition: box-shadow 0.15s, transform 0.15s;
+            -moz-appearance: textfield;
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+        }
+
+        input:focus {
+            box-shadow: 6px 6px 0px var(--teal);
+            transform: translate(-1px, -1px);
+        }
+
+        input::placeholder {
+            color: rgba(0, 0, 0, 0.35);
+            font-weight: 400;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 22px;
+            letter-spacing: 3px;
+            border: var(--border);
+            cursor: pointer;
+            transition: box-shadow 0.12s, transform 0.12s;
+            display: block;
+            text-align: center;
+        }
+
+        .btn:active {
+            transform: translate(4px, 4px);
+            box-shadow: 0px 0px 0px var(--black) !important;
+        }
+
+        .btn-primary {
+            background: var(--teal);
+            color: var(--cream);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 8px 8px 0px var(--black);
+            transform: translate(-2px, -2px);
+        }
+
+        .btn-orange {
+            background: var(--orange);
+            color: var(--black);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-orange:hover {
+            box-shadow: 8px 8px 0px var(--black);
+            transform: translate(-2px, -2px);
+        }
+
+        .btn-dark {
+            background: var(--black);
+            color: var(--orange);
+            box-shadow: 6px 6px 0px var(--teal);
+        }
+
+        .btn-dark:hover {
+            box-shadow: 8px 8px 0px var(--teal);
+            transform: translate(-2px, -2px);
+        }
+
+        .btn-sm {
+            font-size: 14px;
+            padding: 10px 16px;
+            letter-spacing: 2px;
+        }
+
+        .divider {
+            border: none;
+            border-top: 3px solid var(--black);
+            margin: 24px 0;
+        }
+
+        .take-card {
+            background: var(--orange);
+            border: var(--border);
+            box-shadow: var(--shadow-lg);
+            padding: 28px 24px;
+            text-align: center;
+            margin: 20px 0;
+            animation: pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+
+        .take-label {
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(0, 0, 0, 0.5);
+            margin-bottom: 8px;
+        }
+
+        .take-text {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 32px;
+            color: var(--black);
+            letter-spacing: 1px;
+            line-height: 1.1;
+        }
+
+        .timer-box {
+            background: var(--teal);
+            border: var(--border);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            text-align: center;
+            margin: 16px 0;
+        }
+
+        .timer-num {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 72px;
+            color: var(--orange);
+            line-height: 1;
+        }
+
+        .timer-label {
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(255, 140, 0, 0.6);
+            margin-top: 4px;
+        }
+
+        .timer-urgent .timer-num {
+            color: #FF3D3D;
+            animation: pulse 0.5s ease infinite;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 14px;
+            border: 2px solid var(--black);
+            background: var(--white);
+            margin-bottom: 10px;
+            font-size: 13px;
+        }
+
+        .info-row-label {
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.6;
+        }
+
+        .info-row-val {
+            font-weight: 700;
+        }
+
+        .vote-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .vote-btn {
+            padding: 20px;
+            text-align: center;
+            border: var(--border);
+            cursor: pointer;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 20px;
+            letter-spacing: 2px;
+            transition: all 0.12s;
+        }
+
+        .vote-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px var(--black);
+        }
+
+        .vote-btn:active {
+            transform: translate(3px, 3px);
+            box-shadow: none;
+        }
+
+        .vote-convinced {
+            background: var(--teal);
+            color: var(--cream);
+        }
+
+        .vote-delusional {
+            background: var(--orange);
+            color: var(--black);
+        }
+
+        .score-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 14px;
+            border: 2px solid var(--black);
+            margin-bottom: 6px;
+            font-size: 13px;
+            background: var(--white);
+            animation: fadeUp 0.3s ease both;
+        }
+
+        .score-name {
+            font-weight: 700;
+        }
+
+        .score-pts {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 20px;
+            background: var(--teal);
+            color: var(--cream);
+            padding: 2px 10px;
+            border: 2px solid var(--black);
+        }
+
+        .player-badge {
+            display: inline-block;
+            background: var(--teal);
+            color: var(--cream);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 16px;
+            letter-spacing: 2px;
+            padding: 6px 16px;
+            border: 2px solid var(--black);
+            box-shadow: 3px 3px 0px var(--black);
+            margin-bottom: 16px;
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .mt-4 {
+            margin-top: 16px;
+        }
+
+        .home-link {
+            display: inline-block;
+            margin-bottom: 16px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--black);
+            text-decoration: none;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+
+        .home-link:hover {
+            opacity: 1;
+        }
+
+        select {
+            width: 100%;
+            border: var(--border);
+            background: var(--white);
+            padding: 12px 16px;
+            font-family: 'Space Mono', monospace;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--black);
+            outline: none;
+            box-shadow: 4px 4px 0px var(--black);
+            cursor: pointer;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M0 0l6 8 6-8z' fill='%230A0A0A'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 36px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <script>
+        const app = document.getElementById('app');
+
+        const ico = (d, size = 16) =>
+            `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:4px;">${d}</svg>`;
+        const icons = {
+            arrow: ico('<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>'),
+            refresh: ico('<polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/>'),
+            home: ico('<path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>'),
+            flame: ico('<path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.07-2.14 0-5.5 3.5-7.5C14 5 15 7 16 8c.5.5 1.5 2 1.5 4a5.5 5.5 0 01-11 0z"/>'),
+            trophy: ico('<path d="M6 9H4.5a2.5 2.5 0 010-5H6"/><path d="M18 9h1.5a2.5 2.5 0 000-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0012 0V2z"/>'),
+            dice: ico('<rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5" fill="currentColor" stroke="none"/><circle cx="15.5" cy="15.5" r="1.5" fill="currentColor" stroke="none"/>'),
+            gavel: ico('<path d="M14.5 2l5 5-7 7-5-5z"/><path d="M9.5 12L4 17.5 6.5 20 12 14.5"/><line x1="2" y1="22" x2="8" y2="22"/>'),
+            thumbUp: ico('<path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3H14z"/><path d="M7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3"/>'),
+            thumbDown: ico('<path d="M10 15V19a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17"/>'),
+        };
+
+        // Hot takes database
+        const hotTakes = [
+            "Ketchup is technically a smoothie",
+            "Mondays are actually the best day of the week",
+            "Pineapple belongs on pizza and it's not even close",
+            "Sleeping with socks on is superior",
+            "Cereal is technically a soup",
+            "Water has a taste and everyone knows it",
+            "The best part of a shower is getting out",
+            "Dogs are overrated, cats are the real MVPs",
+            "Cold pizza is better than hot pizza",
+            "Math is the easiest subject",
+            "Homework should be banned worldwide",
+            "Frozen vegetables taste better than fresh ones",
+            "Standing up to wipe is the correct way",
+            "The movie is always better than the book",
+            "Summer is the worst season",
+            "Crocs are genuinely fashionable footwear",
+            "Reclining your seat on a plane is totally fine",
+            "Birds aren't real and I have proof",
+            "It's acceptable to eat ice cream for breakfast",
+            "The toilet paper goes under, not over",
+            "Small talk is actually really enjoyable",
+            "Decaf coffee defeats the entire purpose of coffee",
+            "A hot dog IS a sandwich",
+            "GIF is pronounced with a hard G, end of debate",
+            "Rain is better than sunshine",
+            "Candy corn is the best Halloween candy",
+            "Wearing jeans at home is comfortable",
+            "Reply-all emails are underrated",
+            "Sparkling water tastes like TV static and that's good",
+            "Clapping when the plane lands is totally normal",
+            "The Emoji Movie deserved an Oscar",
+            "Parallel parking on the first try is a myth",
+            "Beige is the most exciting color",
+            "Alarm clocks are a form of self-care",
+            "Buffets are fine dining at its peak",
+            "Comic Sans is a beautiful font",
+            "Wearing sunglasses indoors is perfectly acceptable",
+            "Elevators are more fun than escalators",
+            "Pens are way better than pencils",
+            "Reading the terms and conditions is thrilling"
+        ];
+
+        let state = 'setup';
+        let playerNames = [];
+        let playerCount = 4;
+        let scores = {};
+        let currentPlayerIdx = 0;
+        let currentTake = '';
+        let defendTime = 60;
+        let timerVal = 60;
+        let timerInterval = null;
+        let roundNum = 1;
+        let totalRounds = 2;
+        let usedTakes = [];
+        let votes = {};
+
+        function stopTimer() { if (timerInterval) { clearInterval(timerInterval); timerInterval = null; } }
+
+        function getRandomTake() {
+            const available = hotTakes.filter(t => !usedTakes.includes(t));
+            if (available.length === 0) { usedTakes = []; return hotTakes[Math.floor(Math.random() * hotTakes.length)]; }
+            const take = available[Math.floor(Math.random() * available.length)];
+            usedTakes.push(take);
+            return take;
+        }
+
+        function escapeHtml(str) {
+            const d = document.createElement('div');
+            d.textContent = str;
+            return d.innerHTML;
+        }
+
+        function render() {
+            stopTimer();
+            app.innerHTML = '';
+            const card = document.createElement('div');
+            card.className = 'card';
+
+            if (state === 'setup') {
+                card.innerHTML = `
+          <a href="index.html" class="home-link">${icons.home} ALL GAMES</a>
+          <div class="header-bar">
+            <div class="game-title">HOT <span>TAKE</span><br>TRIBUNAL</div>
+            <div class="subtitle">Defend the indefensible</div>
+          </div>
+          <form id="setupForm">
+            <div class="form-group">
+              <label>Number of Players</label>
+              <input required id="countInput" type="number" min="2" max="12" value="4" />
+            </div>
+            <div class="form-group">
+              <label>Rounds (each player defends per round)</label>
+              <input required id="roundsInput" type="number" min="1" max="5" value="2" />
+            </div>
+            <div class="form-group">
+              <label>Defense Timer (seconds)</label>
+              <input required id="timerInput" type="number" min="15" max="120" value="60" />
+            </div>
+            <div class="form-group">
+              <button class="btn btn-primary" type="submit">ENTER PLAYER NAMES ${icons.arrow}</button>
+            </div>
+          </form>
+        `;
+                app.appendChild(card);
+                document.getElementById('setupForm').onsubmit = (e) => {
+                    e.preventDefault();
+                    playerCount = parseInt(document.getElementById('countInput').value, 10);
+                    totalRounds = parseInt(document.getElementById('roundsInput').value, 10);
+                    defendTime = parseInt(document.getElementById('timerInput').value, 10);
+                    state = 'names';
+                    render();
+                };
+
+            } else if (state === 'names') {
+                card.innerHTML = `
+          <div class="header-bar">
+            <div class="game-title" style="font-size:48px;">PLAYER<br><span>NAMES</span></div>
+          </div>
+          <form id="nameForm">
+            ${Array.from({ length: playerCount }, (_, i) => `
+              <div class="form-group" style="animation-delay:${i * 0.05}s">
+                <label>Player ${i + 1}</label>
+                <input required type="text" class="nameField" placeholder="Enter name" autocomplete="off" value="Player ${i + 1}" />
+              </div>
+            `).join('')}
+            <button class="btn btn-primary" type="submit">${icons.flame} START THE TRIBUNAL</button>
+          </form>
+        `;
+                app.appendChild(card);
+                document.getElementById('nameForm').onsubmit = (e) => {
+                    e.preventDefault();
+                    playerNames = [];
+                    document.querySelectorAll('.nameField').forEach(f => playerNames.push(f.value.trim() || 'Player'));
+                    scores = {};
+                    playerNames.forEach(n => scores[n] = 0);
+                    currentPlayerIdx = 0;
+                    roundNum = 1;
+                    usedTakes = [];
+                    state = 'takReveal';
+                    render();
+                };
+
+            } else if (state === 'takReveal') {
+                currentTake = getRandomTake();
+                const name = playerNames[currentPlayerIdx];
+                card.innerHTML = `
+          <div class="header-bar">
+            <div class="subtitle" style="color:var(--orange);">Round ${roundNum} &mdash; Defender ${currentPlayerIdx + 1} of ${playerCount}</div>
+            <div class="game-title" style="font-size:48px;">HOT<br><span>SEAT</span></div>
+          </div>
+          <div class="center">
+            <div class="player-badge">${escapeHtml(name)}</div>
+          </div>
+          <div class="take-card">
+            <div class="take-label">You must defend this take</div>
+            <div class="take-text">"${escapeHtml(currentTake)}"</div>
+          </div>
+          <p style="font-size:11px;opacity:0.5;text-align:center;margin-bottom:20px;line-height:1.5;">
+            You have ${defendTime} seconds to convince the jury this is a valid opinion.
+          </p>
+          <button class="btn btn-primary" id="startDefenseBtn">${icons.flame} START DEFENSE ${icons.arrow}</button>
+          <button class="btn btn-orange btn-sm mt-4" id="newTakeBtn">${icons.dice} GET DIFFERENT TAKE</button>
+        `;
+                app.appendChild(card);
+                document.getElementById('startDefenseBtn').onclick = () => {
+                    timerVal = defendTime;
+                    state = 'defending';
+                    render();
+                };
+                document.getElementById('newTakeBtn').onclick = () => { render(); };
+
+            } else if (state === 'defending') {
+                const name = playerNames[currentPlayerIdx];
+                card.innerHTML = `
+          <div class="header-bar">
+            <div class="subtitle" style="color:var(--orange);">${escapeHtml(name)} is defending</div>
+            <div class="game-title" style="font-size:42px;">MAKE<br><span>YOUR CASE</span></div>
+          </div>
+          <div class="take-card" style="margin-top:0;">
+            <div class="take-label">The hot take</div>
+            <div class="take-text" style="font-size:26px;">"${escapeHtml(currentTake)}"</div>
+          </div>
+          <div class="timer-box" id="timerBox">
+            <div class="timer-num" id="timerDisplay">${timerVal}</div>
+            <div class="timer-label">Seconds remaining</div>
+          </div>
+          <button class="btn btn-dark" id="endEarlyBtn">END EARLY &mdash; GO TO VOTE</button>
+        `;
+                app.appendChild(card);
+
+                timerInterval = setInterval(() => {
+                    timerVal--;
+                    const display = document.getElementById('timerDisplay');
+                    const box = document.getElementById('timerBox');
+                    if (display) display.textContent = timerVal;
+                    if (timerVal <= 10 && box) box.classList.add('timer-urgent');
+                    if (timerVal <= 0) {
+                        stopTimer();
+                        state = 'voting';
+                        render();
+                    }
+                }, 1000);
+
+                document.getElementById('endEarlyBtn').onclick = () => {
+                    stopTimer();
+                    state = 'voting';
+                    render();
+                };
+
+            } else if (state === 'voting') {
+                const name = playerNames[currentPlayerIdx];
+                card.innerHTML = `
+          <div class="header-bar">
+            <div class="game-title" style="font-size:48px;">${icons.gavel} JURY<br><span>VOTE</span></div>
+            <div class="subtitle" style="color:var(--orange);">Was ${escapeHtml(name)} convincing?</div>
+          </div>
+          <div class="take-card" style="padding:16px 20px;margin-top:0;">
+            <div class="take-text" style="font-size:22px;">"${escapeHtml(currentTake)}"</div>
+          </div>
+          <p style="font-size:12px;opacity:0.6;text-align:center;margin-bottom:16px;">Everyone except the defender: vote now!</p>
+          <div class="vote-grid">
+            <div class="vote-btn vote-convinced" id="voteConvinced">
+              ${icons.thumbUp}<br>CONVINCED
+            </div>
+            <div class="vote-btn vote-delusional" id="voteDelusional">
+              ${icons.thumbDown}<br>DELUSIONAL
+            </div>
+          </div>
+          <div id="voteCount" class="center" style="margin:12px 0;">
+            <span style="font-size:12px;opacity:0.5;">Convinced: <strong id="cCount">0</strong> &nbsp;|&nbsp; Delusional: <strong id="dCount">0</strong></span>
+          </div>
+          <button class="btn btn-primary mt-4" id="finalizeBtn">FINALIZE VOTES ${icons.arrow}</button>
+        `;
+                app.appendChild(card);
+
+                let convinced = 0, delusional = 0;
+                document.getElementById('voteConvinced').onclick = () => {
+                    convinced++;
+                    document.getElementById('cCount').textContent = convinced;
+                };
+                document.getElementById('voteDelusional').onclick = () => {
+                    delusional++;
+                    document.getElementById('dCount').textContent = delusional;
+                };
+                document.getElementById('finalizeBtn').onclick = () => {
+                    // Score: points equal to convinced votes
+                    votes = { convinced, delusional };
+                    scores[playerNames[currentPlayerIdx]] += convinced;
+                    state = 'voteResult';
+                    render();
+                };
+
+            } else if (state === 'voteResult') {
+                const name = playerNames[currentPlayerIdx];
+                const won = votes.convinced > votes.delusional;
+                card.innerHTML = `
+          <div class="header-bar" style="background:${won ? 'var(--teal)' : 'var(--orange)'};">
+            <div class="game-title" style="font-size:48px;">${won ? 'CON' : 'DE'}<span>${won ? 'VINCED' : 'LUSIONAL'}</span></div>
+            <div class="subtitle" style="color:${won ? 'var(--orange)' : 'var(--black)'};">${escapeHtml(name)} ${won ? 'swayed the jury!' : 'failed to convince!'}</div>
+          </div>
+          <div class="two-col" style="margin-bottom:16px;">
+            <div class="info-row" style="margin:0;">
+              <span class="info-row-label">Convinced</span>
+              <span class="info-row-val" style="color:var(--teal);">${votes.convinced}</span>
+            </div>
+            <div class="info-row" style="margin:0;">
+              <span class="info-row-label">Delusional</span>
+              <span class="info-row-val" style="color:var(--orange);">${votes.delusional}</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <span class="info-row-label">${escapeHtml(name)}'s Score</span>
+            <span class="info-row-val">${scores[name]} pts</span>
+          </div>
+          <button class="btn btn-primary mt-4" id="nextBtn">${getNextLabel()}</button>
+        `;
+                app.appendChild(card);
+                document.getElementById('nextBtn').onclick = () => {
+                    currentPlayerIdx++;
+                    if (currentPlayerIdx >= playerCount) {
+                        currentPlayerIdx = 0;
+                        roundNum++;
+                        if (roundNum > totalRounds) {
+                            state = 'gameover';
+                        } else {
+                            state = 'takReveal';
+                        }
+                    } else {
+                        state = 'takReveal';
+                    }
+                    render();
+                };
+
+            } else if (state === 'gameover') {
+                const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+                card.innerHTML = `
+          <div class="header-bar">
+            <div class="game-title" style="font-size:52px;">${icons.trophy} FINAL<br><span>SCORES</span></div>
+            <div class="subtitle" style="color:var(--orange);">${escapeHtml(sorted[0][0])} is the best debater!</div>
+          </div>
+          ${sorted.map((s, i) => `
+            <div class="score-row" style="animation-delay:${i * 0.05}s;${i === 0 ? 'background:var(--orange);' : ''}">
+              <span class="score-name">${i === 0 ? icons.trophy : ''} ${i + 1}. ${escapeHtml(s[0])}</span>
+              <span class="score-pts">${s[1]}</span>
+            </div>
+          `).join('')}
+          <hr class="divider">
+          <button class="btn btn-primary" id="restartBtn">${icons.refresh} PLAY AGAIN</button>
+          <a href="index.html" class="btn btn-dark mt-4" style="text-decoration:none;">${icons.home} ALL GAMES</a>
+        `;
+                app.appendChild(card);
+
+                try {
+                    const hist = JSON.parse(localStorage.getItem('hottake_history') || '[]');
+                    hist.unshift({ winner: sorted[0][0], players: playerCount, rounds: totalRounds, date: new Date().toLocaleDateString() });
+                    if (hist.length > 10) hist.length = 10;
+                    localStorage.setItem('hottake_history', JSON.stringify(hist));
+                } catch (e) { }
+
+                document.getElementById('restartBtn').onclick = () => { state = 'setup'; render(); };
+            }
+        }
+
+        function getNextLabel() {
+            if (currentPlayerIdx + 1 < playerCount) return 'NEXT DEFENDER ' + icons.arrow;
+            if (roundNum < totalRounds) return 'NEXT ROUND ' + icons.arrow;
+            return icons.trophy + ' SEE FINAL SCORES';
+        }
+
+        render();
+    </script>
+</body>
+
+</html>

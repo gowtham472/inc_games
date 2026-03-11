@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE ALIBI GAME</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --lime: #AAFF00;
+            --purple: #4A148C;
+            --purple-light: #6A1B9A;
+            --black: #0A0A0A;
+            --white: #FAFAFA;
+            --cream: #F5F0FF;
+            --border: 3px solid var(--black);
+            --shadow: 6px 6px 0px var(--black);
+            --shadow-lg: 10px 10px 0px var(--black);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--lime);
+            background-image: radial-gradient(circle, rgba(0, 0, 0, 0.06) 1px, transparent 1px);
+            background-size: 28px 28px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Mono', monospace;
+            padding: 24px;
+        }
+
+        #app {
+            width: 100%;
+            max-width: 480px;
+            position: relative;
+        }
+
+        .card {
+            background: var(--cream);
+            border: var(--border);
+            box-shadow: var(--shadow-lg);
+            padding: 40px 36px;
+            position: relative;
+            animation: slideIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pop {
+            0% {
+                transform: scale(0.7);
+                opacity: 0;
+            }
+
+            70% {
+                transform: scale(1.08);
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .game-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 58px;
+            line-height: 1;
+            color: var(--cream);
+            letter-spacing: 2px;
+        }
+
+        .game-title span {
+            color: var(--lime);
+        }
+
+        .subtitle {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--lime);
+            font-weight: 700;
+            margin-top: 4px;
+        }
+
+        .header-bar {
+            background: var(--purple);
+            margin: -40px -36px 32px;
+            padding: 28px 36px 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            animation: fadeUp 0.4s ease both;
+        }
+
+        label {
+            display: block;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--black);
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            border: var(--border);
+            background: var(--white);
+            padding: 12px 16px;
+            font-family: 'Space Mono', monospace;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--black);
+            outline: none;
+            box-shadow: 4px 4px 0px var(--black);
+            transition: box-shadow 0.15s, transform 0.15s;
+            -moz-appearance: textfield;
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+        }
+
+        input:focus {
+            box-shadow: 6px 6px 0px var(--purple);
+            transform: translate(-1px, -1px);
+        }
+
+        input::placeholder {
+            color: rgba(0, 0, 0, 0.35);
+            font-weight: 400;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 22px;
+            letter-spacing: 3px;
+            border: var(--border);
+            cursor: pointer;
+            transition: box-shadow 0.12s, transform 0.12s;
+            display: block;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn:active {
+            transform: translate(4px, 4px);
+            box-shadow: 0px 0px 0px var(--black) !important;
+        }
+
+        .btn-primary {
+            background: var(--purple);
+            color: var(--cream);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 8px 8px 0px var(--black);
+            transform: translate(-2px, -2px);
+        }
+
+        .btn-lime {
+            background: var(--lime);
+            color: var(--black);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-lime:hover {
+            box-shadow: 8px 8px 0px var(--black);
+            transform: translate(-2px, -2px);
+        }
+
+        .btn-dark {
+            background: var(--black);
+            color: var(--lime);
+            box-shadow: 6px 6px 0px var(--purple);
+        }
+
+        .btn-dark:hover {
+            box-shadow: 8px 8px 0px var(--purple);
+            transform: translate(-2px, -2px);
+        }
+
+        .btn-sm {
+            font-size: 14px;
+            padding: 10px 16px;
+            letter-spacing: 2px;
+        }
+
+        .divider {
+            border: none;
+            border-top: 3px solid var(--black);
+            margin: 24px 0;
+        }
+
+        .scenario-card {
+            background: var(--lime);
+            border: var(--border);
+            box-shadow: var(--shadow-lg);
+            padding: 28px 24px;
+            text-align: center;
+            margin: 20px 0;
+            animation: pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+
+        .scenario-label {
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(0, 0, 0, 0.5);
+            margin-bottom: 8px;
+        }
+
+        .scenario-text {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 28px;
+            color: var(--black);
+            letter-spacing: 1px;
+            line-height: 1.15;
+        }
+
+        .timer-box {
+            background: var(--purple);
+            border: var(--border);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            text-align: center;
+            margin: 16px 0;
+        }
+
+        .timer-num {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 72px;
+            color: var(--lime);
+            line-height: 1;
+        }
+
+        .timer-label {
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(170, 255, 0, 0.6);
+            margin-top: 4px;
+        }
+
+        .timer-urgent .timer-num {
+            color: #FF3D3D;
+            animation: pulse 0.5s ease infinite;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 14px;
+            border: 2px solid var(--black);
+            background: var(--white);
+            margin-bottom: 10px;
+            font-size: 13px;
+        }
+
+        .info-row-label {
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.6;
+        }
+
+        .info-row-val {
+            font-weight: 700;
+        }
+
+        .vote-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .vote-btn {
+            padding: 20px;
+            text-align: center;
+            border: var(--border);
+            cursor: pointer;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 20px;
+            letter-spacing: 2px;
+            transition: all 0.12s;
+        }
+
+        .vote-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px var(--black);
+        }
+
+        .vote-btn:active {
+            transform: translate(3px, 3px);
+            box-shadow: none;
+        }
+
+        .vote-guilty {
+            background: var(--purple);
+            color: var(--cream);
+        }
+
+        .vote-innocent {
+            background: var(--lime);
+            color: var(--black);
+        }
+
+        .question-item {
+            background: var(--white);
+            border: 2px solid var(--black);
+            padding: 10px 14px;
+            margin-bottom: 8px;
+            font-size: 13px;
+            line-height: 1.4;
+            animation: fadeUp 0.3s ease both;
+            cursor: pointer;
+            transition: background 0.12s;
+        }
+
+        .question-item:hover {
+            background: var(--lime);
+        }
+
+        .question-used {
+            opacity: 0.4;
+            text-decoration: line-through;
+        }
+
+        .score-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 14px;
+            border: 2px solid var(--black);
+            margin-bottom: 6px;
+            font-size: 13px;
+            background: var(--white);
+            animation: fadeUp 0.3s ease both;
+        }
+
+        .score-name {
+            font-weight: 700;
+        }
+
+        .score-pts {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 20px;
+            background: var(--purple);
+            color: var(--cream);
+            padding: 2px 10px;
+            border: 2px solid var(--black);
+        }
+
+        .player-badge {
+            display: inline-block;
+            background: var(--purple);
+            color: var(--cream);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 16px;
+            letter-spacing: 2px;
+            padding: 6px 16px;
+            border: 2px solid var(--black);
+            box-shadow: 3px 3px 0px var(--black);
+            margin-bottom: 8px;
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .mt-4 {
+            margin-top: 16px;
+        }
+
+        .mb-3 {
+            margin-bottom: 12px;
+        }
+
+        .home-link {
+            display: inline-block;
+            margin-bottom: 16px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--black);
+            text-decoration: none;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+
+        .home-link:hover {
+            opacity: 1;
+        }
+
+        .role-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border: 2px solid var(--black);
+        }
+
+        .role-suspect {
+            background: var(--lime);
+            color: var(--black);
+        }
+
+        .role-interrogator {
+            background: var(--purple);
+            color: var(--cream);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <script>
+        const app = document.getElementById('app');
+        const ico = (d, size = 16) =>
+            `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:4px;">${d}</svg>`;
+        const icons = {
+            arrow: ico('<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>'),
+            refresh: ico('<polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/>'),
+            home: ico('<path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>'),
+            eye: ico('<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>'),
+            search: ico('<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>'),
+            trophy: ico('<path d="M6 9H4.5a2.5 2.5 0 010-5H6"/><path d="M18 9h1.5a2.5 2.5 0 000-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0012 0V2z"/>'),
+            shield: ico('<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>'),
+            alert: ico('<path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>'),
+        };
+
+        const scenarios = [
+            { title: "The Missing Birthday Cake", desc: "A birthday cake vanished from the office fridge 10 minutes before the party. Where were you between 2:50 and 3:00 PM?" },
+            { title: "The WiFi Saboteur", desc: "Someone changed the office WiFi password to 'ihatemondays'. It happened during lunch break. What were you doing?" },
+            { title: "The Stolen Parking Spot", desc: "Someone moved the 'Reserved' cone and took the boss's parking spot at 8:45 AM this morning. Account for your arrival." },
+            { title: "The Thermostat Bandit", desc: "The office thermostat was cranked to 85°F at exactly 4 PM yesterday, causing a meltdown. What's your alibi?" },
+            { title: "The Mystery Email", desc: "An email saying 'I quit' was sent from the CEO's computer at 11:30 PM last night. Were you in the building?" },
+            { title: "The Vending Machine Heist", desc: "Someone jammed a paperclip in the vending machine and got 15 free candy bars at 9 AM. Your whereabouts?" },
+            { title: "The Printer Jam Conspiracy", desc: "200 pages of cat memes were printed at 3 AM. The security camera was conveniently covered. Explain yourself." },
+            { title: "The Elevator Button Masher", desc: "Someone pressed all 30 floor buttons in the elevator at 8 AM rush hour. Three witnesses say it was someone matching your description." },
+            { title: "The Coffee Pot Incident", desc: "Someone replaced the regular coffee with decaf—chaos ensued at the Monday meeting. Where were you Sunday night?" },
+            { title: "The Karaoke Machine Theft", desc: "The office karaoke machine disappeared after Friday's party. You were one of the last to leave. Explain." },
+            { title: "The Rubber Duck Invasion", desc: "Someone placed 500 rubber ducks in the conference room overnight. You were seen at the craft store. Coincidence?" },
+            { title: "The Schedule Swap", desc: "Someone swapped the Monday and Friday schedules in the system. Everyone showed up to the wrong meetings. What do you know?" },
+            { title: "The Mystery Lunch Thief", desc: "Someone has been eating people's labeled lunches for 3 weeks straight. Today crumbs were found at your desk." },
+            { title: "The Fire Alarm Fiasco", desc: "The fire alarm was pulled at 2 PM during the big presentation. You were seen near the alarm 5 minutes before." },
+            { title: "The Sticky Note Manifesto", desc: "Someone covered the break room wall with 200 sticky notes forming a ransom message about better snacks. Your handwriting looks familiar." },
+        ];
+
+        const questionBank = [
+            "What exactly were you wearing?",
+            "Who was with you? Can they confirm?",
+            "What time did you arrive that day?",
+            "Did you talk to anyone near the scene?",
+            "What were you eating or drinking?",
+            "Were you on your phone? Show me your screen time.",
+            "Which route did you take to get there?",
+            "What song was stuck in your head?",
+            "Did anyone see you leave?",
+            "What's the last text you sent?",
+            "Can you describe what your neighbor was doing?",
+            "How many steps did you walk that hour?",
+            "What was on TV in the background?",
+            "Did you stop anywhere on the way?",
+            "What were you thinking about at that exact moment?",
+            "Were any doors locked or unlocked?",
+            "Did you hear any suspicious noises?",
+            "Where was your bag or belongings?",
+            "Did you use the bathroom during that time?",
+            "How would you rate your mood at that moment?",
+        ];
+
+        let state = 'setup';
+        let playerNames = [];
+        let playerCount = 4;
+        let prepTime = 120;
+        let interrogateTime = 90;
+        let scores = {};
+        let currentSuspectIdx = 0;
+        let currentScenario = null;
+        let timerVal = 0;
+        let timerInterval = null;
+        let roundNum = 1;
+        let totalRounds = 1;
+        let usedScenarios = [];
+        let usedQuestions = [];
+        let votes = {};
+
+        function stopTimer() { if (timerInterval) { clearInterval(timerInterval); timerInterval = null; } }
+
+        function escapeHtml(str) {
+            const d = document.createElement('div');
+            d.textContent = str;
+            return d.innerHTML;
+        }
+
+        function getScenario() {
+            const avail = scenarios.filter(s => !usedScenarios.includes(s.title));
+            if (avail.length === 0) usedScenarios = [];
+            const pool = avail.length > 0 ? avail : scenarios;
+            const s = pool[Math.floor(Math.random() * pool.length)];
+            usedScenarios.push(s.title);
+            return s;
+        }
+
+        function getQuestions(count) {
+            const shuffled = [...questionBank].sort(() => Math.random() - 0.5);
+            return shuffled.slice(0, count);
+        }
+
+        function render() {
+            stopTimer();
+            app.innerHTML = '';
+            const card = document.createElement('div');
+            card.className = 'card';
+
+            if (state === 'setup') {
+                card.innerHTML = `
+          <a href="index.html" class="home-link">${icons.home} ALL GAMES</a>
+          <div class="header-bar">
+            <div class="game-title">THE <span>ALIBI</span><br>GAME</div>
+            <div class="subtitle">Prove your innocence... or don't</div>
+          </div>
+          <form id="setupForm">
+            <div class="form-group">
+              <label>Number of Players</label>
+              <input required id="countInput" type="number" min="3" max="12" value="4" />
+            </div>
+            <div class="form-group">
+              <label>Rounds (each player is a suspect per round)</label>
+              <input required id="roundsInput" type="number" min="1" max="3" value="1" />
+            </div>
+            <div class="form-group">
+              <label>Prep Time (seconds)</label>
+              <input required id="prepInput" type="number" min="30" max="300" value="120" />
+            </div>
+            <div class="form-group">
+              <label>Interrogation Time (seconds)</label>
+              <input required id="interrogateInput" type="number" min="30" max="180" value="90" />
+            </div>
+            <button class="btn btn-primary" type="submit">ENTER PLAYER NAMES ${icons.arrow}</button>
+          </form>
+        `;
+                app.appendChild(card);
+                document.getElementById('setupForm').onsubmit = (e) => {
+                    e.preventDefault();
+                    playerCount = parseInt(document.getElementById('countInput').value, 10);
+                    totalRounds = parseInt(document.getElementById('roundsInput').value, 10);
+                    prepTime = parseInt(document.getElementById('prepInput').value, 10);
+                    interrogateTime = parseInt(document.getElementById('interrogateInput').value, 10);
+                    state = 'names';
+                    render();
+                };
+
+            } else if (state === 'names') {
+                card.innerHTML = `
+          <div class="header-bar">
+            <div class="game-title" style="font-size:48px;">PLAYER<br><span>NAMES</span></div>
+          </div>
+          <form id="nameForm">
+            ${Array.from({ length: playerCount }, (_, i) => `
+              <div class="form-group" style="animation-delay:${i * 0.05}s">
+                <label>Player ${i + 1}</label>
+                <input required type="text" class="nameField" placeholder="Enter name" autocomplete="off" value="Player ${i + 1}" />
+              </div>
+            `).join('')}
+            <button class="btn btn-primary" type="submit">${icons.search} BEGIN INVESTIGATION</button>
+          </form>
+        `;
+                app.appendChild(card);
+                document.getElementById('nameForm').onsubmit = (e) => {
+                    e.preventDefault();
+                    playerNames = [];
+                    document.querySelectorAll('.nameField').forEach(f => playerNames.push(f.value.trim() || 'Player'));
+                    scores = {};
+                    playerNames.forEach(n => scores[n] = 0);
+                    currentSuspectIdx = 0;
+                    roundNum = 1;
+                    usedScenarios = [];
+                    state = 'scenario';
+                    render();
+                };
+
+            } else if (state === 'scenario') {
+                currentScenario = getScenario();
+                const suspect = playerNames[currentSuspectIdx];
+                card.innerHTML = `
+          <div class="header-bar">
+            <div class="subtitle" style="color:var(--lime);">Round ${roundNum} &mdash; Suspect ${currentSuspectIdx + 1} of ${playerCount}</div>
+            <div class="game-title" style="font-size:42px;">THE <span>CRIME</span></div>
+          </div>
+          <div class="center mb-3">
+            <span class="role-tag role-suspect">${icons.alert} SUSPECT</span>
+            <div class="player-badge mt-4">${escapeHtml(suspect)}</div>
+          </div>
+          <div class="scenario-card">
+            <div class="scenario-label">${escapeHtml(currentScenario.title)}</div>
+            <div class="scenario-text">${escapeHtml(currentScenario.desc)}</div>
+          </div>
+          <p style="font-size:12px;opacity:0.5;text-align:center;margin-bottom:16px;line-height:1.5;">
+            ${escapeHtml(suspect)} will now have ${prepTime}s to prepare their alibi.
+            Everyone else will be the interrogators.
+          </p>
+          <button class="btn btn-primary" id="startPrepBtn">${icons.shield} START PREP TIMER ${icons.arrow}</button>
+          <button class="btn btn-lime btn-sm mt-4" id="newScenarioBtn">${icons.refresh} DIFFERENT SCENARIO</button>
+        `;
+                app.appendChild(card);
+                document.getElementById('startPrepBtn').onclick = () => { timerVal = prepTime; state = 'prep'; render(); };
+                document.getElementById('newScenarioBtn').onclick = () => render();
+
+            } else if (state === 'prep') {
+                const suspect = playerNames[currentSuspectIdx];
+                card.innerHTML = `
+          <div class="header-bar">
+            <div class="subtitle" style="color:var(--lime);">${escapeHtml(suspect)} is preparing</div>
+            <div class="game-title" style="font-size:48px;">BUILD YOUR<br><span>ALIBI</span></div>
+          </div>
+          <div class="scenario-card" style="padding:14px 18px;margin-top:0;">
+            <div class="scenario-text" style="font-size:20px;">${escapeHtml(currentScenario.title)}</div>
+          </div>
+          <div class="timer-box" id="timerBox">
+            <div class="timer-num" id="timerDisplay">${timerVal}</div>
+            <div class="timer-label">Prep Time Remaining</div>
+          </div>
+          <p style="font-size:11px;opacity:0.5;text-align:center;margin:12px 0;line-height:1.4;">
+            Think of where you were, who was with you,<br>and what you were doing. Be detailed!
+          </p>
+          <button class="btn btn-primary" id="skipPrepBtn">SKIP &mdash; START INTERROGATION</button>
+        `;
+                app.appendChild(card);
+                timerInterval = setInterval(() => {
+                    timerVal--;
+                    const display = document.getElementById('timerDisplay');
+                    const box = document.getElementById('timerBox');
+                    if (display) display.textContent = timerVal;
+                    if (timerVal <= 10 && box) box.classList.add('timer-urgent');
+                    if (timerVal <= 0) { stopTimer(); timerVal = interrogateTime; state = 'interrogate'; render(); }
+                }, 1000);
+                document.getElementById('skipPrepBtn').onclick = () => { stopTimer(); timerVal = interrogateTime; state = 'interrogate'; render(); };
+
+            } else if (state === 'interrogate') {
+                const suspect = playerNames[currentSuspectIdx];
+                usedQuestions = [];
+                const questions = getQuestions(6);
+                card.innerHTML = `
+          <div class="header-bar">
+            <div class="subtitle" style="color:var(--lime);">Interrogating ${escapeHtml(suspect)}</div>
+            <div class="game-title" style="font-size:48px;">${icons.search} CROSS<br><span>EXAMINE</span></div>
+          </div>
+          <div class="timer-box" id="timerBox">
+            <div class="timer-num" id="timerDisplay">${timerVal}</div>
+            <div class="timer-label">Interrogation Time</div>
+          </div>
+          <label style="margin-top:12px;">Suggested Questions (tap to cross off)</label>
+          <div id="questionList">
+            ${questions.map((q, i) => `
+              <div class="question-item" data-idx="${i}" style="animation-delay:${i * 0.05}s">${escapeHtml(q)}</div>
+            `).join('')}
+          </div>
+          <button class="btn btn-primary mt-4" id="endInterrogateBtn">${icons.alert} END &mdash; VOTE NOW</button>
+        `;
+                app.appendChild(card);
+
+                document.querySelectorAll('.question-item').forEach(item => {
+                    item.onclick = () => item.classList.toggle('question-used');
+                });
+
+                timerInterval = setInterval(() => {
+                    timerVal--;
+                    const display = document.getElementById('timerDisplay');
+                    const box = document.getElementById('timerBox');
+                    if (display) display.textContent = timerVal;
+                    if (timerVal <= 10 && box) box.classList.add('timer-urgent');
+                    if (timerVal <= 0) { stopTimer(); state = 'vote'; render(); }
+                }, 1000);
+                document.getElementById('endInterrogateBtn').onclick = () => { stopTimer(); state = 'vote'; render(); };
+
+            } else if (state === 'vote') {
+                const suspect = playerNames[currentSuspectIdx];
+                card.innerHTML = `
+          <div class="header-bar">
+            <div class="game-title" style="font-size:48px;">THE <span>VERDICT</span></div>
+            <div class="subtitle" style="color:var(--lime);">Is ${escapeHtml(suspect)} guilty or innocent?</div>
+          </div>
+          <div class="scenario-card" style="padding:14px 18px;margin-top:0;">
+            <div class="scenario-text" style="font-size:18px;">${escapeHtml(currentScenario.title)}</div>
+          </div>
+          <p style="font-size:12px;opacity:0.6;text-align:center;margin-bottom:16px;">Everyone (including suspect): cast your vote!</p>
+          <div class="vote-grid">
+            <div class="vote-btn vote-innocent" id="voteInnocent">
+              ${icons.shield}<br>INNOCENT
+            </div>
+            <div class="vote-btn vote-guilty" id="voteGuilty">
+              ${icons.alert}<br>GUILTY
+            </div>
+          </div>
+          <div class="center" style="margin:12px 0;">
+            <span style="font-size:12px;opacity:0.5;">Innocent: <strong id="iCount">0</strong> &nbsp;|&nbsp; Guilty: <strong id="gCount">0</strong></span>
+          </div>
+          <button class="btn btn-primary mt-4" id="finalizeBtn">FINALIZE VERDICT ${icons.arrow}</button>
+        `;
+                app.appendChild(card);
+
+                let innocent = 0, guilty = 0;
+                document.getElementById('voteInnocent').onclick = () => { innocent++; document.getElementById('iCount').textContent = innocent; };
+                document.getElementById('voteGuilty').onclick = () => { guilty++; document.getElementById('gCount').textContent = guilty; };
+                document.getElementById('finalizeBtn').onclick = () => {
+                    votes = { innocent, guilty };
+                    // Suspect earns points for innocent votes
+                    scores[playerNames[currentSuspectIdx]] += innocent;
+                    state = 'verdict';
+                    render();
+                };
+
+            } else if (state === 'verdict') {
+                const suspect = playerNames[currentSuspectIdx];
+                const cleared = votes.innocent > votes.guilty;
+                card.innerHTML = `
+          <div class="header-bar" style="background:${cleared ? 'var(--purple)' : '#B71C1C'};">
+            <div class="game-title" style="font-size:52px;">${cleared ? 'INNO' : 'GUIL'}<span>${cleared ? 'CENT' : 'TY'}</span></div>
+            <div class="subtitle" style="color:${cleared ? 'var(--lime)' : '#ffcdd2'};">${escapeHtml(suspect)} ${cleared ? 'has been cleared!' : 'was found guilty!'}</div>
+          </div>
+          <div class="two-col mb-3">
+            <div class="info-row" style="margin:0;">
+              <span class="info-row-label">Innocent</span>
+              <span class="info-row-val" style="color:var(--purple);">${votes.innocent}</span>
+            </div>
+            <div class="info-row" style="margin:0;">
+              <span class="info-row-label">Guilty</span>
+              <span class="info-row-val" style="color:#B71C1C;">${votes.guilty}</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <span class="info-row-label">${escapeHtml(suspect)}'s Total Score</span>
+            <span class="info-row-val">${scores[suspect]} pts</span>
+          </div>
+          <button class="btn btn-primary mt-4" id="nextBtn">${getNextLabel()}</button>
+        `;
+                app.appendChild(card);
+                document.getElementById('nextBtn').onclick = () => {
+                    currentSuspectIdx++;
+                    if (currentSuspectIdx >= playerCount) {
+                        currentSuspectIdx = 0;
+                        roundNum++;
+                        if (roundNum > totalRounds) { state = 'gameover'; } else { state = 'scenario'; }
+                    } else { state = 'scenario'; }
+                    render();
+                };
+
+            } else if (state === 'gameover') {
+                const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+                card.innerHTML = `
+          <div class="header-bar">
+            <div class="game-title" style="font-size:48px;">${icons.trophy} CASE<br><span>CLOSED</span></div>
+            <div class="subtitle" style="color:var(--lime);">${escapeHtml(sorted[0][0])} is the most believable!</div>
+          </div>
+          ${sorted.map((s, i) => `
+            <div class="score-row" style="animation-delay:${i * 0.05}s;${i === 0 ? 'background:var(--lime);' : ''}">
+              <span class="score-name">${i === 0 ? icons.trophy : ''} ${i + 1}. ${escapeHtml(s[0])}</span>
+              <span class="score-pts">${s[1]}</span>
+            </div>
+          `).join('')}
+          <hr class="divider">
+          <button class="btn btn-primary" id="restartBtn">${icons.refresh} PLAY AGAIN</button>
+          <a href="index.html" class="btn btn-dark mt-4">${icons.home} ALL GAMES</a>
+        `;
+                app.appendChild(card);
+                try {
+                    const hist = JSON.parse(localStorage.getItem('alibi_history') || '[]');
+                    hist.unshift({ winner: sorted[0][0], players: playerCount, rounds: totalRounds, date: new Date().toLocaleDateString() });
+                    if (hist.length > 10) hist.length = 10;
+                    localStorage.setItem('alibi_history', JSON.stringify(hist));
+                } catch (e) { }
+                document.getElementById('restartBtn').onclick = () => { state = 'setup'; render(); };
+            }
+        }
+
+        function getNextLabel() {
+            if (currentSuspectIdx + 1 < playerCount) return 'NEXT SUSPECT ' + icons.arrow;
+            if (roundNum < totalRounds) return 'NEXT ROUND ' + icons.arrow;
+            return icons.trophy + ' FINAL SCORES';
+        }
+
+        render();
+    </script>
+</body>
+
+</html>

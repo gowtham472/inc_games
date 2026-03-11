@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inc Games Arena</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --black: #0A0A0A;
+            --white: #FAFAFA;
+            --dark: #121212;
+            --dark2: #1E1E1E;
+            --border: 3px solid var(--black);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--white);
+            background-image: radial-gradient(circle, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+            background-size: 28px 28px;
+            min-height: 100vh;
+            font-family: 'Space Mono', monospace;
+            padding: 32px 16px;
+        }
+
+        .hub-header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: slideIn 0.4s ease both;
+        }
+
+        .hub-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 64px;
+            line-height: 1;
+            letter-spacing: 4px;
+            color: var(--black);
+        }
+
+        .hub-sub {
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: rgba(0, 0, 0, 0.4);
+            margin-top: 8px;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 520px) {
+            .games-grid {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+
+            .hub-title {
+                font-size: 48px;
+            }
+
+            .card-title {
+                font-size: 26px;
+            }
+
+            .card-top {
+                padding: 20px 20px 16px;
+            }
+
+            .card-bottom {
+                padding: 10px 20px;
+            }
+
+            .card-num {
+                font-size: 80px;
+            }
+        }
+
+        @media (min-width: 521px) and (max-width: 680px) {
+            .card-title {
+                font-size: 28px;
+            }
+
+            .card-top {
+                padding: 22px 22px 16px;
+            }
+        }
+
+        .game-card {
+            border: 3px solid var(--black);
+            padding: 0;
+            position: relative;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            transition: transform 0.15s, box-shadow 0.15s;
+            animation: fadeUp 0.4s ease both;
+            overflow: hidden;
+            background: var(--white);
+        }
+
+        .game-card:hover {
+            transform: translate(-4px, -4px);
+        }
+
+        .game-card:active {
+            transform: translate(2px, 2px);
+            box-shadow: 0 0 0 var(--black) !important;
+        }
+
+        .card-top {
+            padding: 28px 28px 20px;
+            position: relative;
+        }
+
+        .card-num {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 110px;
+            line-height: 1;
+            opacity: 0.08;
+            position: absolute;
+            right: 16px;
+            top: -8px;
+            color: var(--black);
+        }
+
+        .card-icon {
+            width: 44px;
+            height: 44px;
+            border: 3px solid var(--black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 32px;
+            line-height: 1;
+            letter-spacing: 2px;
+            color: var(--black);
+        }
+
+        .card-tagline {
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 6px;
+            opacity: 0.5;
+            color: var(--black);
+        }
+
+        .card-bottom {
+            background: var(--black);
+            padding: 14px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-players {
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.5;
+        }
+
+        .card-play {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 16px;
+            letter-spacing: 3px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 48px;
+            padding: 24px;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(0, 0, 0, 0.2);
+            animation: fadeUp 0.5s ease both;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="hub-header">
+        <div class="hub-title">Inc. Games Arena</div>
+        <div class="hub-sub">Pass-and-play games for your crew</div>
+    </div>
+
+    <div class="games-grid" id="grid"></div>
+
+    <script>
+        const ico = (d, size = 22) =>
+            `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
+
+        const games = [
+            {
+                title: "IMPOSTER",
+                tagline: "Find the fake among you",
+                href: "imposter.html",
+                bg: "#FFE600",
+                accent: "#6B00FF",
+                players: "3-12 Players",
+                icon: ico('<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>'),
+                shadow: "#6B00FF"
+            },
+            {
+                title: "MAFIA",
+                tagline: "Social deduction at its finest",
+                href: "mafia.html",
+                bg: "#F0E6D3",
+                accent: "#FF3D3D",
+                players: "5-15 Players",
+                icon: ico('<circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>'),
+                shadow: "#FF3D3D"
+            },
+            {
+                title: "FISHBOWL",
+                tagline: "Describe, act, one word — 3 rounds",
+                href: "fishbowl.html",
+                bg: "#0D1117",
+                accent: "#00E5FF",
+                players: "4-20 Players",
+                icon: ico('<circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/>'),
+                shadow: "#FF006E",
+                darkCard: true
+            },
+            {
+                title: "HOT TAKE TRIBUNAL",
+                tagline: "Defend the indefensible",
+                href: "hottake.html",
+                bg: "#FF8C00",
+                accent: "#006B5A",
+                players: "2-12 Players",
+                icon: ico('<path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.07-2.14 0-5.5 3.5-7.5C14 5 15 7 16 8c.5.5 1.5 2 1.5 4a5.5 5.5 0 01-11 0z"/>'),
+                shadow: "#006B5A"
+            },
+            {
+                title: "THE ALIBI GAME",
+                tagline: "Prove your innocence... or don't",
+                href: "alibi.html",
+                bg: "#AAFF00",
+                accent: "#4A148C",
+                players: "3-12 Players",
+                icon: ico('<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>'),
+                shadow: "#4A148C"
+            },
+            {
+                title: "NONSENSE EXPERT",
+                tagline: "Fake it till they believe it",
+                href: "nonsense.html",
+                bg: "#FF80AB",
+                accent: "#1A237E",
+                players: "2-12 Players",
+                icon: ico('<path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/>'),
+                shadow: "#1A237E"
+            },
+            {
+                title: "WORD CHAIN SABOTEUR",
+                tagline: "Build the chain, find the spy",
+                href: "wordchain.html",
+                bg: "#69F0AE",
+                accent: "#B71C1C",
+                players: "4-12 Players",
+                icon: ico('<path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>'),
+                shadow: "#B71C1C"
+            },
+        ];
+
+        const grid = document.getElementById('grid');
+        games.forEach((g, i) => {
+            const textColor = g.darkCard ? '#FAFAFA' : '#0A0A0A';
+            const a = document.createElement('a');
+            a.href = g.href;
+            a.className = 'game-card';
+            a.style.cssText = `box-shadow: 8px 8px 0px ${g.shadow}; animation-delay: ${i * 0.07}s;`;
+            a.onmouseenter = () => a.style.boxShadow = `12px 12px 0px ${g.shadow}`;
+            a.onmouseleave = () => a.style.boxShadow = `8px 8px 0px ${g.shadow}`;
+            a.innerHTML = `
+        <div class="card-top" style="background:${g.bg};">
+          <div class="card-num" style="color:${g.darkCard ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.08)'};">${String(i + 1).padStart(2, '0')}</div>
+          <div class="card-icon" style="background:${g.accent};color:${g.bg};border-color:${g.darkCard ? 'rgba(255,255,255,0.2)' : '#0A0A0A'};">
+            ${g.icon}
+          </div>
+          <div class="card-title" style="color:${textColor};">${g.title}</div>
+          <div class="card-tagline" style="color:${textColor};">${g.tagline}</div>
+        </div>
+        <div class="card-bottom">
+          <span class="card-players" style="color:${g.accent};">${g.players}</span>
+          <span class="card-play" style="color:${g.accent};">PLAY →</span>
+        </div>
+      `;
+            grid.appendChild(a);
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAFIA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --red: #FF3D3D;
+            --navy: #1A1A2E;
+            --navy-light: #16213E;
+            --bone: #F0E6D3;
+            --black: #0A0A0A;
+            --white: #FAFAFA;
+            --border: 3px solid var(--black);
+            --shadow: 6px 6px 0px var(--black);
+            --shadow-lg: 10px 10px 0px var(--black);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--navy);
+            background-image: radial-gradient(circle, rgba(255, 61, 61, 0.06) 1px, transparent 1px);
+            background-size: 28px 28px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Mono', monospace;
+            padding: 24px;
+        }
+
+        #app {
+            width: 100%;
+            max-width: 480px;
+            position: relative;
+        }
+
+        .card {
+            background: var(--bone);
+            border: var(--border);
+            box-shadow: var(--shadow-lg);
+            padding: 40px 36px;
+            position: relative;
+            animation: slideIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pop {
+            0% {
+                transform: scale(0.7);
+                opacity: 0;
+            }
+
+            70% {
+                transform: scale(1.08);
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .game-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 72px;
+            line-height: 1;
+            color: var(--bone);
+            letter-spacing: 2px;
+        }
+
+        .game-title span {
+            color: var(--red);
+        }
+
+        .subtitle {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--red);
+            font-weight: 700;
+            margin-top: 4px;
+        }
+
+        .header-bar {
+            background: var(--navy);
+            margin: -40px -36px 32px;
+            padding: 28px 36px 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            animation: fadeUp 0.4s ease both;
+        }
+
+        .form-group:nth-child(1) {
+            animation-delay: 0.05s;
+        }
+
+        .form-group:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .form-group:nth-child(3) {
+            animation-delay: 0.15s;
+        }
+
+        .form-group:nth-child(4) {
+            animation-delay: 0.2s;
+        }
+
+        .form-group:nth-child(5) {
+            animation-delay: 0.25s;
+        }
+
+        label {
+            display: block;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--black);
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            border: var(--border);
+            background: var(--white);
+            padding: 12px 16px;
+            font-family: 'Space Mono', monospace;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--black);
+            outline: none;
+            box-shadow: 4px 4px 0px var(--black);
+            transition: box-shadow 0.15s, transform 0.15s;
+            -moz-appearance: textfield;
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+        }
+
+        input:focus {
+            box-shadow: 6px 6px 0px var(--red);
+            transform: translate(-1px, -1px);
+        }
+
+        input::placeholder {
+            color: rgba(0, 0, 0, 0.35);
+            font-weight: 400;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 22px;
+            letter-spacing: 3px;
+            border: var(--border);
+            cursor: pointer;
+            transition: box-shadow 0.12s, transform 0.12s;
+            display: block;
+            text-align: center;
+        }
+
+        .btn:active {
+            transform: translate(4px, 4px);
+            box-shadow: 0px 0px 0px var(--black) !important;
+        }
+
+        .btn-primary {
+            background: var(--red);
+            color: var(--white);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 8px 8px 0px var(--black);
+            transform: translate(-2px, -2px);
+        }
+
+        .btn-dark {
+            background: var(--navy);
+            color: var(--bone);
+            box-shadow: 6px 6px 0px var(--red);
+        }
+
+        .btn-dark:hover {
+            box-shadow: 8px 8px 0px var(--red);
+            transform: translate(-2px, -2px);
+        }
+
+        .btn-bone {
+            background: var(--bone);
+            color: var(--navy);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-bone:hover {
+            box-shadow: 8px 8px 0px var(--black);
+            transform: translate(-2px, -2px);
+        }
+
+        .btn-danger {
+            background: var(--white);
+            color: #c00;
+            border-color: #c00;
+            box-shadow: 6px 6px 0px #c00;
+        }
+
+        .btn-danger:hover {
+            box-shadow: 8px 8px 0px #c00;
+            transform: translate(-2px, -2px);
+        }
+
+        .btn-sm {
+            font-size: 14px;
+            padding: 10px 16px;
+            letter-spacing: 2px;
+        }
+
+        .divider {
+            border: none;
+            border-top: 3px solid var(--black);
+            margin: 24px 0;
+        }
+
+        .role-card {
+            border: var(--border);
+            box-shadow: var(--shadow-lg);
+            padding: 32px 24px;
+            text-align: center;
+            margin: 24px 0;
+            animation: pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+
+        .role-card.mafia-role {
+            background: var(--red);
+        }
+
+        .role-card.civilian-role {
+            background: var(--navy);
+        }
+
+        .role-card.doctor-role {
+            background: #00C853;
+        }
+
+        .role-card.detective-role {
+            background: #2979FF;
+        }
+
+        .role-label {
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .role-text {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 52px;
+            letter-spacing: 2px;
+            color: var(--white);
+            line-height: 1;
+            display: block;
+        }
+
+        .role-desc {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+
+        .player-badge {
+            display: inline-block;
+            background: var(--red);
+            color: var(--white);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 13px;
+            letter-spacing: 2px;
+            padding: 4px 12px;
+            border: 2px solid var(--black);
+            box-shadow: 3px 3px 0px var(--black);
+            margin-bottom: 16px;
+        }
+
+        .player-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 100px;
+            line-height: 1;
+            color: var(--black);
+            text-align: center;
+            display: block;
+        }
+
+        .progress-bar-wrap {
+            background: rgba(0, 0, 0, 0.1);
+            border: 2px solid var(--black);
+            height: 10px;
+            margin-bottom: 28px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            background: var(--red);
+            height: 100%;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 14px;
+            border: 2px solid var(--black);
+            background: var(--white);
+            margin-bottom: 10px;
+            font-size: 13px;
+        }
+
+        .info-row-label {
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.6;
+        }
+
+        .info-row-val {
+            font-weight: 700;
+        }
+
+        .player-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+            gap: 8px;
+            margin: 16px 0;
+        }
+
+        .p-cell {
+            text-align: center;
+            padding: 10px 4px;
+            border: 2px solid var(--black);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.15s;
+            position: relative;
+        }
+
+        .p-cell.alive {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        .p-cell.dead {
+            background: var(--black);
+            color: var(--red);
+            text-decoration: line-through;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .p-cell.selected {
+            background: var(--red);
+            color: var(--white);
+            box-shadow: 4px 4px 0px var(--black);
+            transform: translate(-2px, -2px);
+        }
+
+        .p-cell .p-role-tag {
+            font-size: 8px;
+            letter-spacing: 1px;
+            display: block;
+            margin-top: 2px;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .phase-tag {
+            display: inline-block;
+            padding: 4px 14px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border: 2px solid var(--black);
+            margin-bottom: 16px;
+        }
+
+        .phase-night {
+            background: var(--navy);
+            color: var(--bone);
+        }
+
+        .phase-day {
+            background: var(--red);
+            color: var(--white);
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .mt-4 {
+            margin-top: 16px;
+        }
+
+        .mt-6 {
+            margin-top: 24px;
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .timer-display {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 64px;
+            color: var(--navy);
+            text-align: center;
+            letter-spacing: 4px;
+        }
+
+        .log-box {
+            background: var(--navy);
+            border: var(--border);
+            padding: 16px;
+            max-height: 200px;
+            overflow-y: auto;
+            margin: 12px 0;
+        }
+
+        .log-entry {
+            font-size: 11px;
+            color: var(--bone);
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .log-entry:last-child {
+            border-bottom: none;
+        }
+
+        .log-entry.death {
+            color: var(--red);
+            font-weight: 700;
+        }
+
+        .log-entry.save {
+            color: #00C853;
+        }
+
+        .log-entry.detect {
+            color: #2979FF;
+        }
+
+        select {
+            width: 100%;
+            border: var(--border);
+            background: var(--white);
+            padding: 12px 16px;
+            font-family: 'Space Mono', monospace;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--black);
+            outline: none;
+            box-shadow: 4px 4px 0px var(--black);
+            cursor: pointer;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M0 0l6 8 6-8z' fill='%230A0A0A'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 36px;
+        }
+
+        select:focus {
+            box-shadow: 6px 6px 0px var(--red);
+            transform: translate(-1px, -1px);
+        }
+
+        .checkbox-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border: 2px solid var(--black);
+            background: var(--white);
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.12s;
+        }
+
+        .checkbox-row:hover {
+            transform: translate(-1px, -1px);
+            box-shadow: 3px 3px 0px var(--black);
+        }
+
+        .checkbox-row input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--red);
+            cursor: pointer;
+        }
+
+        .checkbox-row label {
+            margin: 0;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .home-link {
+            display: inline-block;
+            margin-bottom: 16px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--bone);
+            text-decoration: none;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+
+        .home-link:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <script>
+        const app = document.getElementById('app');
+
+        // SVG Icons
+        const ico = (d, size = 16) =>
+            `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:4px;">${d}</svg>`;
+        const icons = {
+            moon: ico('<path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>'),
+            sun: ico('<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>'),
+            skull: ico('<circle cx="12" cy="10" r="8"/><circle cx="9" cy="9" r="1.5" fill="currentColor" stroke="none"/><circle cx="15" cy="9" r="1.5" fill="currentColor" stroke="none"/><path d="M10 17v3"/><path d="M14 17v3"/><path d="M9 14h6"/>'),
+            shield: ico('<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>'),
+            search: ico('<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>'),
+            users: ico('<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4-4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>'),
+            arrow: ico('<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>'),
+            refresh: ico('<polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/>'),
+            check: ico('<path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>'),
+            x: ico('<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>'),
+            home: ico('<path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>'),
+            vote: ico('<path d="M14 9V5a3 3 0 00-6 0v4"/><rect x="2" y="9" width="20" height="13" rx="2"/>'),
+        };
+
+        // Game state
+        let state = 'setup';
+        let playerCount = 6;
+        let mafiaCount = 2;
+        let hasDoctor = true;
+        let hasDetective = true;
+        let players = [];
+        let currentPlayer = 0;
+        let round = 0;
+        let phase = 'night'; // night | day
+        let nightActions = {};
+        let nightStep = '';
+        let nightMafiaTarget = null;
+        let nightDoctorTarget = null;
+        let nightDetectiveTarget = null;
+        let detectiveResult = '';
+        let dayVoteTarget = null;
+        let gameLog = [];
+        let winner = '';
+
+        function initPlayers() {
+            players = [];
+            const roles = [];
+            for (let i = 0; i < mafiaCount; i++) roles.push('mafia');
+            if (hasDoctor) roles.push('doctor');
+            if (hasDetective) roles.push('detective');
+            while (roles.length < playerCount) roles.push('civilian');
+            // Shuffle
+            for (let i = roles.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [roles[i], roles[j]] = [roles[j], roles[i]];
+            }
+            for (let i = 0; i < playerCount; i++) {
+                players.push({ id: i + 1, role: roles[i], alive: true });
+            }
+        }
+
+        function alivePlayers() { return players.filter(p => p.alive); }
+        function aliveMafia() { return players.filter(p => p.alive && p.role === 'mafia'); }
+        function aliveCivilians() { return players.filter(p => p.alive && p.role !== 'mafia'); }
+
+        function checkWin() {
+            if (aliveMafia().length === 0) return 'town';
+            if (aliveMafia().length >= aliveCivilians().length) return 'mafia';
+            return '';
+        }
+
+        function roleColor(role) {
+            return { mafia: '#FF3D3D', civilian: '#1A1A2E', doctor: '#00C853', detective: '#2979FF' }[role] || '#1A1A2E';
+        }
+        function roleName(role) {
+            return { mafia: 'MAFIA', civilian: 'CIVILIAN', doctor: 'DOCTOR', detective: 'DETECTIVE' }[role] || 'CIVILIAN';
+        }
+        function roleDesc(role) {
+            return {
+                mafia: 'You are Mafia. Eliminate civilians at night. Blend in during the day.',
+                civilian: 'You are a Civilian. Find and vote out the Mafia to survive.',
+                doctor: 'You are the Doctor. Each night, choose one player to protect from elimination.',
+                detective: 'You are the Detective. Each night, investigate one player to learn their role.'
+            }[role] || '';
+        }
+
+        function escapeHtml(str) {
+            const d = document.createElement('div');
+            d.textContent = str;
+            return d.innerHTML;
+        }
+
+        function render() {
+            app.innerHTML = '';
+            const card = document.createElement('div');
+            card.className = 'card';
+
+            if (state === 'setup') {
+                card.innerHTML = `
+          <a href="index.html" class="home-link">${icons.home} ALL GAMES</a>
+          <div class="header-bar">
+            <div class="game-title">MA<span>FI</span>A</div>
+            <div class="subtitle">Night falls &mdash; who will survive?</div>
+          </div>
+          <form id="setupForm">
+            <div class="form-group">
+              <label>Number of Players</label>
+              <input required id="playerInput" type="number" min="5" max="20" value="6" />
+            </div>
+            <div class="form-group">
+              <label>Number of Mafia</label>
+              <input required id="mafiaInput" type="number" min="1" max="8" value="2" />
+            </div>
+            <div class="form-group">
+              <label>Special Roles</label>
+              <div class="checkbox-row">
+                <input type="checkbox" id="doctorCheck" checked />
+                <label for="doctorCheck">${icons.shield} Doctor (protects 1 player at night)</label>
+              </div>
+              <div class="checkbox-row">
+                <input type="checkbox" id="detectiveCheck" checked />
+                <label for="detectiveCheck">${icons.search} Detective (investigates 1 player at night)</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <button class="btn btn-primary" type="submit">START GAME ${icons.arrow}</button>
+            </div>
+          </form>
+        `;
+                app.appendChild(card);
+                document.getElementById('setupForm').onsubmit = (e) => {
+                    e.preventDefault();
+                    playerCount = parseInt(document.getElementById('playerInput').value, 10);
+                    mafiaCount = parseInt(document.getElementById('mafiaInput').value, 10);
+                    hasDoctor = document.getElementById('doctorCheck').checked;
+                    hasDetective = document.getElementById('detectiveCheck').checked;
+                    const minPlayers = mafiaCount + (hasDoctor ? 1 : 0) + (hasDetective ? 1 : 0) + 1;
+                    if (playerCount < minPlayers || playerCount < 5 || mafiaCount < 1) return;
+                    initPlayers();
+                    round = 0;
+                    gameLog = [];
+                    currentPlayer = 0;
+                    state = 'roleReveal';
+                    render();
+                };
+
+            } else if (state === 'roleReveal') {
+                const p = players[currentPlayer];
+                const pct = Math.round((currentPlayer / playerCount) * 100);
+                card.innerHTML = `
+          <div class="header-bar">
+            <div class="subtitle" style="color:rgba(240,230,211,0.6);margin-bottom:6px;">Player ${p.id} of ${playerCount}</div>
+            <div class="game-title" style="font-size:52px;">YOUR<br><span>ROLE</span></div>
+          </div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar-fill" style="width:${pct}%"></div>
+          </div>
+          <div class="center" style="padding:8px 0 24px;">
+            <div class="player-badge">PLAYER ${p.id}</div>
+            <span class="player-number">${p.id}</span>
+            <p style="font-size:12px;letter-spacing:1px;opacity:0.5;margin-top:8px;">Pass the device. Only you should be looking.</p>
+          </div>
+          <button class="btn btn-bone" id="showRoleBtn">TAP TO REVEAL ROLE</button>
+        `;
+                app.appendChild(card);
+                document.getElementById('showRoleBtn').onclick = () => { state = 'roleShow'; render(); };
+
+            } else if (state === 'roleShow') {
+                const p = players[currentPlayer];
+                const pct = Math.round((currentPlayer / playerCount) * 100);
+                card.innerHTML = `
+          <div class="header-bar">
+            <div class="subtitle" style="color:rgba(240,230,211,0.6);margin-bottom:6px;">Player ${p.id} of ${playerCount}</div>
+            <div class="game-title" style="font-size:52px;">YOUR<br><span>ROLE</span></div>
+          </div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar-fill" style="width:${pct}%"></div>
+          </div>
+          <div class="role-card ${p.role}-role">
+            <span class="role-label">You are</span>
+            <span class="role-text">${roleName(p.role)}</span>
+            <p class="role-desc">${roleDesc(p.role)}</p>
+          </div>
+          <p style="font-size:11px;letter-spacing:1px;opacity:0.45;text-align:center;margin-bottom:20px;">Remember your role. Don't show anyone.</p>
+          <button class="btn btn-dark" id="nextBtn">${currentPlayer < playerCount - 1 ? 'DONE — PASS DEVICE ' + icons.arrow : 'ALL DONE — BEGIN NIGHT ' + icons.moon}</button>
+        `;
+                app.appendChild(card);
+                document.getElementById('nextBtn').onclick = () => {
+                    if (currentPlayer < playerCount - 1) {
+                        currentPlayer++;
+                        state = 'roleReveal';
+                    } else {
+                        round = 1;
+                        startNight();
+                    }
+                    render();
+                };
+
+            } else if (state === 'night') {
+                renderNight(card);
+                app.appendChild(card);
+
+            } else if (state === 'nightResult') {
+                const killed = nightMafiaTarget && nightMafiaTarget !== nightDoctorTarget ? nightMafiaTarget : null;
+                if (killed) {
+                    const p = players[killed - 1];
+                    p.alive = false;
+                    gameLog.push({ type: 'death', text: `Night ${round}: Player ${killed} was eliminated by the Mafia.` });
+                } else {
+                    gameLog.push({ type: 'save', text: `Night ${round}: Nobody was eliminated! ${nightDoctorTarget ? 'The Doctor saved someone!' : ''}` });
+                }
+                if (detectiveResult) {
+                    gameLog.push({ type: 'detect', text: `Night ${round}: Detective investigated a player.` });
+                }
+
+                const w = checkWin();
+                if (w) { winner = w; state = 'gameover'; render(); return; }
+
+                card.innerHTML = `
+          <div class="header-bar">
+            <div class="game-title" style="font-size:52px;">${icons.sun} DAY<span>BREAK</span></div>
+            <div class="subtitle" style="color:var(--red);">Round ${round} &mdash; Morning report</div>
+          </div>
+          ${killed ? `
+            <div class="role-card mafia-role">
+              <span class="role-label">Eliminated during the night</span>
+              <span class="role-text">PLAYER ${killed}</span>
+            </div>
+          ` : `
+            <div class="role-card civilian-role">
+              <span class="role-label">The night was peaceful</span>
+              <span class="role-text">NO ONE DIED</span>
+            </div>
+          `}
+          <div class="info-row">
+            <span class="info-row-label">Alive</span>
+            <span class="info-row-val">${alivePlayers().length}</span>
+          </div>
+          <button class="btn btn-primary mt-4" id="dayBtn">BEGIN DISCUSSION ${icons.arrow}</button>
+        `;
+                app.appendChild(card);
+                document.getElementById('dayBtn').onclick = () => {
+                    phase = 'day';
+                    dayVoteTarget = null;
+                    state = 'day';
+                    render();
+                };
+
+            } else if (state === 'day') {
+                card.innerHTML = `
+          <div class="header-bar">
+            <div class="game-title" style="font-size:52px;">${icons.sun} DIS<span>CUSS</span></div>
+            <div class="subtitle" style="color:var(--red);">Round ${round} &mdash; Find the Mafia</div>
+          </div>
+          <p style="font-size:12px;opacity:0.6;margin-bottom:16px;line-height:1.7;">Discuss among yourselves. Who is suspicious? When ready, vote to eliminate a player.</p>
+          <div class="info-row">
+            <span class="info-row-label">Players Alive</span>
+            <span class="info-row-val">${alivePlayers().length}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-row-label">Mafia Remaining</span>
+            <span class="info-row-val">???</span>
+          </div>
+          <hr class="divider">
+          <p style="font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:12px;">Vote to eliminate</p>
+          <div class="player-grid" id="voteGrid">
+            ${alivePlayers().map(p => `
+              <div class="p-cell alive" data-id="${p.id}">
+                P${p.id}
+              </div>
+            `).join('')}
+          </div>
+          <div id="voteConfirm" style="display:none;">
+            <p style="text-align:center;font-size:13px;font-weight:700;margin-bottom:12px;">Eliminate Player <span id="voteTargetNum"></span>?</p>
+            <div class="two-col">
+              <button class="btn btn-primary btn-sm" id="confirmVoteBtn">${icons.check} CONFIRM</button>
+              <button class="btn btn-bone btn-sm" id="skipVoteBtn">${icons.x} SKIP VOTE</button>
+            </div>
+          </div>
+        `;
+                app.appendChild(card);
+
+                document.querySelectorAll('.p-cell').forEach(cell => {
+                    cell.onclick = () => {
+                        document.querySelectorAll('.p-cell').forEach(c => c.classList.remove('selected'));
+                        cell.classList.add('selected');
+                        dayVoteTarget = parseInt(cell.dataset.id, 10);
+                        document.getElementById('voteConfirm').style.display = 'block';
+                        document.getElementById('voteTargetNum').textContent = dayVoteTarget;
+                    };
+                });
+
+                // Wait for confirm button to be rendered
+                setTimeout(() => {
+                    const confirmBtn = document.getElementById('confirmVoteBtn');
+                    const skipBtn = document.getElementById('skipVoteBtn');
+                    if (confirmBtn) {
+                        confirmBtn.onclick = () => {
+                            if (!dayVoteTarget) return;
+                            const p = players[dayVoteTarget - 1];
+                            p.alive = false;
+                            gameLog.push({ type: 'vote', text: `Day ${round}: Player ${dayVoteTarget} was voted out. They were ${roleName(p.role)}.` });
+                            const w = checkWin();
+                            if (w) { winner = w; state = 'gameover'; render(); return; }
+                            state = 'dayResult';
+                            render();
+                        };
+                    }
+                    if (skipBtn) {
+                        skipBtn.onclick = () => {
+                            gameLog.push({ type: 'save', text: `Day ${round}: Town chose not to eliminate anyone.` });
+                            round++;
+                            startNight();
+                            render();
+                        };
+                    }
+                }, 0);
+
+            } else if (state === 'dayResult') {
+                const p = players[dayVoteTarget - 1];
+                card.innerHTML = `
+          <div class="header-bar">
+            <div class="game-title" style="font-size:52px;">${icons.vote} VOTE<span>OUT</span></div>
+            <div class="subtitle" style="color:var(--red);">The town has spoken</div>
+          </div>
+          <div class="role-card" style="background:${roleColor(p.role)};">
+            <span class="role-label">Player ${p.id} was eliminated</span>
+            <span class="role-text">${roleName(p.role)}</span>
+          </div>
+          <p style="text-align:center;font-size:13px;opacity:0.6;margin-bottom:20px;">
+            ${p.role === 'mafia' ? 'The town got one right!' : 'An innocent was lost...'}
+          </p>
+          <button class="btn btn-dark" id="nextNightBtn">PROCEED TO NIGHT ${icons.moon}</button>
+        `;
+                app.appendChild(card);
+                document.getElementById('nextNightBtn').onclick = () => {
+                    round++;
+                    startNight();
+                    render();
+                };
+
+            } else if (state === 'gameover') {
+                card.innerHTML = `
+          <div class="header-bar">
+            <div class="game-title" style="font-size:52px;">GAME<br><span>OVER</span></div>
+            <div class="subtitle" style="color:var(--red);">${winner === 'town' ? 'The town wins!' : 'The Mafia wins!'}</div>
+          </div>
+          <div class="role-card ${winner === 'town' ? 'civilian-role' : 'mafia-role'}">
+            <span class="role-label">Victory goes to</span>
+            <span class="role-text">${winner === 'town' ? 'THE TOWN' : 'THE MAFIA'}</span>
+          </div>
+          <p style="font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:8px;">Player Roles</p>
+          <div class="player-grid">
+            ${players.map(p => `
+              <div class="p-cell ${p.alive ? 'alive' : 'dead'}" style="${p.alive ? 'background:' + roleColor(p.role) + ';color:#fff;' : ''}">
+                P${p.id}
+                <span class="p-role-tag">${roleName(p.role).substring(0, 3)}</span>
+              </div>
+            `).join('')}
+          </div>
+          <hr class="divider">
+          <p style="font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:8px;">Game Log</p>
+          <div class="log-box">
+            ${gameLog.map(e => `<div class="log-entry ${e.type}">${escapeHtml(e.text)}</div>`).join('')}
+          </div>
+          <hr class="divider">
+          <button class="btn btn-primary" id="restartBtn">${icons.refresh} PLAY AGAIN</button>
+          <a href="index.html" class="btn btn-dark mt-4" style="text-decoration:none;">${icons.home} ALL GAMES</a>
+        `;
+                app.appendChild(card);
+
+                // Save to localStorage
+                try {
+                    const hist = JSON.parse(localStorage.getItem('mafia_history') || '[]');
+                    hist.unshift({ winner, players: playerCount, mafia: mafiaCount, rounds: round, date: new Date().toLocaleDateString() });
+                    if (hist.length > 10) hist.length = 10;
+                    localStorage.setItem('mafia_history', JSON.stringify(hist));
+                } catch (e) { }
+
+                document.getElementById('restartBtn').onclick = () => { state = 'setup'; render(); };
+            }
+        }
+
+        function startNight() {
+            phase = 'night';
+            nightMafiaTarget = null;
+            nightDoctorTarget = null;
+            nightDetectiveTarget = null;
+            detectiveResult = '';
+            if (aliveMafia().length > 0) {
+                nightStep = 'mafia';
+            }
+            state = 'night';
+        }
+
+        function renderNight(card) {
+            const alive = alivePlayers();
+
+            if (nightStep === 'mafia') {
+                card.innerHTML = `
+          <div class="header-bar">
+            <div class="game-title" style="font-size:52px;">${icons.moon} NI<span>GHT</span></div>
+            <div class="subtitle" style="color:var(--red);">Round ${round} &mdash; Mafia, wake up</div>
+          </div>
+          <div class="phase-tag phase-night">${icons.skull} MAFIA'S TURN</div>
+          <p style="font-size:12px;opacity:0.6;margin-bottom:16px;line-height:1.7;">Mafia members: secretly agree on a target. Select the player to eliminate.</p>
+          <div class="player-grid" id="mafiaGrid">
+            ${alive.filter(p => p.role !== 'mafia').map(p => `
+              <div class="p-cell alive" data-id="${p.id}">P${p.id}</div>
+            `).join('')}
+          </div>
+          <button class="btn btn-primary mt-4" id="mafiaConfirm" style="display:none;">${icons.skull} CONFIRM TARGET</button>
+        `;
+
+                setTimeout(() => {
+                    document.querySelectorAll('#mafiaGrid .p-cell').forEach(cell => {
+                        cell.onclick = () => {
+                            document.querySelectorAll('#mafiaGrid .p-cell').forEach(c => c.classList.remove('selected'));
+                            cell.classList.add('selected');
+                            nightMafiaTarget = parseInt(cell.dataset.id, 10);
+                            document.getElementById('mafiaConfirm').style.display = 'block';
+                        };
+                    });
+                    document.getElementById('mafiaConfirm').onclick = () => {
+                        if (!nightMafiaTarget) return;
+                        const doc = players.find(p => p.alive && p.role === 'doctor');
+                        if (doc && hasDoctor) { nightStep = 'doctor'; }
+                        else {
+                            const det = players.find(p => p.alive && p.role === 'detective');
+                            if (det && hasDetective) { nightStep = 'detective'; }
+                            else { state = 'nightResult'; }
+                        }
+                        render();
+                    };
+                }, 0);
+
+            } else if (nightStep === 'doctor') {
+                card.innerHTML = `
+          <div class="header-bar">
+            <div class="game-title" style="font-size:52px;">${icons.moon} NI<span>GHT</span></div>
+            <div class="subtitle" style="color:var(--red);">Round ${round} &mdash; Doctor, wake up</div>
+          </div>
+          <div class="phase-tag phase-night" style="background:#00C853;">${icons.shield} DOCTOR'S TURN</div>
+          <p style="font-size:12px;opacity:0.6;margin-bottom:16px;line-height:1.7;">Doctor: choose one player to protect tonight. They cannot be eliminated.</p>
+          <div class="player-grid" id="doctorGrid">
+            ${alive.map(p => `
+              <div class="p-cell alive" data-id="${p.id}">P${p.id}</div>
+            `).join('')}
+          </div>
+          <button class="btn btn-primary mt-4" id="doctorConfirm" style="display:none;background:#00C853;">${icons.shield} PROTECT PLAYER</button>
+        `;
+
+                setTimeout(() => {
+                    document.querySelectorAll('#doctorGrid .p-cell').forEach(cell => {
+                        cell.onclick = () => {
+                            document.querySelectorAll('#doctorGrid .p-cell').forEach(c => c.classList.remove('selected'));
+                            cell.classList.add('selected');
+                            nightDoctorTarget = parseInt(cell.dataset.id, 10);
+                            document.getElementById('doctorConfirm').style.display = 'block';
+                        };
+                    });
+                    document.getElementById('doctorConfirm').onclick = () => {
+                        if (!nightDoctorTarget) return;
+                        const det = players.find(p => p.alive && p.role === 'detective');
+                        if (det && hasDetective) { nightStep = 'detective'; }
+                        else { state = 'nightResult'; }
+                        render();
+                    };
+                }, 0);
+
+            } else if (nightStep === 'detective') {
+                card.innerHTML = `
+          <div class="header-bar">
+            <div class="game-title" style="font-size:52px;">${icons.moon} NI<span>GHT</span></div>
+            <div class="subtitle" style="color:var(--red);">Round ${round} &mdash; Detective, wake up</div>
+          </div>
+          <div class="phase-tag phase-night" style="background:#2979FF;">${icons.search} DETECTIVE'S TURN</div>
+          <p style="font-size:12px;opacity:0.6;margin-bottom:16px;line-height:1.7;">Detective: choose one player to investigate. You'll learn their role.</p>
+          <div class="player-grid" id="detectiveGrid">
+            ${alive.filter(p => p.role !== 'detective').map(p => `
+              <div class="p-cell alive" data-id="${p.id}">P${p.id}</div>
+            `).join('')}
+          </div>
+          <button class="btn btn-primary mt-4" id="detectiveConfirm" style="display:none;background:#2979FF;">${icons.search} INVESTIGATE</button>
+          <div id="detectiveResult"></div>
+        `;
+
+                setTimeout(() => {
+                    document.querySelectorAll('#detectiveGrid .p-cell').forEach(cell => {
+                        cell.onclick = () => {
+                            document.querySelectorAll('#detectiveGrid .p-cell').forEach(c => c.classList.remove('selected'));
+                            cell.classList.add('selected');
+                            nightDetectiveTarget = parseInt(cell.dataset.id, 10);
+                            document.getElementById('detectiveConfirm').style.display = 'block';
+                        };
+                    });
+                    document.getElementById('detectiveConfirm').onclick = () => {
+                        if (!nightDetectiveTarget) return;
+                        const target = players[nightDetectiveTarget - 1];
+                        detectiveResult = target.role;
+                        document.getElementById('detectiveResult').innerHTML = `
+              <div class="role-card" style="background:${roleColor(target.role)};margin-top:16px;">
+                <span class="role-label">Player ${target.id} is</span>
+                <span class="role-text">${roleName(target.role)}</span>
+              </div>
+              <button class="btn btn-dark mt-4" id="endNightBtn">CONTINUE ${icons.arrow}</button>
+            `;
+                        document.getElementById('detectiveConfirm').style.display = 'none';
+                        document.getElementById('endNightBtn').onclick = () => {
+                            state = 'nightResult';
+                            render();
+                        };
+                    };
+                }, 0);
+            }
+        }
+
+        render();
+    </script>
+</body>
+
+</html>

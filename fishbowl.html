@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FISHBOWL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --cyan: #00E5FF;
+            --pink: #FF006E;
+            --dark: #0D1117;
+            --white: #FAFAFA;
+            --black: #0A0A0A;
+            --border: 3px solid var(--black);
+            --shadow: 6px 6px 0px var(--black);
+            --shadow-lg: 10px 10px 0px var(--black);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--cyan);
+            background-image: radial-gradient(circle, rgba(0, 0, 0, 0.06) 1px, transparent 1px);
+            background-size: 28px 28px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Mono', monospace;
+            padding: 24px;
+        }
+
+        #app {
+            width: 100%;
+            max-width: 480px;
+            position: relative;
+        }
+
+        .card {
+            background: var(--white);
+            border: var(--border);
+            box-shadow: var(--shadow-lg);
+            padding: 40px 36px;
+            position: relative;
+            animation: slideIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pop {
+            0% {
+                transform: scale(0.7);
+                opacity: 0;
+            }
+
+            70% {
+                transform: scale(1.08);
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .game-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 72px;
+            line-height: 1;
+            color: var(--white);
+            letter-spacing: 2px;
+        }
+
+        .game-title span {
+            color: var(--cyan);
+        }
+
+        .subtitle {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--cyan);
+            font-weight: 700;
+            margin-top: 4px;
+        }
+
+        .header-bar {
+            background: var(--pink);
+            margin: -40px -36px 32px;
+            padding: 28px 36px 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            animation: fadeUp 0.4s ease both;
+        }
+
+        label {
+            display: block;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--black);
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            border: var(--border);
+            background: var(--cyan);
+            padding: 12px 16px;
+            font-family: 'Space Mono', monospace;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--black);
+            outline: none;
+            box-shadow: 4px 4px 0px var(--black);
+            transition: box-shadow 0.15s, transform 0.15s;
+            -moz-appearance: textfield;
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+        }
+
+        input:focus {
+            box-shadow: 6px 6px 0px var(--pink);
+            transform: translate(-1px, -1px);
+        }
+
+        input::placeholder {
+            color: rgba(0, 0, 0, 0.35);
+            font-weight: 400;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 22px;
+            letter-spacing: 3px;
+            border: var(--border);
+            cursor: pointer;
+            transition: box-shadow 0.12s, transform 0.12s;
+            display: block;
+            text-align: center;
+        }
+
+        .btn:active {
+            transform: translate(4px, 4px);
+            box-shadow: 0px 0px 0px var(--black) !important;
+        }
+
+        .btn-primary {
+            background: var(--pink);
+            color: var(--white);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 8px 8px 0px var(--black);
+            transform: translate(-2px, -2px);
+        }
+
+        .btn-cyan {
+            background: var(--cyan);
+            color: var(--black);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-cyan:hover {
+            box-shadow: 8px 8px 0px var(--black);
+            transform: translate(-2px, -2px);
+        }
+
+        .btn-dark {
+            background: var(--dark);
+            color: var(--cyan);
+            box-shadow: 6px 6px 0px var(--pink);
+        }
+
+        .btn-dark:hover {
+            box-shadow: 8px 8px 0px var(--pink);
+            transform: translate(-2px, -2px);
+        }
+
+        .btn-sm {
+            font-size: 14px;
+            padding: 10px 16px;
+            letter-spacing: 2px;
+        }
+
+        .divider {
+            border: none;
+            border-top: 3px solid var(--black);
+            margin: 24px 0;
+        }
+
+        .word-chip {
+            display: inline-block;
+            background: var(--cyan);
+            color: var(--black);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border: 2px solid var(--black);
+            margin: 3px;
+            animation: fadeUp 0.2s ease both;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 14px;
+            border: 2px solid var(--black);
+            background: var(--cyan);
+            margin-bottom: 10px;
+            font-size: 13px;
+        }
+
+        .info-row-label {
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.6;
+        }
+
+        .info-row-val {
+            font-weight: 700;
+        }
+
+        .timer-box {
+            background: var(--dark);
+            border: var(--border);
+            box-shadow: var(--shadow-lg);
+            padding: 24px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .timer-num {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 80px;
+            color: var(--cyan);
+            line-height: 1;
+        }
+
+        .timer-label {
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(0, 229, 255, 0.6);
+            margin-top: 4px;
+        }
+
+        .word-card {
+            background: var(--pink);
+            border: var(--border);
+            box-shadow: var(--shadow-lg);
+            padding: 32px 24px;
+            text-align: center;
+            margin: 16px 0;
+            animation: pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+
+        .word-card-label {
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 8px;
+        }
+
+        .word-card-text {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 48px;
+            color: var(--white);
+            letter-spacing: 2px;
+            line-height: 1;
+        }
+
+        .round-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 16px;
+            letter-spacing: 2px;
+            border: 2px solid var(--black);
+            margin-bottom: 16px;
+        }
+
+        .round-1 {
+            background: var(--cyan);
+            color: var(--black);
+        }
+
+        .round-2 {
+            background: var(--pink);
+            color: var(--white);
+        }
+
+        .round-3 {
+            background: var(--dark);
+            color: var(--cyan);
+        }
+
+        .score-bar {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .score-team {
+            text-align: center;
+            padding: 12px;
+            border: var(--border);
+            font-family: 'Bebas Neue', sans-serif;
+        }
+
+        .score-team-name {
+            font-size: 14px;
+            letter-spacing: 2px;
+            margin-bottom: 4px;
+        }
+
+        .score-team-num {
+            font-size: 36px;
+            line-height: 1;
+        }
+
+        .team-a {
+            background: var(--cyan);
+            color: var(--black);
+        }
+
+        .team-b {
+            background: var(--pink);
+            color: var(--white);
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .mt-4 {
+            margin-top: 16px;
+        }
+
+        .progress-bar-wrap {
+            background: rgba(0, 0, 0, 0.1);
+            border: 2px solid var(--black);
+            height: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            background: var(--pink);
+            height: 100%;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .home-link {
+            display: inline-block;
+            margin-bottom: 16px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--dark);
+            text-decoration: none;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+
+        .home-link:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <script>
+        const app = document.getElementById('app');
+
+        const ico = (d, size = 16) =>
+            `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:4px;">${d}</svg>`;
+        const icons = {
+            arrow: ico('<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>'),
+            check: ico('<polyline points="20 6 9 17 4 12"/>'),
+            skip: ico('<polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/>'),
+            refresh: ico('<polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/>'),
+            home: ico('<path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>'),
+            plus: ico('<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>'),
+            play: ico('<polygon points="5 3 19 12 5 21 5 3"/>'),
+            mic: ico('<path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/>'),
+            eye: ico('<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>'),
+            hand: ico('<path d="M18 11V6a2 2 0 00-4 0v1"/><path d="M14 10V4a2 2 0 00-4 0v6"/><path d="M10 10.5V5a2 2 0 00-4 0v9"/><path d="M18 11a2 2 0 014 0v3a8 8 0 01-8 8h-2c-2.76 0-3.58-.56-5.09-2.05L3.66 16.7a2 2 0 012.83-2.83L8 15.36"/>'),
+            trophy: ico('<path d="M6 9H4.5a2.5 2.5 0 01 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 000-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0012 0V2z"/>'),
+        };
+
+        let state = 'setup';
+        let words = [];
+        let currentAdder = 1;
+        let totalAdders = 4;
+        let wordsPerPerson = 3;
+        let turnTime = 60;
+        let teams = { a: 0, b: 0 };
+        let currentTeam = 'a';
+        let currentRound = 1; // 1=describe, 2=act, 3=one-word
+        let bowl = [];
+        let currentWord = null;
+        let timerVal = 60;
+        let timerInterval = null;
+        let gotWords = [];
+        let skippedWords = [];
+
+        function roundName(r) { return ['', 'DESCRIBE IT', 'ACT IT OUT', 'ONE WORD'][r]; }
+        function roundRule(r) {
+            return [
+                '',
+                'Describe the word using sentences. No saying the word, no gestures.',
+                'Act out the word using only gestures. No talking, no sounds.',
+                'Say exactly ONE word as a clue. No gestures, no extra words.'
+            ][r];
+        }
+        function teamName(t) { return t === 'a' ? 'TEAM A' : 'TEAM B'; }
+
+        function shuffle(arr) {
+            const a = [...arr];
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+
+        function escapeHtml(str) {
+            const d = document.createElement('div');
+            d.textContent = str;
+            return d.innerHTML;
+        }
+
+        function stopTimer() { if (timerInterval) { clearInterval(timerInterval); timerInterval = null; } }
+
+        function render() {
+            stopTimer();
+            app.innerHTML = '';
+            const card = document.createElement('div');
+            card.className = 'card';
+
+            if (state === 'setup') {
+                card.innerHTML = `
+          <a href="index.html" class="home-link">${icons.home} ALL GAMES</a>
+          <div class="header-bar">
+            <div class="game-title">FISH<span>BOWL</span></div>
+            <div class="subtitle">3 Rounds &mdash; 1 Bowl &mdash; Infinite Laughs</div>
+          </div>
+          <form id="setupForm">
+            <div class="form-group">
+              <label>Number of People Adding Words</label>
+              <input required id="addersInput" type="number" min="2" max="20" value="4" />
+            </div>
+            <div class="form-group">
+              <label>Words Per Person</label>
+              <input required id="wordsInput" type="number" min="1" max="10" value="3" />
+            </div>
+            <div class="form-group">
+              <label>Turn Timer (seconds)</label>
+              <input required id="timerInput" type="number" min="15" max="180" value="60" />
+            </div>
+            <div class="form-group">
+              <button class="btn btn-primary" type="submit">START ADDING WORDS ${icons.arrow}</button>
+            </div>
+          </form>
+        `;
+                app.appendChild(card);
+                document.getElementById('setupForm').onsubmit = (e) => {
+                    e.preventDefault();
+                    totalAdders = parseInt(document.getElementById('addersInput').value, 10);
+                    wordsPerPerson = parseInt(document.getElementById('wordsInput').value, 10);
+                    turnTime = parseInt(document.getElementById('timerInput').value, 10);
+                    words = [];
+                    currentAdder = 1;
+                    state = 'addWords';
+                    render();
+                };
+
+            } else if (state === 'addWords') {
+                const pct = Math.round(((currentAdder - 1) / totalAdders) * 100);
+                card.innerHTML = `
+          <div class="header-bar">
+            <div class="subtitle" style="color:rgba(255,255,255,0.6);margin-bottom:6px;">Person ${currentAdder} of ${totalAdders}</div>
+            <div class="game-title" style="font-size:48px;">ADD<br><span>WORDS</span></div>
+          </div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar-fill" style="width:${pct}%"></div>
+          </div>
+          <p style="font-size:12px;opacity:0.6;margin-bottom:16px;">Add ${wordsPerPerson} word(s) or phrase(s). Be creative and funny!</p>
+          <form id="wordForm">
+            ${Array.from({ length: wordsPerPerson }, (_, i) => `
+              <div class="form-group" style="animation-delay:${i * 0.05}s">
+                <label>Word ${i + 1}</label>
+                <input required type="text" class="wordField" placeholder="e.g. Flying penguin" autocomplete="off" />
+              </div>
+            `).join('')}
+            <button class="btn btn-primary" type="submit">${currentAdder < totalAdders ? 'SUBMIT & PASS DEVICE ' + icons.arrow : 'ALL WORDS IN — START GAME ' + icons.play}</button>
+          </form>
+        `;
+                app.appendChild(card);
+                document.getElementById('wordForm').onsubmit = (e) => {
+                    e.preventDefault();
+                    const fields = document.querySelectorAll('.wordField');
+                    fields.forEach(f => {
+                        const val = f.value.trim();
+                        if (val) words.push(val);
+                    });
+                    if (currentAdder < totalAdders) {
+                        currentAdder++;
+                        render();
+                    } else {
+                        bowl = shuffle([...words]);
+                        currentRound = 1;
+                        teams = { a: 0, b: 0 };
+                        currentTeam = 'a';
+                        state = 'roundIntro';
+                        render();
+                    }
+                };
+
+            } else if (state === 'roundIntro') {
+                card.innerHTML = `
+          <div class="header-bar">
+            <div class="game-title" style="font-size:52px;">ROUND<br><span>${currentRound}</span></div>
+            <div class="subtitle" style="color:var(--cyan);">${roundName(currentRound)}</div>
+          </div>
+          <div class="round-badge round-${currentRound}">ROUND ${currentRound} OF 3</div>
+          <p style="font-size:13px;opacity:0.7;margin-bottom:20px;line-height:1.7;">${roundRule(currentRound)}</p>
+          <div class="score-bar">
+            <div class="score-team team-a">
+              <div class="score-team-name">TEAM A</div>
+              <div class="score-team-num">${teams.a}</div>
+            </div>
+            <div class="score-team team-b">
+              <div class="score-team-name">TEAM B</div>
+              <div class="score-team-num">${teams.b}</div>
+            </div>
+          </div>
+          <div class="info-row">
+            <span class="info-row-label">Words in Bowl</span>
+            <span class="info-row-val">${bowl.length}</span>
+          </div>
+          <button class="btn btn-primary mt-4" id="startRoundBtn">START ROUND ${currentRound} ${icons.arrow}</button>
+        `;
+                app.appendChild(card);
+                document.getElementById('startRoundBtn').onclick = () => {
+                    state = 'turnStart';
+                    render();
+                };
+
+            } else if (state === 'turnStart') {
+                card.innerHTML = `
+          <div class="header-bar">
+            <div class="subtitle" style="color:rgba(255,255,255,0.6);">Round ${currentRound} &mdash; ${roundName(currentRound)}</div>
+            <div class="game-title" style="font-size:48px;color:${currentTeam === 'a' ? 'var(--cyan)' : 'var(--white)'};">${teamName(currentTeam)}'S<br><span>TURN</span></div>
+          </div>
+          <div class="score-bar">
+            <div class="score-team team-a" ${currentTeam === 'a' ? 'style="box-shadow:var(--shadow);"' : ''}>
+              <div class="score-team-name">TEAM A</div>
+              <div class="score-team-num">${teams.a}</div>
+            </div>
+            <div class="score-team team-b" ${currentTeam === 'b' ? 'style="box-shadow:var(--shadow);"' : ''}>
+              <div class="score-team-name">TEAM B</div>
+              <div class="score-team-num">${teams.b}</div>
+            </div>
+          </div>
+          <p style="font-size:12px;opacity:0.6;text-align:center;margin-bottom:20px;line-height:1.6;">
+            One person from ${teamName(currentTeam)} will give clues.<br>
+            ${roundRule(currentRound)}<br>
+            <strong>${turnTime} seconds</strong> on the clock!
+          </p>
+          <button class="btn btn-primary" id="goBtn">${icons.play} START TIMER</button>
+        `;
+                app.appendChild(card);
+                document.getElementById('goBtn').onclick = () => {
+                    timerVal = turnTime;
+                    gotWords = [];
+                    skippedWords = [];
+                    currentWord = bowl.pop() || null;
+                    state = 'playing';
+                    render();
+                };
+
+            } else if (state === 'playing') {
+                if (!currentWord && bowl.length === 0) {
+                    // Round over
+                    teams[currentTeam] += gotWords.length;
+                    endRound();
+                    return;
+                }
+
+                card.innerHTML = `
+          <div class="header-bar" style="background:${currentTeam === 'a' ? 'var(--dark)' : 'var(--pink)'};">
+            <div class="subtitle" style="color:var(--cyan);">Round ${currentRound} &mdash; ${teamName(currentTeam)}</div>
+            <div class="game-title" style="font-size:42px;">${roundName(currentRound)}</div>
+          </div>
+          <div class="timer-box">
+            <div class="timer-num" id="timerDisplay">${timerVal}</div>
+            <div class="timer-label">Seconds remaining</div>
+          </div>
+          ${currentWord ? `
+            <div class="word-card">
+              <div class="word-card-label">Current word</div>
+              <div class="word-card-text">${escapeHtml(currentWord)}</div>
+            </div>
+            <div class="two-col mt-4">
+              <button class="btn btn-primary btn-sm" id="gotItBtn">${icons.check} GOT IT!</button>
+              <button class="btn btn-cyan btn-sm" id="skipBtn">${icons.skip} SKIP</button>
+            </div>
+          ` : `
+            <p class="center" style="font-size:14px;font-weight:700;margin:20px 0;">Bowl is empty!</p>
+          `}
+          <p class="center" style="font-size:11px;opacity:0.4;margin-top:12px;">Got: ${gotWords.length} | Skipped: ${skippedWords.length}</p>
+        `;
+                app.appendChild(card);
+
+                // Start timer
+                timerInterval = setInterval(() => {
+                    timerVal--;
+                    const display = document.getElementById('timerDisplay');
+                    if (display) display.textContent = timerVal;
+                    if (timerVal <= 0) {
+                        stopTimer();
+                        // Put current word back
+                        if (currentWord) bowl.push(currentWord);
+                        // Put skipped words back
+                        skippedWords.forEach(w => bowl.push(w));
+                        bowl = shuffle(bowl);
+                        teams[currentTeam] += gotWords.length;
+                        if (bowl.length === 0) { endRound(); }
+                        else { state = 'turnEnd'; render(); }
+                    }
+                }, 1000);
+
+                if (document.getElementById('gotItBtn')) {
+                    document.getElementById('gotItBtn').onclick = () => {
+                        gotWords.push(currentWord);
+                        if (bowl.length > 0) {
+                            currentWord = bowl.pop();
+                        } else {
+                            currentWord = null;
+                            stopTimer();
+                            skippedWords.forEach(w => bowl.push(w));
+                            bowl = shuffle(bowl);
+                            teams[currentTeam] += gotWords.length;
+                            if (bowl.length === 0) { endRound(); }
+                            else { state = 'turnEnd'; render(); }
+                            return;
+                        }
+                        render();
+                    };
+                }
+                if (document.getElementById('skipBtn')) {
+                    document.getElementById('skipBtn').onclick = () => {
+                        skippedWords.push(currentWord);
+                        if (bowl.length > 0) {
+                            currentWord = bowl.pop();
+                        } else {
+                            currentWord = null;
+                        }
+                        render();
+                    };
+                }
+
+            } else if (state === 'turnEnd') {
+                card.innerHTML = `
+          <div class="header-bar">
+            <div class="game-title" style="font-size:48px;">TIME'S<br><span>UP!</span></div>
+          </div>
+          <p class="center" style="font-size:14px;font-weight:700;margin-bottom:16px;">${teamName(currentTeam)} got ${gotWords.length} word${gotWords.length !== 1 ? 's' : ''}!</p>
+          <div class="score-bar">
+            <div class="score-team team-a">
+              <div class="score-team-name">TEAM A</div>
+              <div class="score-team-num">${teams.a}</div>
+            </div>
+            <div class="score-team team-b">
+              <div class="score-team-name">TEAM B</div>
+              <div class="score-team-num">${teams.b}</div>
+            </div>
+          </div>
+          <div class="info-row">
+            <span class="info-row-label">Words Remaining</span>
+            <span class="info-row-val">${bowl.length}</span>
+          </div>
+          <button class="btn btn-primary mt-4" id="nextTurnBtn">NEXT: ${teamName(currentTeam === 'a' ? 'b' : 'a')}'S TURN ${icons.arrow}</button>
+        `;
+                app.appendChild(card);
+                document.getElementById('nextTurnBtn').onclick = () => {
+                    currentTeam = currentTeam === 'a' ? 'b' : 'a';
+                    state = 'turnStart';
+                    render();
+                };
+
+            } else if (state === 'roundEnd') {
+                card.innerHTML = `
+          <div class="header-bar">
+            <div class="game-title" style="font-size:48px;">ROUND<br><span>${currentRound}</span></div>
+            <div class="subtitle" style="color:var(--cyan);">${roundName(currentRound)} complete!</div>
+          </div>
+          <div class="score-bar">
+            <div class="score-team team-a">
+              <div class="score-team-name">TEAM A</div>
+              <div class="score-team-num">${teams.a}</div>
+            </div>
+            <div class="score-team team-b">
+              <div class="score-team-name">TEAM B</div>
+              <div class="score-team-num">${teams.b}</div>
+            </div>
+          </div>
+          ${currentRound < 3 ? `
+            <p style="font-size:13px;opacity:0.6;text-align:center;margin:16px 0;line-height:1.6;">
+              All words go back in the bowl.<br>
+              Next up: <strong>Round ${currentRound + 1} &mdash; ${roundName(currentRound + 1)}</strong>
+            </p>
+            <button class="btn btn-primary" id="nextRoundBtn">START ROUND ${currentRound + 1} ${icons.arrow}</button>
+          ` : `
+            <button class="btn btn-primary mt-4" id="finalBtn">${icons.trophy} SEE FINAL RESULTS</button>
+          `}
+        `;
+                app.appendChild(card);
+                if (document.getElementById('nextRoundBtn')) {
+                    document.getElementById('nextRoundBtn').onclick = () => {
+                        currentRound++;
+                        bowl = shuffle([...words]);
+                        currentTeam = currentRound === 2 ? 'b' : 'a';
+                        state = 'roundIntro';
+                        render();
+                    };
+                }
+                if (document.getElementById('finalBtn')) {
+                    document.getElementById('finalBtn').onclick = () => {
+                        state = 'gameover';
+                        render();
+                    };
+                }
+
+            } else if (state === 'gameover') {
+                const winner = teams.a > teams.b ? 'TEAM A' : teams.b > teams.a ? 'TEAM B' : 'TIE';
+                card.innerHTML = `
+          <div class="header-bar">
+            <div class="game-title" style="font-size:52px;">GAME<br><span>OVER</span></div>
+            <div class="subtitle" style="color:var(--cyan);">${winner === 'TIE' ? "It's a tie!" : winner + ' wins!'}</div>
+          </div>
+          <div class="score-bar">
+            <div class="score-team team-a" ${teams.a >= teams.b ? 'style="box-shadow:var(--shadow-lg);"' : ''}>
+              <div class="score-team-name">TEAM A</div>
+              <div class="score-team-num">${teams.a}</div>
+            </div>
+            <div class="score-team team-b" ${teams.b >= teams.a ? 'style="box-shadow:var(--shadow-lg);"' : ''}>
+              <div class="score-team-name">TEAM B</div>
+              <div class="score-team-num">${teams.b}</div>
+            </div>
+          </div>
+          <hr class="divider">
+          <p style="font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:8px;">All words in the bowl</p>
+          <div style="margin-bottom:16px;">
+            ${words.map(w => `<span class="word-chip">${escapeHtml(w)}</span>`).join('')}
+          </div>
+          <hr class="divider">
+          <button class="btn btn-primary" id="restartBtn">${icons.refresh} PLAY AGAIN</button>
+          <a href="index.html" class="btn btn-dark mt-4" style="text-decoration:none;">${icons.home} ALL GAMES</a>
+        `;
+                app.appendChild(card);
+
+                try {
+                    const hist = JSON.parse(localStorage.getItem('fishbowl_history') || '[]');
+                    hist.unshift({ teamA: teams.a, teamB: teams.b, totalWords: words.length, date: new Date().toLocaleDateString() });
+                    if (hist.length > 10) hist.length = 10;
+                    localStorage.setItem('fishbowl_history', JSON.stringify(hist));
+                } catch (e) { }
+
+                document.getElementById('restartBtn').onclick = () => { state = 'setup'; render(); };
+            }
+        }
+
+        function endRound() {
+            stopTimer();
+            teams[currentTeam] += gotWords.length;
+            state = 'roundEnd';
+            render();
+        }
+
+        render();
+    </script>
+</body>
+
+</html>

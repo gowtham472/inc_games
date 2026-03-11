@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WORD CHAIN SABOTEUR</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --mint: #69F0AE;
+            --crimson: #B71C1C;
+            --crimson-light: #D32F2F;
+            --black: #0A0A0A;
+            --white: #FAFAFA;
+            --cream: #F0FFF4;
+            --border: 3px solid var(--black);
+            --shadow: 6px 6px 0px var(--black);
+            --shadow-lg: 10px 10px 0px var(--black);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--mint);
+            background-image: radial-gradient(circle, rgba(0, 0, 0, 0.06) 1px, transparent 1px);
+            background-size: 28px 28px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Mono', monospace;
+            padding: 24px;
+        }
+
+        #app {
+            width: 100%;
+            max-width: 480px;
+            position: relative;
+        }
+
+        .card {
+            background: var(--cream);
+            border: var(--border);
+            box-shadow: var(--shadow-lg);
+            padding: 40px 36px;
+            position: relative;
+            animation: slideIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pop {
+            0% {
+                transform: scale(0.7);
+                opacity: 0;
+            }
+
+            70% {
+                transform: scale(1.08);
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .game-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 52px;
+            line-height: 1;
+            color: var(--cream);
+            letter-spacing: 2px;
+        }
+
+        .game-title span {
+            color: var(--mint);
+        }
+
+        .subtitle {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--mint);
+            font-weight: 700;
+            margin-top: 4px;
+        }
+
+        .header-bar {
+            background: var(--crimson);
+            margin: -40px -36px 32px;
+            padding: 28px 36px 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            animation: fadeUp 0.4s ease both;
+        }
+
+        label {
+            display: block;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--black);
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            border: var(--border);
+            background: var(--white);
+            padding: 12px 16px;
+            font-family: 'Space Mono', monospace;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--black);
+            outline: none;
+            box-shadow: 4px 4px 0px var(--black);
+            transition: box-shadow 0.15s, transform 0.15s;
+            -moz-appearance: textfield;
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+        }
+
+        input:focus {
+            box-shadow: 6px 6px 0px var(--crimson);
+            transform: translate(-1px, -1px);
+        }
+
+        input::placeholder {
+            color: rgba(0, 0, 0, 0.35);
+            font-weight: 400;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 22px;
+            letter-spacing: 3px;
+            border: var(--border);
+            cursor: pointer;
+            transition: box-shadow 0.12s, transform 0.12s;
+            display: block;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn:active {
+            transform: translate(4px, 4px);
+            box-shadow: 0px 0px 0px var(--black) !important;
+        }
+
+        .btn-primary {
+            background: var(--crimson);
+            color: var(--cream);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 8px 8px 0px var(--black);
+            transform: translate(-2px, -2px);
+        }
+
+        .btn-mint {
+            background: var(--mint);
+            color: var(--black);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-mint:hover {
+            box-shadow: 8px 8px 0px var(--black);
+            transform: translate(-2px, -2px);
+        }
+
+        .btn-dark {
+            background: var(--black);
+            color: var(--mint);
+            box-shadow: 6px 6px 0px var(--crimson);
+        }
+
+        .btn-dark:hover {
+            box-shadow: 8px 8px 0px var(--crimson);
+            transform: translate(-2px, -2px);
+        }
+
+        .btn-sm {
+            font-size: 14px;
+            padding: 10px 16px;
+            letter-spacing: 2px;
+        }
+
+        .divider {
+            border: none;
+            border-top: 3px solid var(--black);
+            margin: 24px 0;
+        }
+
+        .word-chain {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 16px 0;
+            min-height: 40px;
+        }
+
+        .word-pill {
+            display: inline-block;
+            padding: 6px 14px;
+            border: 2px solid var(--black);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 18px;
+            letter-spacing: 1px;
+            animation: pop 0.25s ease both;
+        }
+
+        .word-pill-ok {
+            background: var(--mint);
+            color: var(--black);
+        }
+
+        .word-pill-sab {
+            background: var(--crimson);
+            color: var(--cream);
+        }
+
+        .word-pill-current {
+            background: var(--black);
+            color: var(--mint);
+            animation: pulse 0.8s ease infinite;
+        }
+
+        .category-card {
+            background: var(--mint);
+            border: var(--border);
+            box-shadow: var(--shadow-lg);
+            padding: 24px 20px;
+            text-align: center;
+            margin: 16px 0;
+            animation: pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+
+        .category-label {
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(0, 0, 0, 0.5);
+            margin-bottom: 8px;
+        }
+
+        .category-text {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 34px;
+            color: var(--black);
+            letter-spacing: 1px;
+            line-height: 1.1;
+        }
+
+        .timer-box {
+            background: var(--crimson);
+            border: var(--border);
+            box-shadow: var(--shadow);
+            padding: 16px;
+            text-align: center;
+            margin: 12px 0;
+        }
+
+        .timer-num {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 56px;
+            color: var(--mint);
+            line-height: 1;
+        }
+
+        .timer-label {
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(105, 240, 174, 0.6);
+            margin-top: 2px;
+        }
+
+        .timer-urgent .timer-num {
+            color: #FFD600;
+            animation: pulse 0.5s ease infinite;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 14px;
+            border: 2px solid var(--black);
+            background: var(--white);
+            margin-bottom: 10px;
+            font-size: 13px;
+        }
+
+        .info-row-label {
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.6;
+        }
+
+        .info-row-val {
+            font-weight: 700;
+        }
+
+        .player-badge {
+            display: inline-block;
+            background: var(--crimson);
+            color: var(--cream);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 18px;
+            letter-spacing: 2px;
+            padding: 6px 16px;
+            border: 2px solid var(--black);
+            box-shadow: 3px 3px 0px var(--black);
+            margin-bottom: 8px;
+        }
+
+        .role-reveal-card {
+            background: var(--white);
+            border: var(--border);
+            box-shadow: var(--shadow);
+            padding: 28px;
+            text-align: center;
+            margin: 16px 0;
+        }
+
+        .role-big {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 52px;
+            letter-spacing: 2px;
+            line-height: 1;
+        }
+
+        .role-citizen {
+            color: var(--crimson);
+        }
+
+        .role-saboteur {
+            color: var(--crimson);
+        }
+
+        .player-list {
+            margin: 12px 0;
+        }
+
+        .player-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 14px;
+            border: 2px solid var(--black);
+            margin-bottom: 6px;
+            font-size: 13px;
+            background: var(--white);
+            cursor: pointer;
+            transition: all 0.12s;
+        }
+
+        .player-row:hover {
+            background: var(--mint);
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0px var(--black);
+        }
+
+        .player-row-selected {
+            background: var(--crimson) !important;
+            color: var(--cream);
+        }
+
+        .player-row-eliminated {
+            opacity: 0.35;
+            text-decoration: line-through;
+            pointer-events: none;
+        }
+
+        .score-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 14px;
+            border: 2px solid var(--black);
+            margin-bottom: 6px;
+            font-size: 13px;
+            background: var(--white);
+            animation: fadeUp 0.3s ease both;
+        }
+
+        .score-name {
+            font-weight: 700;
+        }
+
+        .score-pts {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 18px;
+            padding: 2px 10px;
+            border: 2px solid var(--black);
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .mt-4 {
+            margin-top: 16px;
+        }
+
+        .mb-3 {
+            margin-bottom: 12px;
+        }
+
+        .home-link {
+            display: inline-block;
+            margin-bottom: 16px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--black);
+            text-decoration: none;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+
+        .home-link:hover {
+            opacity: 1;
+        }
+
+        .secret-box {
+            background: var(--black);
+            color: var(--mint);
+            border: var(--border);
+            padding: 20px;
+            text-align: center;
+            margin: 12px 0;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .secret-box:hover {
+            background: #1a1a1a;
+        }
+
+        .secret-hidden {
+            filter: blur(8px);
+            user-select: none;
+        }
+
+        select {
+            width: 100%;
+            border: var(--border);
+            background: var(--white);
+            padding: 12px 16px;
+            font-family: 'Space Mono', monospace;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--black);
+            outline: none;
+            box-shadow: 4px 4px 0px var(--black);
+            cursor: pointer;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M0 0l6 8 6-8z' fill='%230A0A0A'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 36px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <script>
+        const app = document.getElementById('app');
+        const ico = (d, size = 16) =>
+            `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:4px;">${d}</svg>`;
+        const icons = {
+            arrow: ico('<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>'),
+            refresh: ico('<polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/>'),
+            home: ico('<path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>'),
+            link: ico('<path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>'),
+            skull: ico('<circle cx="9" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="15" cy="12" r="1" fill="currentColor" stroke="none"/><path d="M8 20v1h8v-1"/><path d="M12.5 17l-.5-1-.5 1"/><path d="M16 20a2 2 0 001.56-3.25 8 8 0 10-11.12 0A2 2 0 008 20"/>'),
+            trophy: ico('<path d="M6 9H4.5a2.5 2.5 0 010-5H6"/><path d="M18 9h1.5a2.5 2.5 0 000-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0012 0V2z"/>'),
+            eye: ico('<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>'),
+            eyeOff: ico('<path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>'),
+            alert: ico('<path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>'),
+            check: ico('<polyline points="20 6 9 17 4 12"/>'),
+        };
+
+        const categories = [
+            { name: "Animals", words: ["Cat", "Dog", "Horse", "Eagle", "Shark", "Elephant", "Tiger", "Bear", "Wolf", "Dolphin", "Penguin", "Parrot", "Snake", "Frog", "Rabbit", "Deer", "Fox", "Owl", "Hawk", "Lion"] },
+            { name: "Food & Drinks", words: ["Pizza", "Burger", "Sushi", "Taco", "Pasta", "Coffee", "Juice", "Cake", "Bread", "Cheese", "Rice", "Soup", "Steak", "Cookie", "Waffle", "Salad", "Mango", "Grape", "Melon", "Lemon"] },
+            { name: "Countries", words: ["Japan", "France", "Brazil", "Egypt", "India", "Italy", "Spain", "Canada", "Mexico", "Peru", "Korea", "Greece", "Turkey", "Sweden", "Chile", "Cuba", "Nepal", "Kenya", "Iran", "Fiji"] },
+            { name: "Movies & TV", words: ["Jaws", "Rocky", "Frozen", "Avatar", "Shrek", "Matrix", "Batman", "Joker", "Alien", "Elf", "Logan", "Moana", "Click", "Cars", "Hook", "Ghost", "Scream", "Grease", "Dumbo", "Lucy"] },
+            { name: "Sports", words: ["Soccer", "Tennis", "Boxing", "Golf", "Rugby", "Hockey", "Cricket", "Surfing", "Skiing", "Rowing", "Diving", "Fencing", "Archery", "Polo", "Karate", "Judo", "Cycling", "Running", "Swimming", "Climbing"] },
+            { name: "Jobs", words: ["Doctor", "Chef", "Pilot", "Nurse", "Judge", "Baker", "Driver", "Singer", "Dancer", "Writer", "Artist", "Farmer", "Barber", "Tailor", "Butler", "Mayor", "Guard", "Coach", "Tutor", "Clerk"] },
+        ];
+
+        let state = 'setup';
+        let playerNames = [];
+        let playerCount = 5;
+        let saboteurCount = 1;
+        let roles = [];
+        let revealIdx = 0;
+        let turnTime = 15;
+        let timerVal = 0;
+        let timerInterval = null;
+        let currentCategory = null;
+        let chain = [];
+        let currentTurnIdx = 0;
+        let eliminated = [];
+        let accusationTarget = -1;
+        let gameLog = [];
+        let roleRevealed = false;
+
+        function stopTimer() { if (timerInterval) { clearInterval(timerInterval); timerInterval = null; } }
+
+        function escapeHtml(str) {
+            const d = document.createElement('div');
+            d.textContent = str;
+            return d.innerHTML;
+        }
+
+        function shuffle(arr) { const a = [...arr]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+        function assignRoles() {
+            roles = Array(playerCount).fill('citizen');
+            const indices = shuffle(Array.from({ length: playerCount }, (_, i) => i));
+            for (let i = 0; i < saboteurCount; i++) roles[indices[i]] = 'saboteur';
+        }
+
+        function getAlivePlayers() {
+            return playerNames.map((n, i) => ({ name: n, idx: i })).filter(p => !eliminated.includes(p.idx));
+        }
+
+        function getNextAliveIdx(from) {
+            const alive = getAlivePlayers();
+            if (alive.length === 0) return -1;
+            let idx = from;
+            for (let tries = 0; tries < playerCount; tries++) {
+                idx = (idx + 1) % playerCount;
+                if (!eliminated.includes(idx)) return idx;
+            }
+            return alive[0].idx;
+        }
+
+        function checkWin() {
+            const alive = getAlivePlayers();
+            const saboAlive = alive.filter(p => roles[p.idx] === 'saboteur');
+            if (saboAlive.length === 0) return 'citizens';
+            if (chain.length >= 12 + playerCount) return 'citizens';
+            const citizenAlive = alive.filter(p => roles[p.idx] === 'citizen');
+            if (citizenAlive.length <= saboAlive.length) return 'saboteurs';
+            return null;
+        }
+
+        function render() {
+            stopTimer();
+            app.innerHTML = '';
+            const card = document.createElement('div');
+            card.className = 'card';
+
+            if (state === 'setup') {
+                card.innerHTML = `
+          <a href="index.html" class="home-link">${icons.home} ALL GAMES</a>
+          <div class="header-bar">
+            <div class="game-title">WORD CHAIN<br><span>SABOTEUR</span></div>
+            <div class="subtitle">Build the chain, find the spy</div>
+          </div>
+          <form id="setupForm">
+            <div class="form-group">
+              <label>Number of Players</label>
+              <input required id="countInput" type="number" min="4" max="12" value="5" />
+            </div>
+            <div class="form-group">
+              <label>Number of Saboteurs</label>
+              <input required id="sabInput" type="number" min="1" max="3" value="1" />
+            </div>
+            <div class="form-group">
+              <label>Turn Timer (seconds)</label>
+              <input required id="timerInput" type="number" min="5" max="30" value="15" />
+            </div>
+            <div class="form-group">
+              <label>Category</label>
+              <select id="catSelect">
+                <option value="random">Random Category</option>
+                ${categories.map((c, i) => `<option value="${i}">${c.name}</option>`).join('')}
+              </select>
+            </div>
+            <button class="btn btn-primary" type="submit">ENTER PLAYER NAMES ${icons.arrow}</button>
+          </form>
+        `;
+                app.appendChild(card);
+                document.getElementById('setupForm').onsubmit = (e) => {
+                    e.preventDefault();
+                    playerCount = parseInt(document.getElementById('countInput').value, 10);
+                    saboteurCount = Math.min(parseInt(document.getElementById('sabInput').value, 10), Math.floor(playerCount / 3));
+                    turnTime = parseInt(document.getElementById('timerInput').value, 10);
+                    const sel = document.getElementById('catSelect').value;
+                    currentCategory = sel === 'random' ? categories[Math.floor(Math.random() * categories.length)] : categories[parseInt(sel, 10)];
+                    state = 'names';
+                    render();
+                };
+
+            } else if (state === 'names') {
+                card.innerHTML = `
+          <div class="header-bar">
+            <div class="game-title" style="font-size:48px;">PLAYER<br><span>NAMES</span></div>
+          </div>
+          <form id="nameForm">
+            ${Array.from({ length: playerCount }, (_, i) => `
+              <div class="form-group" style="animation-delay:${i * 0.05}s">
+                <label>Player ${i + 1}</label>
+                <input required type="text" class="nameField" placeholder="Enter name" autocomplete="off" value="Player ${i + 1}" />
+              </div>
+            `).join('')}
+            <button class="btn btn-primary" type="submit">${icons.eye} REVEAL ROLES</button>
+          </form>
+        `;
+                app.appendChild(card);
+                document.getElementById('nameForm').onsubmit = (e) => {
+                    e.preventDefault();
+                    playerNames = [];
+                    document.querySelectorAll('.nameField').forEach(f => playerNames.push(f.value.trim() || 'Player'));
+                    assignRoles();
+                    revealIdx = 0;
+                    chain = [];
+                    eliminated = [];
+                    gameLog = [];
+                    currentTurnIdx = 0;
+                    state = 'roleReveal';
+                    render();
+                };
+
+            } else if (state === 'roleReveal') {
+                const name = playerNames[revealIdx];
+                card.innerHTML = `
+          <div class="header-bar">
+            <div class="subtitle" style="color:var(--mint);">Player ${revealIdx + 1} of ${playerCount}</div>
+            <div class="game-title" style="font-size:48px;">PASS TO<br><span>${escapeHtml(name.toUpperCase())}</span></div>
+          </div>
+          <p style="font-size:12px;opacity:0.6;text-align:center;margin-bottom:20px;line-height:1.5;">
+            Tap the box below to reveal your role.<br>Don't let anyone else see!
+          </p>
+          <div class="role-reveal-card" id="roleBox">
+            <div id="roleContent" class="secret-hidden" style="pointer-events:none;">
+              <div class="role-big ${roles[revealIdx] === 'saboteur' ? 'role-saboteur' : 'role-citizen'}">
+                ${roles[revealIdx] === 'saboteur' ? icons.skull + ' SABOTEUR' : icons.link + ' CITIZEN'}
+              </div>
+              <p style="font-size:12px;margin-top:12px;opacity:0.6;">
+                ${roles[revealIdx] === 'saboteur'
+                        ? 'Sneak in words that DON\'T fit the category!'
+                        : 'Add words that FIT the category. Spot the saboteur!'}
+              </p>
+            </div>
+            <div id="tapHint" style="font-size:11px;letter-spacing:2px;text-transform:uppercase;opacity:0.5;margin-top:8px;">Tap to reveal</div>
+          </div>
+          <button class="btn btn-primary mt-4" id="nextRevealBtn" disabled>
+            ${revealIdx < playerCount - 1 ? 'NEXT PLAYER' : icons.link + ' START GAME'} ${icons.arrow}
+          </button>
+        `;
+                app.appendChild(card);
+                let revealed = false;
+                document.getElementById('roleBox').onclick = () => {
+                    if (!revealed) {
+                        revealed = true;
+                        document.getElementById('roleContent').classList.remove('secret-hidden');
+                        document.getElementById('roleContent').style.pointerEvents = 'auto';
+                        document.getElementById('tapHint').style.display = 'none';
+                        document.getElementById('nextRevealBtn').disabled = false;
+                    }
+                };
+                document.getElementById('nextRevealBtn').onclick = () => {
+                    revealIdx++;
+                    if (revealIdx >= playerCount) { state = 'playing'; render(); }
+                    else render();
+                };
+
+            } else if (state === 'playing') {
+                const name = playerNames[currentTurnIdx];
+                const lastWord = chain.length > 0 ? chain[chain.length - 1].word : null;
+                const lastLetter = lastWord ? lastWord.slice(-1).toUpperCase() : '';
+                card.innerHTML = `
+          <div class="header-bar">
+            <div class="subtitle" style="color:var(--mint);">Category: ${escapeHtml(currentCategory.name)} &nbsp;|&nbsp; Chain: ${chain.length} words</div>
+            <div class="game-title" style="font-size:42px;">${escapeHtml(name.toUpperCase())}'S<br><span>TURN</span></div>
+          </div>
+          ${chain.length > 0 ? `
+            <div class="info-row">
+              <span class="info-row-label">Last Word</span>
+              <span class="info-row-val" style="font-size:18px;">${escapeHtml(lastWord)}</span>
+            </div>
+            <p style="font-size:12px;opacity:0.5;text-align:center;margin-bottom:12px;">
+              Your word should start with "<strong>${lastLetter}</strong>" and fit the "${escapeHtml(currentCategory.name)}" category
+            </p>
+          ` : `
+            <p style="font-size:12px;opacity:0.5;text-align:center;margin-bottom:12px;">
+              Say any word that fits the "${escapeHtml(currentCategory.name)}" category to start the chain!
+            </p>
+          `}
+          <div class="timer-box" id="timerBox">
+            <div class="timer-num" id="timerDisplay">${turnTime}</div>
+            <div class="timer-label">Seconds</div>
+          </div>
+          <div class="form-group" style="margin-top:16px;">
+            <label>Enter Your Word</label>
+            <input type="text" id="wordInput" placeholder="Type a word..." autocomplete="off" />
+          </div>
+          <button class="btn btn-primary" id="submitWordBtn">${icons.check} SUBMIT WORD</button>
+          <hr class="divider">
+          <button class="btn btn-dark btn-sm" id="accuseBtn">${icons.alert} CALL AN ACCUSATION VOTE</button>
+          ${chain.length > 0 ? `
+            <div style="margin-top:16px;">
+              <label>Word Chain So Far</label>
+              <div class="word-chain">
+                ${chain.map(w => `<span class="word-pill word-pill-ok">${escapeHtml(w.word)}</span>`).join('')}
+              </div>
+            </div>
+          ` : ''}
+        `;
+                app.appendChild(card);
+
+                timerVal = turnTime;
+                timerInterval = setInterval(() => {
+                    timerVal--;
+                    const display = document.getElementById('timerDisplay');
+                    const box = document.getElementById('timerBox');
+                    if (display) display.textContent = timerVal;
+                    if (timerVal <= 5 && box) box.classList.add('timer-urgent');
+                    if (timerVal <= 0) {
+                        stopTimer();
+                        // Time's up — this player is eliminated
+                        gameLog.push(`${name} ran out of time and was eliminated!`);
+                        eliminated.push(currentTurnIdx);
+                        const win = checkWin();
+                        if (win) { state = 'gameover'; render(); return; }
+                        currentTurnIdx = getNextAliveIdx(currentTurnIdx);
+                        render();
+                    }
+                }, 1000);
+
+                document.getElementById('wordInput').addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') { e.preventDefault(); document.getElementById('submitWordBtn').click(); }
+                });
+
+                document.getElementById('submitWordBtn').onclick = () => {
+                    const input = document.getElementById('wordInput');
+                    const word = input.value.trim();
+                    if (!word) return;
+                    if (chain.some(w => w.word.toLowerCase() === word.toLowerCase())) {
+                        input.style.boxShadow = '6px 6px 0px var(--crimson)';
+                        input.placeholder = 'Word already used!';
+                        input.value = '';
+                        return;
+                    }
+                    stopTimer();
+                    chain.push({ word, player: currentTurnIdx });
+                    gameLog.push(`${name}: "${word}"`);
+                    const win = checkWin();
+                    if (win) { state = 'gameover'; render(); return; }
+                    currentTurnIdx = getNextAliveIdx(currentTurnIdx);
+                    render();
+                };
+
+                document.getElementById('accuseBtn').onclick = () => {
+                    stopTimer();
+                    state = 'accusation';
+                    render();
+                };
+
+            } else if (state === 'accusation') {
+                const alive = getAlivePlayers();
+                card.innerHTML = `
+          <div class="header-bar">
+            <div class="game-title" style="font-size:48px;">${icons.alert} ACCUSA<span>TION</span></div>
+            <div class="subtitle" style="color:var(--mint);">Who do you think is the saboteur?</div>
+          </div>
+          <p style="font-size:12px;opacity:0.6;text-align:center;margin-bottom:16px;">
+            Everyone discuss and select who to accuse. Majority vote eliminates!
+          </p>
+          <label>Select the Accused</label>
+          <div class="player-list" id="playerList">
+            ${alive.map(p => `
+              <div class="player-row" data-idx="${p.idx}">${escapeHtml(p.name)}</div>
+            `).join('')}
+          </div>
+          <button class="btn btn-primary mt-4" id="voteBtn" disabled>${icons.alert} VOTE TO ELIMINATE</button>
+          <button class="btn btn-mint btn-sm mt-4" id="cancelBtn">CANCEL &mdash; RESUME GAME</button>
+        `;
+                app.appendChild(card);
+
+                accusationTarget = -1;
+                document.querySelectorAll('.player-row').forEach(row => {
+                    row.onclick = () => {
+                        document.querySelectorAll('.player-row').forEach(r => r.classList.remove('player-row-selected'));
+                        row.classList.add('player-row-selected');
+                        accusationTarget = parseInt(row.dataset.idx, 10);
+                        document.getElementById('voteBtn').disabled = false;
+                    };
+                });
+
+                document.getElementById('voteBtn').onclick = () => {
+                    if (accusationTarget < 0) return;
+                    state = 'accuseVote';
+                    render();
+                };
+                document.getElementById('cancelBtn').onclick = () => {
+                    state = 'playing';
+                    render();
+                };
+
+            } else if (state === 'accuseVote') {
+                const accused = playerNames[accusationTarget];
+                card.innerHTML = `
+          <div class="header-bar">
+            <div class="game-title" style="font-size:48px;">VOTE TO<br><span>ELIMINATE</span></div>
+            <div class="subtitle" style="color:var(--mint);">Should ${escapeHtml(accused)} be eliminated?</div>
+          </div>
+          <div class="center mb-3">
+            <div class="player-badge">${icons.skull} ${escapeHtml(accused)}</div>
+          </div>
+          <p style="font-size:12px;opacity:0.6;text-align:center;margin-bottom:16px;">
+            Each player votes YES or NO. Majority YES eliminates them.
+          </p>
+          <div class="two-col mb-3">
+            <div class="vote-btn" style="background:var(--crimson);color:var(--cream);" id="voteYes">
+              ${icons.check}<br>ELIMINATE
+            </div>
+            <div class="vote-btn" style="background:var(--mint);color:var(--black);" id="voteNo">
+              ${icons.alert}<br>SPARE
+            </div>
+          </div>
+          <div class="center" style="margin:8px 0;">
+            <span style="font-size:12px;opacity:0.5;">Eliminate: <strong id="yCount">0</strong> &nbsp;|&nbsp; Spare: <strong id="nCount">0</strong></span>
+          </div>
+          <button class="btn btn-primary mt-4" id="finalizeVoteBtn">FINALIZE VOTE ${icons.arrow}</button>
+        `;
+                app.appendChild(card);
+
+                let yes = 0, no = 0;
+                document.getElementById('voteYes').onclick = () => { yes++; document.getElementById('yCount').textContent = yes; };
+                document.getElementById('voteNo').onclick = () => { no++; document.getElementById('nCount').textContent = no; };
+                document.getElementById('finalizeVoteBtn').onclick = () => {
+                    if (yes > no) {
+                        eliminated.push(accusationTarget);
+                        const wasRole = roles[accusationTarget];
+                        gameLog.push(`${playerNames[accusationTarget]} was eliminated! They were a ${wasRole.toUpperCase()}.`);
+                        state = 'accuseResult';
+                    } else {
+                        gameLog.push(`${playerNames[accusationTarget]} was spared by the vote.`);
+                        state = 'playing';
+                    }
+                    const win = checkWin();
+                    if (win) { state = 'gameover'; }
+                    render();
+                };
+
+            } else if (state === 'accuseResult') {
+                const accused = playerNames[accusationTarget];
+                const wasSab = roles[accusationTarget] === 'saboteur';
+                card.innerHTML = `
+          <div class="header-bar" style="background:${wasSab ? 'var(--crimson)' : '#333'};">
+            <div class="game-title" style="font-size:48px;">${wasSab ? 'SABOTEUR' : 'INNOCENT'}<br><span>${wasSab ? 'CAUGHT' : 'LOST'}</span></div>
+            <div class="subtitle" style="color:var(--mint);">${escapeHtml(accused)} was a ${wasSab ? 'SABOTEUR' : 'CITIZEN'}!</div>
+          </div>
+          <div class="center">
+            <div style="font-size:80px;margin:20px 0;animation:pop 0.5s ease both;">
+              ${wasSab ? icons.skull : icons.link}
+            </div>
+            <p style="font-size:14px;font-weight:700;">${wasSab ? 'Great detective work!' : 'An innocent citizen was lost...'}</p>
+          </div>
+          <button class="btn btn-primary mt-4" id="continueBtn">CONTINUE GAME ${icons.arrow}</button>
+        `;
+                app.appendChild(card);
+                document.getElementById('continueBtn').onclick = () => {
+                    if (currentTurnIdx === accusationTarget || eliminated.includes(currentTurnIdx)) {
+                        currentTurnIdx = getNextAliveIdx(currentTurnIdx);
+                    }
+                    const win = checkWin();
+                    if (win) { state = 'gameover'; render(); return; }
+                    state = 'playing';
+                    render();
+                };
+
+            } else if (state === 'gameover') {
+                const alive = getAlivePlayers();
+                const saboAlive = alive.filter(p => roles[p.idx] === 'saboteur');
+                const citizensWon = saboAlive.length === 0;
+                card.innerHTML = `
+          <div class="header-bar" style="background:${citizensWon ? 'var(--crimson)' : '#333'};">
+            <div class="game-title" style="font-size:48px;">${icons.trophy} ${citizensWon ? 'CITIZENS' : 'SABOTEURS'}<br><span>WIN</span></div>
+            <div class="subtitle" style="color:var(--mint);">${citizensWon ? 'All saboteurs were caught!' : 'The saboteurs took control!'}</div>
+          </div>
+          <label>Final Roles</label>
+          ${playerNames.map((name, i) => `
+            <div class="score-row" style="animation-delay:${i * 0.04}s;${eliminated.includes(i) ? 'opacity:0.4;text-decoration:line-through;' : ''}">
+              <span class="score-name">${escapeHtml(name)}</span>
+              <span class="score-pts" style="background:${roles[i] === 'saboteur' ? 'var(--crimson);color:var(--cream);' : 'var(--mint);color:var(--black);'}">${roles[i] === 'saboteur' ? 'SABOTEUR' : 'CITIZEN'}</span>
+            </div>
+          `).join('')}
+          <div class="info-row mt-4">
+            <span class="info-row-label">Chain Length</span>
+            <span class="info-row-val">${chain.length} words</span>
+          </div>
+          ${chain.length > 0 ? `
+            <div style="margin-top:12px;">
+              <label>The Word Chain</label>
+              <div class="word-chain">
+                ${chain.map(w => `<span class="word-pill ${roles[w.player] === 'saboteur' ? 'word-pill-sab' : 'word-pill-ok'}">${escapeHtml(w.word)}</span>`).join('')}
+              </div>
+              <p style="font-size:10px;opacity:0.4;margin-top:4px;">Red = saboteur's words</p>
+            </div>
+          ` : ''}
+          ${gameLog.length > 0 ? `
+            <hr class="divider">
+            <label>Game Log</label>
+            <div style="max-height:160px;overflow-y:auto;border:2px solid var(--black);padding:8px 12px;font-size:11px;line-height:1.6;background:var(--white);">
+              ${gameLog.map(l => `<div>${escapeHtml(l)}</div>`).join('')}
+            </div>
+          ` : ''}
+          <hr class="divider">
+          <button class="btn btn-primary" id="restartBtn">${icons.refresh} PLAY AGAIN</button>
+          <a href="index.html" class="btn btn-dark mt-4">${icons.home} ALL GAMES</a>
+        `;
+                app.appendChild(card);
+
+                try {
+                    const hist = JSON.parse(localStorage.getItem('wordchain_history') || '[]');
+                    hist.unshift({ winner: citizensWon ? 'Citizens' : 'Saboteurs', players: playerCount, chainLength: chain.length, date: new Date().toLocaleDateString() });
+                    if (hist.length > 10) hist.length = 10;
+                    localStorage.setItem('wordchain_history', JSON.stringify(hist));
+                } catch (e) { }
+
+                document.getElementById('restartBtn').onclick = () => { state = 'setup'; render(); };
+            }
+        }
+
+        render();
+    </script>
+</body>
+
+</html>
