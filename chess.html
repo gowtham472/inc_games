@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>CHESS ARENA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --yellow: #FFE600;
+            --yellow-light: #FFF176;
+            --green: #00C853;
+            --green-dark: #009624;
+            --green-light: #69F0AE;
+            --black: #0A0A0A;
+            --white: #FAFAFA;
+            --gray: #E0E0E0;
+            --border: 3px solid var(--black);
+            --shadow: 6px 6px 0px var(--black);
+            --shadow-lg: 10px 10px 0px var(--black);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--yellow);
+            background-image: radial-gradient(circle, rgba(0, 0, 0, 0.07) 1px, transparent 1px);
+            background-size: 28px 28px;
+            min-height: 100vh;
+            font-family: 'Space Mono', monospace;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body.clock-mode {
+            padding: 0;
+            background: var(--black);
+            background-image: none;
+        }
+
+        #app {
+            width: 100%;
+            max-width: 540px;
+            position: relative;
+        }
+
+        body.clock-mode #app {
+            max-width: 100%;
+            height: 100vh;
+            height: 100dvh;
+        }
+
+        .card {
+            background: var(--white);
+            border: var(--border);
+            box-shadow: var(--shadow-lg);
+            padding: 36px 30px;
+            position: relative;
+            animation: slideIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+
+        body.clock-mode .card {
+            border: none;
+            box-shadow: none;
+            padding: 0;
+            background: transparent;
+            height: 100%;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pop {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        .screen-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 42px;
+            letter-spacing: 3px;
+            color: var(--black);
+            line-height: 1;
+        }
+
+        .screen-sub {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(0, 0, 0, 0.45);
+            margin-top: 6px;
+        }
+
+        .label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--black);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 12px 14px;
+            border: var(--border);
+            background: var(--white);
+            font-family: 'Space Mono', monospace;
+            font-size: 14px;
+            outline: none;
+            transition: box-shadow 0.15s;
+        }
+
+        input:focus {
+            box-shadow: 4px 4px 0 var(--green);
+        }
+
+        .btn {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 20px;
+            letter-spacing: 3px;
+            padding: 14px 28px;
+            border: var(--border);
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.1s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-transform: uppercase;
+            user-select: none;
+        }
+
+        .btn:active {
+            transform: translate(3px, 3px) !important;
+            box-shadow: 0 0 0 var(--black) !important;
+        }
+
+        .btn-primary {
+            background: var(--green);
+            color: var(--black);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-primary:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 8px 8px 0 var(--black);
+        }
+
+        .btn-secondary {
+            background: var(--yellow);
+            color: var(--black);
+            box-shadow: 4px 4px 0 var(--black);
+        }
+
+        .btn-secondary:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 var(--black);
+        }
+
+        .btn-danger {
+            background: #FF5252;
+            color: var(--white);
+            box-shadow: 4px 4px 0 var(--black);
+        }
+
+        .btn-small {
+            font-size: 14px;
+            padding: 8px 16px;
+            letter-spacing: 2px;
+        }
+
+        .btn-block {
+            width: 100%;
+        }
+
+        .player-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 16px 0;
+            max-height: 260px;
+            overflow-y: auto;
+        }
+
+        .player-chip {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 14px;
+            border: 2px solid var(--black);
+            background: var(--yellow-light);
+            font-size: 13px;
+            font-weight: 700;
+            animation: fadeUp 0.2s ease both;
+        }
+
+        .player-chip .num {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 20px;
+            color: var(--green-dark);
+            margin-right: 10px;
+            min-width: 28px;
+        }
+
+        .player-chip .name {
+            flex: 1;
+        }
+
+        .player-chip .remove {
+            cursor: pointer;
+            font-size: 18px;
+            color: #FF5252;
+            font-weight: 700;
+            padding: 0 4px;
+            border: none;
+            background: none;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .add-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .add-row input {
+            flex: 1;
+        }
+
+        /* FORMAT SELECTOR */
+        .format-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 16px 0;
+        }
+
+        .format-option {
+            border: var(--border);
+            padding: 16px 12px;
+            text-align: center;
+            cursor: pointer;
+            background: var(--white);
+            transition: all 0.15s;
+            user-select: none;
+        }
+
+        .format-option:hover {
+            background: var(--yellow-light);
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0 var(--black);
+        }
+
+        .format-option.selected {
+            background: var(--green);
+            box-shadow: var(--shadow);
+            transform: translate(-2px, -2px);
+        }
+
+        .format-option .fmt-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 22px;
+            letter-spacing: 2px;
+        }
+
+        .format-option .fmt-desc {
+            font-size: 9px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            opacity: 0.6;
+            margin-top: 4px;
+        }
+
+        /* TIME PICKER */
+        .time-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 12px 0;
+        }
+
+        .time-pill {
+            border: 2px solid var(--black);
+            padding: 8px 16px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 18px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            background: var(--white);
+            transition: all 0.15s;
+            user-select: none;
+        }
+
+        .time-pill:hover {
+            background: var(--yellow-light);
+        }
+
+        .time-pill.selected {
+            background: var(--green);
+            box-shadow: 3px 3px 0 var(--black);
+        }
+
+        .custom-time {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-top: 8px;
+        }
+
+        .custom-time input {
+            width: 70px;
+            text-align: center;
+        }
+
+        .custom-time span {
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        /* SEPARATOR */
+        .sep {
+            height: 3px;
+            background: var(--black);
+            margin: 24px 0;
+        }
+
+        /* FIXTURES */
+        .round-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 28px;
+            letter-spacing: 2px;
+            color: var(--black);
+            margin-bottom: 12px;
+        }
+
+        .match-card {
+            border: var(--border);
+            margin-bottom: 10px;
+            overflow: hidden;
+            animation: fadeUp 0.25s ease both;
+        }
+
+        .match-header {
+            background: var(--black);
+            color: var(--green);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 14px;
+            letter-spacing: 3px;
+            padding: 6px 14px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .match-body {
+            display: flex;
+            align-items: stretch;
+        }
+
+        .match-player {
+            flex: 1;
+            padding: 14px;
+            font-size: 13px;
+            font-weight: 700;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--white);
+            transition: background 0.15s;
+        }
+
+        .match-vs {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 20px;
+            background: var(--yellow);
+            padding: 0 10px;
+            display: flex;
+            align-items: center;
+            border-left: 2px solid var(--black);
+            border-right: 2px solid var(--black);
+        }
+
+        .match-actions {
+            display: flex;
+            border-top: 2px solid var(--black);
+        }
+
+        .match-actions .btn {
+            flex: 1;
+            border: none;
+            border-radius: 0;
+            font-size: 12px;
+            padding: 10px;
+            letter-spacing: 2px;
+        }
+
+        .match-actions .btn+.btn {
+            border-left: 2px solid var(--black);
+        }
+
+        .match-card.completed .match-player.winner {
+            background: var(--green);
+        }
+
+        .match-card.completed .match-player.loser {
+            opacity: 0.4;
+        }
+
+        .bye-card {
+            border: 2px dashed rgba(0, 0, 0, 0.3);
+            padding: 12px 14px;
+            margin-bottom: 10px;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(0, 0, 0, 0.45);
+            text-align: center;
+            animation: fadeUp 0.25s ease both;
+        }
+
+        /* CHESS CLOCK */
+        .clock-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .clock-half {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s;
+            position: relative;
+        }
+
+        .clock-half.top {
+            transform: rotate(180deg);
+        }
+
+        .clock-half.inactive {
+            opacity: 0.35;
+        }
+
+        .clock-half.white-side {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        .clock-half.black-side {
+            background: var(--green-dark);
+            color: var(--white);
+        }
+
+        .clock-half.active-turn {
+            opacity: 1;
+        }
+
+        .clock-half.active-turn.white-side {
+            background: var(--yellow-light);
+        }
+
+        .clock-half.active-turn.black-side {
+            background: var(--green);
+            color: var(--black);
+        }
+
+        .clock-half.flagged {
+            background: #FF5252 !important;
+            color: var(--white) !important;
+            animation: pulse 0.8s infinite;
+        }
+
+        .clock-player-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 28px;
+            letter-spacing: 4px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .clock-time {
+            font-family: 'Space Mono', monospace;
+            font-size: 72px;
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: 2px;
+        }
+
+        .clock-moves {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-top: 8px;
+            opacity: 0.6;
+        }
+
+        .clock-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .clock-center-btn {
+            width: 56px;
+            height: 56px;
+            border: 3px solid var(--yellow);
+            background: var(--black);
+            color: var(--yellow);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 14px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .clock-center-btn:hover {
+            background: var(--yellow);
+            color: var(--black);
+        }
+
+        .clock-center-btn svg {
+            pointer-events: none;
+        }
+
+        .clock-divider {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--yellow);
+            transform: translateY(-50%);
+            z-index: 5;
+            box-shadow: 0 0 12px rgba(255, 230, 0, 0.4);
+        }
+
+        /* Winner screen */
+        .trophy {
+            font-size: 80px;
+            text-align: center;
+            margin: 20px 0;
+            animation: pop 0.6s ease;
+        }
+
+        .champion-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 52px;
+            text-align: center;
+            color: var(--green-dark);
+            letter-spacing: 4px;
+            line-height: 1.1;
+        }
+
+        /* Scroll */
+        .scroll-area {
+            max-height: 55vh;
+            overflow-y: auto;
+            margin: 12px 0;
+            padding-right: 4px;
+        }
+
+        .scroll-area::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .scroll-area::-webkit-scrollbar-track {
+            background: var(--gray);
+        }
+
+        .scroll-area::-webkit-scrollbar-thumb {
+            background: var(--black);
+        }
+
+        /* NAV */
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .back-btn {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 16px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            background: none;
+            border: 2px solid var(--black);
+            padding: 6px 14px;
+            transition: all 0.15s;
+        }
+
+        .back-btn:hover {
+            background: var(--yellow-light);
+        }
+
+        .badge {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 14px;
+            letter-spacing: 2px;
+            padding: 4px 12px;
+            background: var(--green);
+            border: 2px solid var(--black);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
+            }
+
+            .card {
+                padding: 24px 18px;
+            }
+
+            .screen-title {
+                font-size: 34px;
+            }
+
+            .clock-time {
+                font-size: 52px;
+            }
+
+            .clock-player-name {
+                font-size: 22px;
+            }
+
+            .clock-center-btn {
+                width: 46px;
+                height: 46px;
+            }
+        }
+
+        @media (max-height: 600px) and (orientation: landscape) {
+            .clock-time {
+                font-size: 48px;
+            }
+
+            .clock-player-name {
+                font-size: 18px;
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .increment-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-top: 8px;
+        }
+
+        .increment-row input {
+            width: 60px;
+            text-align: center;
+        }
+
+        .increment-row span {
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .bracket-round {
+            margin-bottom: 24px;
+        }
+
+        .round-badge {
+            display: inline-block;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 18px;
+            letter-spacing: 3px;
+            padding: 4px 14px;
+            background: var(--yellow);
+            border: 2px solid var(--black);
+            margin-bottom: 10px;
+        }
+
+        .round-badge.active {
+            background: var(--green);
+            box-shadow: 3px 3px 0 var(--black);
+        }
+
+        .match-card.current {
+            box-shadow: var(--shadow);
+            border-color: var(--green-dark);
+            border-width: 3px;
+        }
+
+        .draw-btn {
+            background: var(--yellow) !important;
+            color: var(--black) !important;
+        }
+
+        .flex-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .flex-row .btn {
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .home-link {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            z-index: 100;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-decoration: none;
+            color: var(--black);
+            border: 2px solid var(--black);
+            padding: 4px 12px;
+            background: var(--white);
+            transition: all 0.15s;
+        }
+
+        .home-link:hover {
+            background: var(--yellow);
+        }
+
+        body.clock-mode .home-link {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="index.html" class="home-link">← GAMES</a>
+    <div id="app"></div>
+
+    <script>
+        const $ = s => document.querySelector(s);
+        const APP = $('#app');
+        const LS_KEY = 'chess_arena_data';
+
+        /* ── STATE ── */
+        let state = loadState() || {
+            players: [],
+            format: null,       // 'knockout' | 'top2' | 'top4'
+            timeMinutes: 10,
+            incrementSec: 0,
+            rounds: [],
+            currentRound: 0,
+            currentMatch: 0,
+            phase: 'setup',     // setup | format | fixtures | clock | result | champion
+            clockState: null,
+            started: false
+        };
+
+        function saveState() {
+            const s = { ...state, clockState: null };
+            try { localStorage.setItem(LS_KEY, JSON.stringify(s)); } catch (e) { }
+        }
+
+        function loadState() {
+            try {
+                const d = localStorage.getItem(LS_KEY);
+                return d ? JSON.parse(d) : null;
+            } catch (e) { return null; }
+        }
+
+        function resetAll() {
+            localStorage.removeItem(LS_KEY);
+            state = {
+                players: [], format: null, timeMinutes: 10, incrementSec: 0,
+                rounds: [], currentRound: 0, currentMatch: 0,
+                phase: 'setup', clockState: null, started: false
+            };
+            render();
+        }
+
+        /* ── RENDER ROUTER ── */
+        function render() {
+            document.body.classList.remove('clock-mode');
+            switch (state.phase) {
+                case 'setup': renderSetup(); break;
+                case 'format': renderFormat(); break;
+                case 'fixtures': renderFixtures(); break;
+                case 'clock': renderClock(); break;
+                case 'result': renderResult(); break;
+                case 'champion': renderChampion(); break;
+                default: renderSetup();
+            }
+        }
+
+        /* ══════════════════════════════════
+           SCREEN 1: PLAYER SETUP
+        ══════════════════════════════════ */
+        function renderSetup() {
+            APP.innerHTML = `
+        <div class="card">
+          <div class="screen-title">♚ CHESS ARENA</div>
+          <div class="screen-sub">Tournament Fixture Generator</div>
+          <div class="sep"></div>
+          <label class="label">Add Players</label>
+          <div class="add-row">
+            <input type="text" id="nameInput" placeholder="Player name..." maxlength="24"
+              onkeydown="if(event.key==='Enter')addPlayer()">
+            <button class="btn btn-primary btn-small" onclick="addPlayer()">+ ADD</button>
+          </div>
+          <div class="player-list" id="playerList"></div>
+          <div style="margin-top:20px;">
+            <button class="btn btn-primary btn-block" onclick="goToFormat()"
+              id="nextBtn" ${state.players.length < 2 ? 'disabled style="opacity:0.4;pointer-events:none;"' : ''}>
+              NEXT → TOURNAMENT FORMAT
+            </button>
+          </div>
+          ${state.players.length > 0 ? `
+            <button class="btn btn-danger btn-small" style="margin-top:12px;" onclick="if(confirm('Clear all players?')){state.players=[];saveState();render();}">CLEAR ALL</button>
+          ` : ''}
+        </div>`;
+
+            const list = $('#playerList');
+            state.players.forEach((p, i) => {
+                const div = document.createElement('div');
+                div.className = 'player-chip';
+                div.style.animationDelay = `${i * 0.04}s`;
+                div.innerHTML = `
+          <span class="num">${String(i + 1).padStart(2, '0')}</span>
+          <span class="name">${esc(p)}</span>
+          <button class="remove" onclick="removePlayer(${i})">✕</button>`;
+                list.appendChild(div);
+            });
+
+            const inp = $('#nameInput');
+            if (inp) setTimeout(() => inp.focus(), 100);
+        }
+
+        function addPlayer() {
+            const inp = $('#nameInput');
+            const name = inp.value.trim();
+            if (!name) return;
+            if (state.players.length >= 32) return alert('Max 32 players');
+            if (state.players.some(p => p.toLowerCase() === name.toLowerCase())) return alert('Name already exists');
+            state.players.push(name);
+            saveState();
+            render();
+        }
+
+        function removePlayer(i) {
+            state.players.splice(i, 1);
+            saveState();
+            render();
+        }
+
+        function goToFormat() {
+            if (state.players.length < 2) return;
+            state.phase = 'format';
+            saveState();
+            render();
+        }
+
+        /* ══════════════════════════════════
+           SCREEN 2: FORMAT & TIME
+        ══════════════════════════════════ */
+        function renderFormat() {
+            const n = state.players.length;
+            const canTop4 = n >= 4;
+            const canTop2 = n >= 4;
+
+            APP.innerHTML = `
+        <div class="card">
+          <div class="top-nav">
+            <button class="back-btn" onclick="state.phase='setup';saveState();render();">← BACK</button>
+            <span class="badge">${n} PLAYERS</span>
+          </div>
+          <div class="screen-title">TOURNAMENT FORMAT</div>
+          <div class="screen-sub">Choose playoff structure</div>
+          <div class="sep"></div>
+
+          <label class="label">Format</label>
+          <div class="format-grid">
+            <div class="format-option ${state.format === 'knockout' ? 'selected' : ''}" onclick="pickFormat('knockout')">
+              <div class="fmt-title">ALL KNOCKOUT</div>
+              <div class="fmt-desc">Single elimination</div>
+            </div>
+            <div class="format-option ${state.format === 'top2' ? 'selected' : ''} ${!canTop2 ? 'hidden' : ''}" onclick="pickFormat('top2')">
+              <div class="fmt-title">TOP 2 PLAYOFF</div>
+              <div class="fmt-desc">Groups → Final</div>
+            </div>
+            <div class="format-option ${state.format === 'top4' ? 'selected' : ''} ${!canTop4 ? 'hidden' : ''}" onclick="pickFormat('top4')">
+              <div class="fmt-title">TOP 4 PLAYOFF</div>
+              <div class="fmt-desc">Groups → Semi → Final</div>
+            </div>
+            <div class="format-option ${state.format === 'roundrobin' ? 'selected' : ''}" onclick="pickFormat('roundrobin')">
+              <div class="fmt-title">ROUND ROBIN</div>
+              <div class="fmt-desc">Everyone plays everyone</div>
+            </div>
+          </div>
+
+          <div class="sep"></div>
+          <label class="label">Time Control (per player)</label>
+          <div class="time-options" id="timeOptions"></div>
+          <div class="custom-time">
+            <span>Custom:</span>
+            <input type="number" id="customMin" min="1" max="180" value="${state.timeMinutes}" 
+              onchange="pickCustomTime()">
+            <span>Min</span>
+          </div>
+
+          <div class="increment-row">
+            <span>Increment:</span>
+            <input type="number" id="incSec" min="0" max="60" value="${state.incrementSec}"
+              onchange="state.incrementSec=parseInt(this.value)||0;saveState();">
+            <span>Sec</span>
+          </div>
+
+          <div class="sep"></div>
+          <button class="btn btn-primary btn-block" onclick="generateFixtures()"
+            ${!state.format ? 'disabled style="opacity:0.4;pointer-events:none;"' : ''}>
+            GENERATE FIXTURES →
+          </button>
+        </div>`;
+
+            const times = [1, 3, 5, 10, 15, 30];
+            const container = $('#timeOptions');
+            times.forEach(t => {
+                const pill = document.createElement('div');
+                pill.className = `time-pill ${state.timeMinutes === t ? 'selected' : ''}`;
+                pill.textContent = `${t} MIN`;
+                pill.onclick = () => { state.timeMinutes = t; saveState(); render(); };
+                container.appendChild(pill);
+            });
+        }
+
+        function pickFormat(f) {
+            state.format = f;
+            saveState();
+            render();
+        }
+
+        function pickCustomTime() {
+            const v = parseInt($('#customMin').value) || 10;
+            state.timeMinutes = Math.max(1, Math.min(180, v));
+            saveState();
+            render();
+        }
+
+        /* ══════════════════════════════════
+           FIXTURE GENERATION
+        ══════════════════════════════════ */
+        function shuffle(arr) {
+            const a = [...arr];
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+
+        function generateFixtures() {
+            if (!state.format) return;
+            const players = shuffle([...state.players]);
+
+            if (state.format === 'knockout') {
+                state.rounds = buildKnockoutRounds(players);
+            } else if (state.format === 'top2') {
+                state.rounds = buildKnockoutRounds(players);
+                state.rounds.meta = 'top2';
+            } else if (state.format === 'top4') {
+                state.rounds = buildKnockoutRounds(players);
+                state.rounds.meta = 'top4';
+            } else if (state.format === 'roundrobin') {
+                state.rounds = buildRoundRobin(players);
+            }
+
+            state.currentRound = 0;
+            state.currentMatch = 0;
+            state.phase = 'fixtures';
+            state.started = true;
+            saveState();
+            render();
+        }
+
+        function buildKnockoutRounds(players) {
+            // Pad to power of 2
+            const n = players.length;
+            let size = 1;
+            while (size < n) size *= 2;
+
+            const padded = [...players];
+            while (padded.length < size) padded.push(null); // byes
+
+            const rounds = [];
+            const matches = [];
+            for (let i = 0; i < padded.length; i += 2) {
+                matches.push({
+                    p1: padded[i],
+                    p2: padded[i + 1],
+                    winner: padded[i + 1] === null ? padded[i] : null,
+                    isBye: padded[i + 1] === null
+                });
+            }
+
+            const roundNames = getRoundNames(Math.log2(size));
+            rounds.push({ name: roundNames[0], matches });
+
+            // Pre-create empty rounds
+            let mCount = matches.length;
+            for (let r = 1; mCount > 1; r++) {
+                mCount = Math.floor(mCount / 2);
+                const rm = [];
+                for (let i = 0; i < mCount; i++) {
+                    rm.push({ p1: null, p2: null, winner: null, isBye: false });
+                }
+                rounds.push({ name: roundNames[r] || `ROUND ${r + 1}`, matches: rm });
+            }
+
+            return rounds;
+        }
+
+        function getRoundNames(totalRounds) {
+            const names = [];
+            for (let i = 0; i < totalRounds; i++) {
+                const remaining = totalRounds - i;
+                if (remaining === 1) names.push('FINAL');
+                else if (remaining === 2) names.push('SEMI-FINALS');
+                else if (remaining === 3) names.push('QUARTER-FINALS');
+                else names.push(`ROUND ${i + 1}`);
+            }
+            return names;
+        }
+
+        function buildRoundRobin(players) {
+            const rounds = [];
+            const n = players.length;
+            const list = [...players];
+            if (n % 2 !== 0) list.push(null); // bye player
+            const numRounds = list.length - 1;
+            const half = list.length / 2;
+
+            for (let r = 0; r < numRounds; r++) {
+                const matches = [];
+                for (let i = 0; i < half; i++) {
+                    const p1 = list[i];
+                    const p2 = list[list.length - 1 - i];
+                    if (p1 === null || p2 === null) {
+                        if (p1) matches.push({ p1, p2: null, winner: p1, isBye: true });
+                        else if (p2) matches.push({ p1: p2, p2: null, winner: p2, isBye: true });
+                    } else {
+                        matches.push({ p1, p2, winner: null, isBye: false });
+                    }
+                }
+                rounds.push({ name: `ROUND ${r + 1}`, matches });
+                // Rotate: fix first, rotate rest
+                list.splice(1, 0, list.pop());
+            }
+            return rounds;
+        }
+
+        /* ══════════════════════════════════
+           SCREEN 3: FIXTURES VIEW
+        ══════════════════════════════════ */
+        function renderFixtures() {
+            const isRR = state.format === 'roundrobin';
+            const allDone = state.rounds.every(r => r.matches.every(m => m.winner));
+
+            APP.innerHTML = `
+        <div class="card">
+          <div class="top-nav">
+            <button class="back-btn" onclick="confirmBack()">← RESET</button>
+            <span class="badge">${state.format === 'roundrobin' ? 'ROUND ROBIN' : state.format.toUpperCase()}</span>
+          </div>
+          <div class="screen-title">FIXTURES</div>
+          <div class="screen-sub">${state.timeMinutes}+${state.incrementSec} · ${state.players.length} Players</div>
+          <div class="sep"></div>
+          <div class="scroll-area" id="fixtureArea"></div>
+          ${allDone && isRR ? `
+            <div class="sep"></div>
+            <button class="btn btn-primary btn-block" onclick="showRRStandings()">VIEW STANDINGS →</button>
+          ` : ''}
+          ${allDone && !isRR ? `
+            <div class="sep"></div>
+            <div style="text-align:center;">
+              <button class="btn btn-primary btn-block" onclick="crownChampion()">VIEW CHAMPION →</button>
+            </div>
+          ` : ''}
+        </div>`;
+
+            const area = $('#fixtureArea');
+            state.rounds.forEach((round, ri) => {
+                const div = document.createElement('div');
+                div.className = 'bracket-round';
+                const isActiveRound = isCurrentRound(ri);
+                div.innerHTML = `<div class="round-badge ${isActiveRound ? 'active' : ''}">${round.name}</div>`;
+
+                round.matches.forEach((m, mi) => {
+                    if (m.isBye) {
+                        const bye = document.createElement('div');
+                        bye.className = 'bye-card';
+                        bye.textContent = `${m.p1 || '?'} — BYE (advances)`;
+                        div.appendChild(bye);
+                        return;
+                    }
+
+                    const isCurrent = isActiveRound && !m.winner && isNextMatch(ri, mi);
+                    const mc = document.createElement('div');
+                    mc.className = `match-card ${m.winner ? 'completed' : ''} ${isCurrent ? 'current' : ''}`;
+
+                    let p1Class = m.winner === m.p1 ? 'winner' : (m.winner ? 'loser' : '');
+                    let p2Class = m.winner === m.p2 ? 'winner' : (m.winner ? 'loser' : '');
+
+                    mc.innerHTML = `
+            <div class="match-header">
+              <span>MATCH ${mi + 1}</span>
+              <span>${m.winner ? '✓ DONE' : (isCurrent ? '● NEXT' : '—')}</span>
+            </div>
+            <div class="match-body">
+              <div class="match-player ${p1Class}">${m.p1 ? esc(m.p1) : 'TBD'}</div>
+              <div class="match-vs">VS</div>
+              <div class="match-player ${p2Class}">${m.p2 ? esc(m.p2) : 'TBD'}</div>
+            </div>
+            ${isCurrent && m.p1 && m.p2 ? `
+              <div class="match-actions">
+                <button class="btn btn-primary" onclick="startMatch(${ri},${mi})">⏱ START CLOCK</button>
+                <button class="btn btn-secondary" onclick="quickResult(${ri},${mi},'p1')">${esc(m.p1)} WINS</button>
+                <button class="btn draw-btn" onclick="quickResult(${ri},${mi},'draw')">DRAW</button>
+                <button class="btn btn-secondary" onclick="quickResult(${ri},${mi},'p2')">${esc(m.p2)} WINS</button>
+              </div>
+            ` : ''}`;
+                    div.appendChild(mc);
+                });
+
+                area.appendChild(div);
+            });
+        }
+
+        function isCurrentRound(ri) {
+            // A round is active if it has incomplete matches and all prior rounds are complete
+            for (let r = 0; r < ri; r++) {
+                if (state.rounds[r].matches.some(m => !m.winner && !m.isBye)) return false;
+            }
+            return state.rounds[ri].matches.some(m => !m.winner && !m.isBye);
+        }
+
+        function isNextMatch(ri, mi) {
+            // First incomplete non-bye match in the round
+            for (let i = 0; i < state.rounds[ri].matches.length; i++) {
+                const m = state.rounds[ri].matches[i];
+                if (!m.winner && !m.isBye) return i === mi;
+            }
+            return false;
+        }
+
+        function confirmBack() {
+            if (confirm('Reset tournament? All progress will be lost.')) {
+                resetAll();
+            }
+        }
+
+        function startMatch(ri, mi) {
+            state.currentRound = ri;
+            state.currentMatch = mi;
+            state.phase = 'clock';
+            saveState();
+            render();
+        }
+
+        function quickResult(ri, mi, result) {
+            const m = state.rounds[ri].matches[mi];
+            if (result === 'p1') m.winner = m.p1;
+            else if (result === 'p2') m.winner = m.p2;
+            else m.winner = 'DRAW';
+            advanceTournament(ri, mi);
+            saveState();
+            render();
+        }
+
+        function advanceTournament(ri, mi) {
+            if (state.format === 'roundrobin') return;
+
+            // For knockout: fill next round
+            const match = state.rounds[ri].matches[mi];
+            if (!match.winner || match.winner === 'DRAW') return;
+
+            if (ri + 1 < state.rounds.length) {
+                const nextMatchIdx = Math.floor(mi / 2);
+                const nextMatch = state.rounds[ri + 1].matches[nextMatchIdx];
+                if (mi % 2 === 0) {
+                    nextMatch.p1 = match.winner;
+                } else {
+                    nextMatch.p2 = match.winner;
+                }
+                // Auto-advance if opponent is already set from bye
+                if (nextMatch.p1 && !nextMatch.p2 && allMatchesFedTo(ri, nextMatchIdx)) {
+                    // Check if other feeder was a bye already resolved
+                }
+            }
+        }
+
+        function allMatchesFedTo(roundIdx, nextMatchIdx) {
+            const m1 = state.rounds[roundIdx].matches[nextMatchIdx * 2];
+            const m2 = state.rounds[roundIdx].matches[nextMatchIdx * 2 + 1];
+            return m1 && m1.winner && m2 && m2.winner;
+        }
+
+        function crownChampion() {
+            const finalRound = state.rounds[state.rounds.length - 1];
+            const finalMatch = finalRound.matches[0];
+            if (finalMatch.winner && finalMatch.winner !== 'DRAW') {
+                state.phase = 'champion';
+                saveState();
+                render();
+            }
+        }
+
+        function showRRStandings() {
+            // Calculate standings
+            const scores = {};
+            state.players.forEach(p => { scores[p] = { w: 0, d: 0, l: 0, pts: 0 }; });
+            state.rounds.forEach(r => {
+                r.matches.forEach(m => {
+                    if (m.isBye || !m.winner) return;
+                    if (m.winner === 'DRAW') {
+                        if (m.p1 && scores[m.p1]) { scores[m.p1].d++; scores[m.p1].pts += 0.5; }
+                        if (m.p2 && scores[m.p2]) { scores[m.p2].d++; scores[m.p2].pts += 0.5; }
+                    } else {
+                        const loser = m.winner === m.p1 ? m.p2 : m.p1;
+                        if (scores[m.winner]) { scores[m.winner].w++; scores[m.winner].pts += 1; }
+                        if (loser && scores[loser]) { scores[loser].l++; }
+                    }
+                });
+            });
+
+            const sorted = Object.entries(scores).sort((a, b) => b[1].pts - a[1].pts);
+            state.phase = 'champion';
+            state._rrStandings = sorted;
+            saveState();
+            render();
+        }
+
+        /* ══════════════════════════════════
+           SCREEN 4: CHESS CLOCK (DGT)
+        ══════════════════════════════════ */
+        let clockInterval = null;
+        let clockData = null;
+
+        function renderClock() {
+            document.body.classList.add('clock-mode');
+            const m = state.rounds[state.currentRound].matches[state.currentMatch];
+
+            if (!clockData) {
+                const totalSec = state.timeMinutes * 60;
+                clockData = {
+                    p1: m.p1,
+                    p2: m.p2,
+                    time1: totalSec * 1000,
+                    time2: totalSec * 1000,
+                    turn: null,    // null = not started, 1 = p1 thinking, 2 = p2 thinking
+                    running: false,
+                    moves1: 0,
+                    moves2: 0,
+                    flagged: null,
+                    increment: state.incrementSec * 1000
+                };
+            }
+
+            APP.innerHTML = `
+        <div class="card">
+          <div class="clock-container">
+            <div class="clock-half top black-side ${clockData.turn === 2 ? 'active-turn' : 'inactive'} ${clockData.flagged === 2 ? 'flagged' : ''}"
+                 id="topHalf" onclick="clockTap(2)">
+              <div class="clock-player-name">${esc(clockData.p2)}</div>
+              <div class="clock-time" id="time2">${formatTime(clockData.time2)}</div>
+              <div class="clock-moves">${clockData.moves2} MOVES</div>
+            </div>
+            <div class="clock-divider"></div>
+            <div class="clock-center">
+              <button class="clock-center-btn" id="pauseBtn" onclick="togglePause()" title="Pause/Resume">
+                ${clockData.running ? pauseIcon() : playIcon()}
+              </button>
+              <button class="clock-center-btn" onclick="endClockMatch()" title="End Match">
+                ${stopIcon()}
+              </button>
+            </div>
+            <div class="clock-half bottom white-side ${clockData.turn === 1 ? 'active-turn' : 'inactive'} ${clockData.flagged === 1 ? 'flagged' : ''}"
+                 id="bottomHalf" onclick="clockTap(1)">
+              <div class="clock-player-name">${esc(clockData.p1)}</div>
+              <div class="clock-time" id="time1">${formatTime(clockData.time1)}</div>
+              <div class="clock-moves">${clockData.moves1} MOVES</div>
+            </div>
+          </div>
+        </div>`;
+        }
+
+        function clockTap(player) {
+            if (clockData.flagged) return;
+
+            if (clockData.turn === null) {
+                // First tap starts the clock — tapped side means "I moved", other side's clock starts
+                clockData.turn = player === 1 ? 2 : 1;
+                clockData.running = true;
+                if (player === 1) clockData.moves1++;
+                else clockData.moves2++;
+                startClockInterval();
+                render();
+                return;
+            }
+
+            if (!clockData.running) return;
+            if (clockData.turn !== player) return; // can only tap your own side when it's your turn
+
+            // Add increment
+            if (clockData.increment > 0) {
+                if (player === 1) clockData.time1 += clockData.increment;
+                else clockData.time2 += clockData.increment;
+            }
+
+            // Switch turns
+            if (player === 1) { clockData.moves1++; clockData.turn = 2; }
+            else { clockData.moves2++; clockData.turn = 1; }
+
+            render();
+        }
+
+        function startClockInterval() {
+            if (clockInterval) clearInterval(clockInterval);
+            let lastTick = performance.now();
+            clockInterval = setInterval(() => {
+                if (!clockData || !clockData.running || clockData.flagged) return;
+                const now = performance.now();
+                const delta = now - lastTick;
+                lastTick = now;
+
+                if (clockData.turn === 1) {
+                    clockData.time1 -= delta;
+                    if (clockData.time1 <= 0) {
+                        clockData.time1 = 0;
+                        clockData.flagged = 1;
+                        clockData.running = false;
+                        clearInterval(clockInterval);
+                        render();
+                        return;
+                    }
+                    const el = $('#time1');
+                    if (el) el.textContent = formatTime(clockData.time1);
+                } else if (clockData.turn === 2) {
+                    clockData.time2 -= delta;
+                    if (clockData.time2 <= 0) {
+                        clockData.time2 = 0;
+                        clockData.flagged = 2;
+                        clockData.running = false;
+                        clearInterval(clockInterval);
+                        render();
+                        return;
+                    }
+                    const el = $('#time2');
+                    if (el) el.textContent = formatTime(clockData.time2);
+                }
+            }, 50);
+        }
+
+        function togglePause() {
+            if (clockData.flagged) return;
+            if (clockData.turn === null) return;
+            clockData.running = !clockData.running;
+            if (clockData.running) startClockInterval();
+            else clearInterval(clockInterval);
+            render();
+        }
+
+        function endClockMatch() {
+            clearInterval(clockInterval);
+            clockInterval = null;
+            const m = state.rounds[state.currentRound].matches[state.currentMatch];
+
+            // Go to result selection
+            state.phase = 'result';
+            saveState();
+            render();
+        }
+
+        function formatTime(ms) {
+            if (ms <= 0) return '0:00.0';
+            const totalSec = Math.floor(ms / 1000);
+            const tenths = Math.floor((ms % 1000) / 100);
+            const mins = Math.floor(totalSec / 60);
+            const secs = totalSec % 60;
+            if (mins < 1) {
+                return `0:${String(secs).padStart(2, '0')}.${tenths}`;
+            }
+            return `${mins}:${String(secs).padStart(2, '0')}`;
+        }
+
+        function playIcon() {
+            return `<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>`;
+        }
+        function pauseIcon() {
+            return `<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>`;
+        }
+        function stopIcon() {
+            return `<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>`;
+        }
+
+        /* ══════════════════════════════════
+           SCREEN 5: RESULT SELECTION
+        ══════════════════════════════════ */
+        function renderResult() {
+            const m = state.rounds[state.currentRound].matches[state.currentMatch];
+            const flagged = clockData ? clockData.flagged : null;
+
+            APP.innerHTML = `
+        <div class="card">
+          <div class="screen-title">MATCH RESULT</div>
+          <div class="screen-sub">${esc(m.p1)} vs ${esc(m.p2)}</div>
+          ${flagged ? `<div style="margin-top:12px;padding:10px;border:2px solid #FF5252;background:#FFF3F3;font-size:12px;letter-spacing:1px;text-transform:uppercase;text-align:center;">
+            ⏰ ${flagged === 1 ? esc(m.p1) : esc(m.p2)} flagged (time out)
+          </div>` : ''}
+          ${clockData ? `<div style="margin:12px 0;display:flex;gap:10px;justify-content:center;">
+            <div style="text-align:center;padding:12px 20px;border:2px solid var(--black);background:var(--white);">
+              <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;opacity:0.5;">${esc(m.p1)}</div>
+              <div style="font-family:'Bebas Neue';font-size:28px;">${formatTime(clockData.time1)}</div>
+              <div style="font-size:10px;opacity:0.5;">${clockData.moves1} moves</div>
+            </div>
+            <div style="text-align:center;padding:12px 20px;border:2px solid var(--black);background:var(--white);">
+              <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;opacity:0.5;">${esc(m.p2)}</div>
+              <div style="font-family:'Bebas Neue';font-size:28px;">${formatTime(clockData.time2)}</div>
+              <div style="font-size:10px;opacity:0.5;">${clockData.moves2} moves</div>
+            </div>
+          </div>` : ''}
+          <div class="sep"></div>
+          <label class="label">Who Won?</label>
+          <div style="display:flex;flex-direction:column;gap:10px;margin-top:12px;">
+            <button class="btn btn-primary btn-block" onclick="confirmResult('p1')">
+              ♚ ${esc(m.p1)} WINS
+            </button>
+            ${state.format === 'roundrobin' ? `
+              <button class="btn btn-secondary btn-block" onclick="confirmResult('draw')">
+                ½ DRAW
+              </button>
+            ` : ''}
+            <button class="btn btn-primary btn-block" onclick="confirmResult('p2')">
+              ♚ ${esc(m.p2)} WINS
+            </button>
+          </div>
+        </div>`;
+        }
+
+        function confirmResult(result) {
+            const ri = state.currentRound;
+            const mi = state.currentMatch;
+            const m = state.rounds[ri].matches[mi];
+
+            if (result === 'p1') m.winner = m.p1;
+            else if (result === 'p2') m.winner = m.p2;
+            else m.winner = 'DRAW';
+
+            advanceTournament(ri, mi);
+            clockData = null;
+            state.phase = 'fixtures';
+            saveState();
+            render();
+        }
+
+        /* ══════════════════════════════════
+           SCREEN 6: CHAMPION
+        ══════════════════════════════════ */
+        function renderChampion() {
+            if (state.format === 'roundrobin' && state._rrStandings) {
+                renderRRStandings();
+                return;
+            }
+
+            const finalRound = state.rounds[state.rounds.length - 1];
+            const champ = finalRound.matches[0].winner;
+
+            APP.innerHTML = `
+        <div class="card" style="text-align:center;">
+          <div class="trophy">🏆</div>
+          <div class="screen-sub">TOURNAMENT CHAMPION</div>
+          <div class="champion-name">${esc(champ)}</div>
+          <div class="sep"></div>
+          <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;opacity:0.5;margin-bottom:20px;">
+            ${state.format.toUpperCase()} · ${state.timeMinutes}+${state.incrementSec} · ${state.players.length} PLAYERS
+          </div>
+          <div class="flex-row">
+            <button class="btn btn-secondary" onclick="state.phase='fixtures';saveState();render();">VIEW BRACKET</button>
+            <button class="btn btn-primary" onclick="resetAll()">NEW TOURNAMENT</button>
+          </div>
+        </div>`;
+        }
+
+        function renderRRStandings() {
+            const standings = state._rrStandings;
+            const champ = standings[0];
+
+            APP.innerHTML = `
+        <div class="card">
+          <div class="trophy" style="text-align:center;">🏆</div>
+          <div class="screen-title" style="text-align:center;">STANDINGS</div>
+          <div class="champion-name" style="font-size:36px;">${esc(champ[0])}</div>
+          <div class="sep"></div>
+          <div class="scroll-area">
+            <table style="width:100%;border-collapse:collapse;font-size:12px;">
+              <thead>
+                <tr style="border-bottom:2px solid var(--black);text-align:left;">
+                  <th style="padding:8px 6px;font-size:10px;letter-spacing:2px;">#</th>
+                  <th style="padding:8px 6px;font-size:10px;letter-spacing:2px;">PLAYER</th>
+                  <th style="padding:8px 6px;font-size:10px;letter-spacing:2px;">W</th>
+                  <th style="padding:8px 6px;font-size:10px;letter-spacing:2px;">D</th>
+                  <th style="padding:8px 6px;font-size:10px;letter-spacing:2px;">L</th>
+                  <th style="padding:8px 6px;font-size:10px;letter-spacing:2px;">PTS</th>
+                </tr>
+              </thead>
+              <tbody id="standingsBody"></tbody>
+            </table>
+          </div>
+          <div class="sep"></div>
+          <div class="flex-row">
+            <button class="btn btn-secondary" onclick="state.phase='fixtures';state._rrStandings=null;saveState();render();">VIEW FIXTURES</button>
+            <button class="btn btn-primary" onclick="resetAll()">NEW TOURNAMENT</button>
+          </div>
+        </div>`;
+
+            const tbody = $('#standingsBody');
+            standings.forEach(([name, s], i) => {
+                const tr = document.createElement('tr');
+                tr.style.borderBottom = '1px solid var(--gray)';
+                if (i === 0) tr.style.background = 'var(--green-light)';
+                else if (i < 3) tr.style.background = 'var(--yellow-light)';
+                tr.innerHTML = `
+          <td style="padding:10px 6px;font-family:'Bebas Neue';font-size:18px;">${i + 1}</td>
+          <td style="padding:10px 6px;font-weight:700;">${esc(name)}</td>
+          <td style="padding:10px 6px;">${s.w}</td>
+          <td style="padding:10px 6px;">${s.d}</td>
+          <td style="padding:10px 6px;">${s.l}</td>
+          <td style="padding:10px 6px;font-weight:700;font-family:'Bebas Neue';font-size:18px;">${s.pts}</td>`;
+                tbody.appendChild(tr);
+            });
+        }
+
+        /* ── UTILITY ── */
+        function esc(s) {
+            if (!s) return '';
+            const d = document.createElement('div');
+            d.textContent = s;
+            return d.innerHTML;
+        }
+
+        /* ── INIT ── */
+        // Handle page visibility to keep clock accurate
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden && clockData && clockData.running) {
+                // pause clock when tab hidden
+            }
+        });
+
+        // Prevent sleep during clock
+        let wakeLock = null;
+        async function requestWakeLock() {
+            try {
+                if ('wakeLock' in navigator) {
+                    wakeLock = await navigator.wakeLock.request('screen');
+                }
+            } catch (e) { }
+        }
+
+        // Keyboard shortcut: space to toggle pause
+        document.addEventListener('keydown', (e) => {
+            if (state.phase === 'clock' && e.code === 'Space') {
+                e.preventDefault();
+                togglePause();
+            }
+        });
+
+        // Handle beforeunload if clock running
+        window.addEventListener('beforeunload', (e) => {
+            if (clockData && clockData.running) {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        });
+
+        // Request fullscreen for clock mode
+        function tryFullscreen() {
+            try {
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen();
+                }
+            } catch (e) { }
+        }
+
+        // Boot
+        render();
+        if (state.phase === 'clock') {
+            // Recovering from reload during clock — go back to fixtures
+            clockData = null;
+            state.phase = 'fixtures';
+            saveState();
+            render();
+        }
+    </script>
+</body>
+
+</html>
