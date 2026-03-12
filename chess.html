@@ -77,34 +77,75 @@
         }
 
         @keyframes slideIn {
-            from { opacity: 0; transform: translateY(20px) scale(0.97); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @keyframes pop {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.6;
+            }
         }
 
         @keyframes modalIn {
-            from { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
-            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
         }
 
         @keyframes overlayIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         .screen-title {
@@ -670,9 +711,17 @@
             padding-right: 4px;
         }
 
-        .scroll-area::-webkit-scrollbar { width: 6px; }
-        .scroll-area::-webkit-scrollbar-track { background: var(--gray); }
-        .scroll-area::-webkit-scrollbar-thumb { background: var(--black); }
+        .scroll-area::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .scroll-area::-webkit-scrollbar-track {
+            background: var(--gray);
+        }
+
+        .scroll-area::-webkit-scrollbar-thumb {
+            background: var(--black);
+        }
 
         .top-nav {
             display: flex;
@@ -692,7 +741,9 @@
             transition: all 0.15s;
         }
 
-        .back-btn:hover { background: var(--yellow-light); }
+        .back-btn:hover {
+            background: var(--yellow-light);
+        }
 
         .badge {
             font-family: 'Bebas Neue', sans-serif;
@@ -710,7 +761,10 @@
             margin-top: 8px;
         }
 
-        .increment-row input { width: 60px; text-align: center; }
+        .increment-row input {
+            width: 60px;
+            text-align: center;
+        }
 
         .increment-row span {
             font-size: 10px;
@@ -719,7 +773,9 @@
             font-weight: 700;
         }
 
-        .bracket-round { margin-bottom: 24px; }
+        .bracket-round {
+            margin-bottom: 24px;
+        }
 
         .round-badge {
             display: inline-block;
@@ -754,7 +810,10 @@
             flex-wrap: wrap;
         }
 
-        .flex-row .btn { flex: 1; min-width: 120px; }
+        .flex-row .btn {
+            flex: 1;
+            min-width: 120px;
+        }
 
         .home-link {
             position: fixed;
@@ -772,13 +831,21 @@
             transition: all 0.15s;
         }
 
-        .home-link:hover { background: var(--yellow); }
-        body.clock-mode .home-link { display: none; }
+        .home-link:hover {
+            background: var(--yellow);
+        }
+
+        body.clock-mode .home-link {
+            display: none;
+        }
 
         /* CUSTOM MODAL */
         .modal-overlay {
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             background: rgba(10, 10, 10, 0.65);
             z-index: 9000;
             animation: overlayIn 0.2s ease;
@@ -815,7 +882,7 @@
         .modal-msg {
             font-size: 12px;
             line-height: 1.6;
-            color: rgba(0,0,0,0.65);
+            color: rgba(0, 0, 0, 0.65);
             margin-bottom: 20px;
         }
 
@@ -824,9 +891,13 @@
             gap: 10px;
         }
 
-        .modal-btns .btn { flex: 1; }
+        .modal-btns .btn {
+            flex: 1;
+        }
 
-        .hidden { display: none !important; }
+        .hidden {
+            display: none !important;
+        }
 
         /* STAGE TABS */
         .stage-tabs {
@@ -850,7 +921,7 @@
             user-select: none;
         }
 
-        .stage-tab + .stage-tab {
+        .stage-tab+.stage-tab {
             border-left: 2px solid var(--black);
         }
 
@@ -865,20 +936,53 @@
 
         /* Responsive */
         @media (max-width: 480px) {
-            body { padding: 12px; }
-            .card { padding: 24px 18px; }
-            .screen-title { font-size: 34px; }
-            .clock-time { font-size: 52px; }
-            .clock-player-name { font-size: 22px; }
-            .clock-center-btn { width: 46px; height: 46px; }
-            .pts-table { font-size: 10px; }
-            .pts-table th { font-size: 8px; padding: 6px 3px; }
-            .pts-table td { padding: 6px 3px; }
+            body {
+                padding: 12px;
+            }
+
+            .card {
+                padding: 24px 18px;
+            }
+
+            .screen-title {
+                font-size: 34px;
+            }
+
+            .clock-time {
+                font-size: 52px;
+            }
+
+            .clock-player-name {
+                font-size: 22px;
+            }
+
+            .clock-center-btn {
+                width: 46px;
+                height: 46px;
+            }
+
+            .pts-table {
+                font-size: 10px;
+            }
+
+            .pts-table th {
+                font-size: 8px;
+                padding: 6px 3px;
+            }
+
+            .pts-table td {
+                padding: 6px 3px;
+            }
         }
 
         @media (max-height: 600px) and (orientation: landscape) {
-            .clock-time { font-size: 48px; }
-            .clock-player-name { font-size: 18px; }
+            .clock-time {
+                font-size: 48px;
+            }
+
+            .clock-player-name {
+                font-size: 18px;
+            }
         }
     </style>
 </head>
@@ -889,17 +993,17 @@
     <div id="modalRoot"></div>
 
     <script>
-    const $ = s => document.querySelector(s);
-    const APP = $('#app');
-    const LS_TOURNEY = 'chess_arena_data';
-    const LS_NAMES = 'chess_arena_players';
+        const $ = s => document.querySelector(s);
+        const APP = $('#app');
+        const LS_TOURNEY = 'chess_arena_data';
+        const LS_NAMES = 'chess_arena_players';
 
-    /* ════════════════════════════════
-       MODAL SYSTEM
-    ════════════════════════════════ */
-    function showModal({ icon, title, message, buttons }) {
-        const root = $('#modalRoot');
-        root.innerHTML = `
+        /* ════════════════════════════════
+           MODAL SYSTEM
+        ════════════════════════════════ */
+        function showModal({ icon, title, message, buttons }) {
+            const root = $('#modalRoot');
+            root.innerHTML = `
             <div class="modal-overlay" onclick="closeModal()"></div>
             <div class="modal-box">
                 ${icon ? `<div class="modal-icon">${icon}</div>` : ''}
@@ -907,126 +1011,126 @@
                 <div class="modal-msg">${message}</div>
                 <div class="modal-btns" id="modalBtns"></div>
             </div>`;
-        const btnContainer = $('#modalBtns');
-        buttons.forEach((b, i) => {
-            const btn = document.createElement('button');
-            btn.className = `btn ${b.cls || 'btn-secondary'} btn-small`;
-            btn.textContent = b.label;
-            btn.onclick = () => { closeModal(); if (b.action) b.action(); };
-            btnContainer.appendChild(btn);
-        });
-    }
-
-    function closeModal() {
-        $('#modalRoot').innerHTML = '';
-    }
-
-    function confirmDialog(title, message, icon, onConfirm) {
-        showModal({
-            icon,
-            title,
-            message,
-            buttons: [
-                { label: 'CANCEL', cls: 'btn-secondary' },
-                { label: 'CONFIRM', cls: 'btn-danger', action: onConfirm }
-            ]
-        });
-    }
-
-    function alertDialog(title, message, icon) {
-        showModal({
-            icon: icon || '⚠️',
-            title,
-            message,
-            buttons: [{ label: 'OK', cls: 'btn-primary' }]
-        });
-    }
-
-    /* ════════════════════════════════
-       STATE
-    ════════════════════════════════ */
-    function loadNames() {
-        try {
-            const d = localStorage.getItem(LS_NAMES);
-            return d ? JSON.parse(d) : [];
-        } catch (e) { return []; }
-    }
-
-    function saveNames(names) {
-        try { localStorage.setItem(LS_NAMES, JSON.stringify(names)); } catch (e) {}
-    }
-
-    function loadTourney() {
-        try {
-            const d = localStorage.getItem(LS_TOURNEY);
-            return d ? JSON.parse(d) : null;
-        } catch (e) { return null; }
-    }
-
-    function saveTourney() {
-        const s = { ...state, clockState: null };
-        try { localStorage.setItem(LS_TOURNEY, JSON.stringify(s)); } catch (e) {}
-    }
-
-    let savedNames = loadNames();
-
-    let state = loadTourney() || makeDefaultState();
-
-    function makeDefaultState() {
-        return {
-            players: savedNames.length > 0 ? [...savedNames] : [],
-            format: null,
-            timeMinutes: 10,
-            incrementSec: 0,
-            groupRounds: [],
-            playoffRounds: [],
-            scores: {},
-            viewTab: 'group',
-            currentStage: 'group',
-            currentRound: 0,
-            currentMatch: 0,
-            phase: 'setup',
-            started: false
-        };
-    }
-
-    function resetTourney() {
-        localStorage.removeItem(LS_TOURNEY);
-        state = makeDefaultState();
-        // Keep player names from persistent storage
-        state.players = loadNames();
-        render();
-    }
-
-    function clearAllPlayers() {
-        state.players = [];
-        saveNames([]);
-        saveTourney();
-        render();
-    }
-
-    /* ════════════════════════════════
-       RENDER ROUTER
-    ════════════════════════════════ */
-    function render() {
-        document.body.classList.remove('clock-mode');
-        switch (state.phase) {
-            case 'setup': renderSetup(); break;
-            case 'format': renderFormat(); break;
-            case 'fixtures': renderFixtures(); break;
-            case 'standings': renderStandings(); break;
-            case 'clock': renderClock(); break;
-            case 'result': renderResult(); break;
-            case 'champion': renderChampion(); break;
-            default: renderSetup();
+            const btnContainer = $('#modalBtns');
+            buttons.forEach((b, i) => {
+                const btn = document.createElement('button');
+                btn.className = `btn ${b.cls || 'btn-secondary'} btn-small`;
+                btn.textContent = b.label;
+                btn.onclick = () => { closeModal(); if (b.action) b.action(); };
+                btnContainer.appendChild(btn);
+            });
         }
-    }
 
-    /* ════════════════════════════════
-       SCREEN 1: PLAYER SETUP
-    ════════════════════════════════ */
-    function renderSetup() {
-        APP.innerHTML = `
+        function closeModal() {
+            $('#modalRoot').innerHTML = '';
+        }
+
+        function confirmDialog(title, message, icon, onConfirm) {
+            showModal({
+                icon,
+                title,
+                message,
+                buttons: [
+                    { label: 'CANCEL', cls: 'btn-secondary' },
+                    { label: 'CONFIRM', cls: 'btn-danger', action: onConfirm }
+                ]
+            });
+        }
+
+        function alertDialog(title, message, icon) {
+            showModal({
+                icon: icon || '⚠️',
+                title,
+                message,
+                buttons: [{ label: 'OK', cls: 'btn-primary' }]
+            });
+        }
+
+        /* ════════════════════════════════
+           STATE
+        ════════════════════════════════ */
+        function loadNames() {
+            try {
+                const d = localStorage.getItem(LS_NAMES);
+                return d ? JSON.parse(d) : [];
+            } catch (e) { return []; }
+        }
+
+        function saveNames(names) {
+            try { localStorage.setItem(LS_NAMES, JSON.stringify(names)); } catch (e) { }
+        }
+
+        function loadTourney() {
+            try {
+                const d = localStorage.getItem(LS_TOURNEY);
+                return d ? JSON.parse(d) : null;
+            } catch (e) { return null; }
+        }
+
+        function saveTourney() {
+            const s = { ...state, clockState: null };
+            try { localStorage.setItem(LS_TOURNEY, JSON.stringify(s)); } catch (e) { }
+        }
+
+        let savedNames = loadNames();
+
+        let state = loadTourney() || makeDefaultState();
+
+        function makeDefaultState() {
+            return {
+                players: savedNames.length > 0 ? [...savedNames] : [],
+                format: null,
+                timeMinutes: 10,
+                incrementSec: 0,
+                groupRounds: [],
+                playoffRounds: [],
+                scores: {},
+                viewTab: 'group',
+                currentStage: 'group',
+                currentRound: 0,
+                currentMatch: 0,
+                phase: 'setup',
+                started: false
+            };
+        }
+
+        function resetTourney() {
+            localStorage.removeItem(LS_TOURNEY);
+            state = makeDefaultState();
+            // Keep player names from persistent storage
+            state.players = loadNames();
+            render();
+        }
+
+        function clearAllPlayers() {
+            state.players = [];
+            saveNames([]);
+            saveTourney();
+            render();
+        }
+
+        /* ════════════════════════════════
+           RENDER ROUTER
+        ════════════════════════════════ */
+        function render() {
+            document.body.classList.remove('clock-mode');
+            switch (state.phase) {
+                case 'setup': renderSetup(); break;
+                case 'format': renderFormat(); break;
+                case 'fixtures': renderFixtures(); break;
+                case 'standings': renderStandings(); break;
+                case 'clock': renderClock(); break;
+                case 'result': renderResult(); break;
+                case 'champion': renderChampion(); break;
+                default: renderSetup();
+            }
+        }
+
+        /* ════════════════════════════════
+           SCREEN 1: PLAYER SETUP
+        ════════════════════════════════ */
+        function renderSetup() {
+            APP.innerHTML = `
         <div class="card">
           <div class="screen-title">♚ CHESS ARENA</div>
           <div class="screen-sub">Tournament Fixture Generator</div>
@@ -1049,65 +1153,67 @@
           ` : ''}
         </div>`;
 
-        const list = $('#playerList');
-        state.players.forEach((p, i) => {
-            const div = document.createElement('div');
-            div.className = 'player-chip';
-            div.style.animationDelay = `${i * 0.04}s`;
-            div.innerHTML = `
+            const list = $('#playerList');
+            state.players.forEach((p, i) => {
+                const div = document.createElement('div');
+                div.className = 'player-chip';
+                div.style.animationDelay = `${i * 0.04}s`;
+                div.innerHTML = `
                 <span class="num">${String(i + 1).padStart(2, '0')}</span>
                 <span class="name">${esc(p)}</span>
                 <button class="remove" onclick="removePlayer(${i})">✕</button>`;
-            list.appendChild(div);
-        });
+                list.appendChild(div);
+            });
 
-        const inp = $('#nameInput');
-        if (inp) setTimeout(() => inp.focus(), 100);
-    }
+            const inp = $('#nameInput');
+            if (inp) setTimeout(() => inp.focus(), 100);
+        }
 
-    function addPlayer() {
-        const inp = $('#nameInput');
-        const name = inp.value.trim();
-        if (!name) return;
-        if (state.players.length >= 32) return alertDialog('LIMIT REACHED', 'Maximum 32 players allowed per tournament.', '🚫');
-        if (state.players.some(p => p.toLowerCase() === name.toLowerCase())) return alertDialog('DUPLICATE', 'A player with this name already exists.', '⚠️');
-        state.players.push(name);
-        saveNames(state.players);
-        saveTourney();
-        render();
-    }
+        function addPlayer() {
+            const inp = $('#nameInput');
+            const name = inp.value.trim();
+            if (!name) return;
+            if (state.players.length >= 32) return alertDialog('LIMIT REACHED', 'Maximum 32 players allowed per tournament.', '🚫');
+            if (state.players.some(p => p.toLowerCase() === name.toLowerCase())) return alertDialog('DUPLICATE', 'A player with this name already exists.', '⚠️');
+            state.players.push(name);
+            saveNames(state.players);
+            saveTourney();
+            render();
+        }
 
-    function removePlayer(i) {
-        state.players.splice(i, 1);
-        saveNames(state.players);
-        saveTourney();
-        render();
-    }
+        function removePlayer(i) {
+            state.players.splice(i, 1);
+            saveNames(state.players);
+            saveTourney();
+            render();
+        }
 
-    function onClearAll() {
-        confirmDialog(
-            'CLEAR ALL PLAYERS',
-            'This will permanently remove all player names. You will need to re-enter them. Are you sure?',
-            '🗑️',
-            clearAllPlayers
-        );
-    }
+        function onClearAll() {
+            confirmDialog(
+                'CLEAR ALL PLAYERS',
+                'This will permanently remove all player names. You will need to re-enter them. Are you sure?',
+                '🗑️',
+                clearAllPlayers
+            );
+        }
 
-    function goToFormat() {
-        if (state.players.length < 2) return;
-        state.phase = 'format';
-        saveTourney();
-        render();
-    }
+        function goToFormat() {
+            if (state.players.length < 2) return;
+            state.phase = 'format';
+            saveTourney();
+            render();
+        }
 
-    /* ════════════════════════════════
-       SCREEN 2: FORMAT & TIME
-    ════════════════════════════════ */
-    function renderFormat() {
-        const n = state.players.length;
-        const canGroups = n >= 4;
+        /* ════════════════════════════════
+           SCREEN 2: FORMAT & TIME
+        ════════════════════════════════ */
+        function renderFormat() {
+            const n = state.players.length;
+            const canGroups = n >= 4;
+            const canKnockout = n >= 8;
+            const canTop3 = n >= 6;
 
-        APP.innerHTML = `
+            APP.innerHTML = `
         <div class="card">
           <div class="top-nav">
             <button class="back-btn" onclick="state.phase='setup';saveTourney();render();">← BACK</button>
@@ -1119,9 +1225,13 @@
 
           <label class="label">Format</label>
           <div class="format-grid">
-            <div class="format-option ${state.format === 'knockout' ? 'selected' : ''}" onclick="pickFormat('knockout')">
+            <div class="format-option ${state.format === 'knockout' ? 'selected' : ''} ${!canKnockout ? 'hidden' : ''}" onclick="pickFormat('knockout')">
               <div class="fmt-title">ALL KNOCKOUT</div>
-              <div class="fmt-desc">Single Elimination</div>
+              <div class="fmt-desc">Single Elimination (8+)</div>
+            </div>
+            <div class="format-option ${state.format === 'top3' ? 'selected' : ''} ${!canTop3 ? 'hidden' : ''}" onclick="pickFormat('top3')">
+              <div class="fmt-title">TOP 3 PLAYOFF</div>
+              <div class="fmt-desc">RR → #1 to Final, #2 vs #3 Semi</div>
             </div>
             <div class="format-option ${state.format === 'top2' ? 'selected' : ''} ${!canGroups ? 'hidden' : ''}" onclick="pickFormat('top2')">
               <div class="fmt-title">TOP 2 PLAYOFF</div>
@@ -1158,203 +1268,203 @@
           </button>
         </div>`;
 
-        const times = [1, 3, 5, 10, 15, 30];
-        const container = $('#timeOptions');
-        times.forEach(t => {
-            const pill = document.createElement('div');
-            pill.className = `time-pill ${state.timeMinutes === t ? 'selected' : ''}`;
-            pill.textContent = `${t} MIN`;
-            pill.onclick = () => { state.timeMinutes = t; saveTourney(); render(); };
-            container.appendChild(pill);
-        });
-    }
-
-    function pickFormat(f) {
-        state.format = f;
-        saveTourney();
-        render();
-    }
-
-    function pickCustomTime() {
-        const v = parseInt($('#customMin').value) || 10;
-        state.timeMinutes = Math.max(1, Math.min(180, v));
-        saveTourney();
-        render();
-    }
-
-    /* ════════════════════════════════
-       TOURNAMENT GENERATION
-    ════════════════════════════════ */
-    function shuffle(arr) {
-        const a = [...arr];
-        for (let i = a.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [a[i], a[j]] = [a[j], a[i]];
-        }
-        return a;
-    }
-
-    function generateTournament() {
-        if (!state.format) return;
-        const players = shuffle([...state.players]);
-
-        // Init scores for all players
-        state.scores = {};
-        state.players.forEach(p => {
-            state.scores[p] = { gp: 0, w: 0, d: 0, l: 0, pts: 0, timeUsed: 0 };
-        });
-
-        if (state.format === 'knockout') {
-            state.groupRounds = [];
-            state.playoffRounds = buildKnockoutRounds(players);
-            state.currentStage = 'playoff';
-            state.viewTab = 'playoff';
-        } else if (state.format === 'top2' || state.format === 'top4') {
-            state.groupRounds = buildRoundRobin(players);
-            state.playoffRounds = [];
-            state.currentStage = 'group';
-            state.viewTab = 'group';
-        } else if (state.format === 'roundrobin') {
-            state.groupRounds = buildRoundRobin(players);
-            state.playoffRounds = [];
-            state.currentStage = 'group';
-            state.viewTab = 'group';
-        }
-
-        state.currentRound = 0;
-        state.currentMatch = 0;
-        state.phase = 'fixtures';
-        state.started = true;
-        saveTourney();
-        render();
-    }
-
-    function buildKnockoutRounds(players) {
-        const n = players.length;
-        let size = 1;
-        while (size < n) size *= 2;
-
-        const padded = [...players];
-        while (padded.length < size) padded.push(null);
-
-        const rounds = [];
-        const matches = [];
-        for (let i = 0; i < padded.length; i += 2) {
-            const isBye = padded[i + 1] === null;
-            matches.push({
-                p1: padded[i],
-                p2: padded[i + 1],
-                winner: isBye ? padded[i] : null,
-                isBye,
-                time1Used: 0,
-                time2Used: 0
+            const times = [1, 3, 5, 10, 15, 30];
+            const container = $('#timeOptions');
+            times.forEach(t => {
+                const pill = document.createElement('div');
+                pill.className = `time-pill ${state.timeMinutes === t ? 'selected' : ''}`;
+                pill.textContent = `${t} MIN`;
+                pill.onclick = () => { state.timeMinutes = t; saveTourney(); render(); };
+                container.appendChild(pill);
             });
         }
 
-        const roundNames = getKnockoutRoundNames(Math.log2(size));
-        rounds.push({ name: roundNames[0], matches });
+        function pickFormat(f) {
+            state.format = f;
+            saveTourney();
+            render();
+        }
 
-        let mCount = matches.length;
-        for (let r = 1; mCount > 1; r++) {
-            mCount = Math.floor(mCount / 2);
-            const rm = [];
-            for (let i = 0; i < mCount; i++) {
-                rm.push({ p1: null, p2: null, winner: null, isBye: false, time1Used: 0, time2Used: 0 });
+        function pickCustomTime() {
+            const v = parseInt($('#customMin').value) || 10;
+            state.timeMinutes = Math.max(1, Math.min(180, v));
+            saveTourney();
+            render();
+        }
+
+        /* ════════════════════════════════
+           TOURNAMENT GENERATION
+        ════════════════════════════════ */
+        function shuffle(arr) {
+            const a = [...arr];
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
             }
-            rounds.push({ name: roundNames[r] || `ROUND ${r + 1}`, matches: rm });
+            return a;
         }
 
-        return rounds;
-    }
+        function generateTournament() {
+            if (!state.format) return;
+            const players = shuffle([...state.players]);
 
-    function getKnockoutRoundNames(totalRounds) {
-        const names = [];
-        for (let i = 0; i < totalRounds; i++) {
-            const remaining = totalRounds - i;
-            if (remaining === 1) names.push('FINAL');
-            else if (remaining === 2) names.push('SEMI-FINALS');
-            else if (remaining === 3) names.push('QUARTER-FINALS');
-            else names.push(`ROUND ${i + 1}`);
+            // Init scores for all players
+            state.scores = {};
+            state.players.forEach(p => {
+                state.scores[p] = { gp: 0, w: 0, d: 0, l: 0, pts: 0, timeUsed: 0 };
+            });
+
+            if (state.format === 'knockout') {
+                state.groupRounds = [];
+                state.playoffRounds = buildKnockoutRounds(players);
+                state.currentStage = 'playoff';
+                state.viewTab = 'playoff';
+            } else if (state.format === 'top2' || state.format === 'top3' || state.format === 'top4') {
+                state.groupRounds = buildRoundRobin(players);
+                state.playoffRounds = [];
+                state.currentStage = 'group';
+                state.viewTab = 'group';
+            } else if (state.format === 'roundrobin') {
+                state.groupRounds = buildRoundRobin(players);
+                state.playoffRounds = [];
+                state.currentStage = 'group';
+                state.viewTab = 'group';
+            }
+
+            state.currentRound = 0;
+            state.currentMatch = 0;
+            state.phase = 'fixtures';
+            state.started = true;
+            saveTourney();
+            render();
         }
-        return names;
-    }
 
-    function buildRoundRobin(players) {
-        const rounds = [];
-        const list = [...players];
-        if (list.length % 2 !== 0) list.push(null);
-        const numRounds = list.length - 1;
-        const half = list.length / 2;
+        function buildKnockoutRounds(players) {
+            const n = players.length;
+            let size = 1;
+            while (size < n) size *= 2;
 
-        for (let r = 0; r < numRounds; r++) {
+            const padded = [...players];
+            while (padded.length < size) padded.push(null);
+
+            const rounds = [];
             const matches = [];
-            for (let i = 0; i < half; i++) {
-                const p1 = list[i];
-                const p2 = list[list.length - 1 - i];
-                if (p1 === null || p2 === null) {
-                    const real = p1 || p2;
-                    if (real) matches.push({ p1: real, p2: null, winner: real, isBye: true, time1Used: 0, time2Used: 0 });
-                } else {
-                    matches.push({ p1, p2, winner: null, isBye: false, time1Used: 0, time2Used: 0 });
-                }
+            for (let i = 0; i < padded.length; i += 2) {
+                const isBye = padded[i + 1] === null;
+                matches.push({
+                    p1: padded[i],
+                    p2: padded[i + 1],
+                    winner: isBye ? padded[i] : null,
+                    isBye,
+                    time1Used: 0,
+                    time2Used: 0
+                });
             }
-            rounds.push({ name: `ROUND ${r + 1}`, matches });
-            list.splice(1, 0, list.pop());
+
+            const roundNames = getKnockoutRoundNames(Math.log2(size));
+            rounds.push({ name: roundNames[0], matches });
+
+            let mCount = matches.length;
+            for (let r = 1; mCount > 1; r++) {
+                mCount = Math.floor(mCount / 2);
+                const rm = [];
+                for (let i = 0; i < mCount; i++) {
+                    rm.push({ p1: null, p2: null, winner: null, isBye: false, time1Used: 0, time2Used: 0 });
+                }
+                rounds.push({ name: roundNames[r] || `ROUND ${r + 1}`, matches: rm });
+            }
+
+            return rounds;
         }
-        return rounds;
-    }
 
-    /* ════════════════════════════════
-       POINTS TABLE
-    ════════════════════════════════ */
-    function computeScores() {
-        // Reset
-        state.players.forEach(p => {
-            if (!state.scores[p]) state.scores[p] = { gp: 0, w: 0, d: 0, l: 0, pts: 0, timeUsed: 0 };
-            else Object.assign(state.scores[p], { gp: 0, w: 0, d: 0, l: 0, pts: 0, timeUsed: 0 });
-        });
+        function getKnockoutRoundNames(totalRounds) {
+            const names = [];
+            for (let i = 0; i < totalRounds; i++) {
+                const remaining = totalRounds - i;
+                if (remaining === 1) names.push('FINAL');
+                else if (remaining === 2) names.push('SEMI-FINALS');
+                else if (remaining === 3) names.push('QUARTER-FINALS');
+                else names.push(`ROUND ${i + 1}`);
+            }
+            return names;
+        }
 
-        const rounds = state.groupRounds;
-        rounds.forEach(r => {
-            r.matches.forEach(m => {
-                if (m.isBye || !m.winner) return;
-                const s1 = state.scores[m.p1];
-                const s2 = m.p2 ? state.scores[m.p2] : null;
-                if (s1) {
-                    s1.gp++;
-                    s1.timeUsed += (m.time1Used || 0);
+        function buildRoundRobin(players) {
+            const rounds = [];
+            const list = [...players];
+            if (list.length % 2 !== 0) list.push(null);
+            const numRounds = list.length - 1;
+            const half = list.length / 2;
+
+            for (let r = 0; r < numRounds; r++) {
+                const matches = [];
+                for (let i = 0; i < half; i++) {
+                    const p1 = list[i];
+                    const p2 = list[list.length - 1 - i];
+                    if (p1 === null || p2 === null) {
+                        const real = p1 || p2;
+                        if (real) matches.push({ p1: real, p2: null, winner: real, isBye: true, time1Used: 0, time2Used: 0 });
+                    } else {
+                        matches.push({ p1, p2, winner: null, isBye: false, time1Used: 0, time2Used: 0 });
+                    }
                 }
-                if (s2) {
-                    s2.gp++;
-                    s2.timeUsed += (m.time2Used || 0);
-                }
-                if (m.winner === 'DRAW') {
-                    if (s1) { s1.d++; s1.pts += 0.5; }
-                    if (s2) { s2.d++; s2.pts += 0.5; }
-                } else {
-                    const winScore = m.winner === m.p1 ? s1 : s2;
-                    const loseScore = m.winner === m.p1 ? s2 : s1;
-                    if (winScore) { winScore.w++; winScore.pts += 1; }
-                    if (loseScore) { loseScore.l++; }
-                }
+                rounds.push({ name: `ROUND ${r + 1}`, matches });
+                list.splice(1, 0, list.pop());
+            }
+            return rounds;
+        }
+
+        /* ════════════════════════════════
+           POINTS TABLE
+        ════════════════════════════════ */
+        function computeScores() {
+            // Reset
+            state.players.forEach(p => {
+                if (!state.scores[p]) state.scores[p] = { gp: 0, w: 0, d: 0, l: 0, pts: 0, timeUsed: 0 };
+                else Object.assign(state.scores[p], { gp: 0, w: 0, d: 0, l: 0, pts: 0, timeUsed: 0 });
             });
-        });
-    }
 
-    function getSortedStandings() {
-        computeScores();
-        return Object.entries(state.scores)
-            .filter(([name]) => state.players.includes(name))
-            .sort((a, b) => {
-                if (b[1].pts !== a[1].pts) return b[1].pts - a[1].pts;
-                if (b[1].w !== a[1].w) return b[1].w - a[1].w;
-                return a[1].timeUsed - b[1].timeUsed; // less time used = better tiebreak
+            const rounds = state.groupRounds;
+            rounds.forEach(r => {
+                r.matches.forEach(m => {
+                    if (m.isBye || !m.winner) return;
+                    const s1 = state.scores[m.p1];
+                    const s2 = m.p2 ? state.scores[m.p2] : null;
+                    if (s1) {
+                        s1.gp++;
+                        s1.timeUsed += (m.time1Used || 0);
+                    }
+                    if (s2) {
+                        s2.gp++;
+                        s2.timeUsed += (m.time2Used || 0);
+                    }
+                    if (m.winner === 'DRAW') {
+                        if (s1) { s1.d++; s1.pts += 0.5; }
+                        if (s2) { s2.d++; s2.pts += 0.5; }
+                    } else {
+                        const winScore = m.winner === m.p1 ? s1 : s2;
+                        const loseScore = m.winner === m.p1 ? s2 : s1;
+                        if (winScore) { winScore.w++; winScore.pts += 1; }
+                        if (loseScore) { loseScore.l++; }
+                    }
+                });
             });
-    }
+        }
 
-    function renderPointsTableHTML(qualifyCount) {
-        const standings = getSortedStandings();
-        let html = `
+        function getSortedStandings() {
+            computeScores();
+            return Object.entries(state.scores)
+                .filter(([name]) => state.players.includes(name))
+                .sort((a, b) => {
+                    if (b[1].pts !== a[1].pts) return b[1].pts - a[1].pts;
+                    if (b[1].w !== a[1].w) return b[1].w - a[1].w;
+                    return a[1].timeUsed - b[1].timeUsed; // less time used = better tiebreak
+                });
+        }
+
+        function renderPointsTableHTML(qualifyCount) {
+            const standings = getSortedStandings();
+            let html = `
         <table class="pts-table">
           <thead>
             <tr>
@@ -1369,10 +1479,10 @@
             </tr>
           </thead>
           <tbody>`;
-        standings.forEach(([name, s], i) => {
-            const isQ = qualifyCount > 0 && i < qualifyCount;
-            const cls = i === 0 ? 'top-row' : (isQ ? 'qualified' : '');
-            html += `
+            standings.forEach(([name, s], i) => {
+                const isQ = qualifyCount > 0 && i < qualifyCount;
+                const cls = i === 0 ? 'top-row' : (isQ ? 'qualified' : '');
+                html += `
             <tr class="${cls}">
               <td class="rank-cell">${i + 1}</td>
               <td class="name-cell">${esc(name)}${isQ ? '<span class="qualify-tag">Q</span>' : ''}</td>
@@ -1383,55 +1493,57 @@
               <td class="pts-cell">${s.pts}</td>
               <td class="time-cell">${formatTimeSec(s.timeUsed)}</td>
             </tr>`;
-        });
-        html += '</tbody></table>';
-        return html;
-    }
-
-    function formatTimeSec(ms) {
-        if (!ms || ms <= 0) return '—';
-        const totalSec = Math.round(ms / 1000);
-        const m = Math.floor(totalSec / 60);
-        const s = totalSec % 60;
-        return `${m}:${String(s).padStart(2, '0')}`;
-    }
-
-    /* ════════════════════════════════
-       SCREEN 3: FIXTURES VIEW
-    ════════════════════════════════ */
-    function renderFixtures() {
-        const hasGroup = state.format !== 'knockout';
-        const hasPlayoff = state.format !== 'roundrobin';
-        const groupDone = state.groupRounds.length > 0 && state.groupRounds.every(r => r.matches.every(m => m.winner));
-        const playoffExists = state.playoffRounds.length > 0;
-        const playoffDone = playoffExists && state.playoffRounds.every(r => r.matches.every(m => m.winner));
-
-        // Determine qualify count for badges
-        let qualifyCount = 0;
-        if (state.format === 'top2') qualifyCount = 2;
-        else if (state.format === 'top4') qualifyCount = Math.min(4, state.players.length);
-
-        // Auto-generate playoffs when group is done and playoffs not yet made
-        if (hasGroup && hasPlayoff && groupDone && !playoffExists) {
-            generatePlayoffsFromGroup();
+            });
+            html += '</tbody></table>';
+            return html;
         }
 
-        const showingGroup = state.viewTab === 'group';
-        const rounds = showingGroup ? state.groupRounds : state.playoffRounds;
+        function formatTimeSec(ms) {
+            if (!ms || ms <= 0) return '—';
+            const totalSec = Math.round(ms / 1000);
+            const m = Math.floor(totalSec / 60);
+            const s = totalSec % 60;
+            return `${m}:${String(s).padStart(2, '0')}`;
+        }
 
-        // Check if entire tournament is done
-        const allDone = (state.format === 'roundrobin' && groupDone)
-            || (state.format === 'knockout' && playoffDone)
-            || ((state.format === 'top2' || state.format === 'top4') && playoffDone);
+        /* ════════════════════════════════
+           SCREEN 3: FIXTURES VIEW
+        ════════════════════════════════ */
+        function renderFixtures() {
+            const hasGroup = state.format !== 'knockout';
+            const hasPlayoff = state.format !== 'roundrobin';
+            const groupDone = state.groupRounds.length > 0 && state.groupRounds.every(r => r.matches.every(m => m.winner));
+            const playoffExists = state.playoffRounds.length > 0;
+            const playoffDone = playoffExists && state.playoffRounds.every(r => r.matches.every(m => m.winner));
 
-        const formatLabel = {
-            knockout: 'KNOCKOUT',
-            top2: 'TOP 2 PLAYOFF',
-            top4: 'TOP 4 PLAYOFF',
-            roundrobin: 'ROUND ROBIN'
-        }[state.format];
+            // Determine qualify count for badges
+            let qualifyCount = 0;
+            if (state.format === 'top2') qualifyCount = 2;
+            else if (state.format === 'top3') qualifyCount = Math.min(3, state.players.length);
+            else if (state.format === 'top4') qualifyCount = Math.min(4, state.players.length);
 
-        APP.innerHTML = `
+            // Auto-generate playoffs when group is done and playoffs not yet made
+            if (hasGroup && hasPlayoff && groupDone && !playoffExists) {
+                generatePlayoffsFromGroup();
+            }
+
+            const showingGroup = state.viewTab === 'group';
+            const rounds = showingGroup ? state.groupRounds : state.playoffRounds;
+
+            // Check if entire tournament is done
+            const allDone = (state.format === 'roundrobin' && groupDone)
+                || (state.format === 'knockout' && playoffDone)
+                || ((state.format === 'top2' || state.format === 'top3' || state.format === 'top4') && playoffDone);
+
+            const formatLabel = {
+                knockout: 'KNOCKOUT',
+                top3: 'TOP 3 PLAYOFF',
+                top2: 'TOP 2 PLAYOFF',
+                top4: 'TOP 4 PLAYOFF',
+                roundrobin: 'ROUND ROBIN'
+            }[state.format];
+
+            APP.innerHTML = `
         <div class="card">
           <div class="top-nav">
             <button class="back-btn" onclick="onResetTourney()">← RESET</button>
@@ -1465,62 +1577,62 @@
           ` : ''}
         </div>`;
 
-        if (state.viewTab !== 'standings') {
-            const area = $('#fixtureArea');
-            if (area) renderMatchList(area, rounds, showingGroup);
+            if (state.viewTab !== 'standings') {
+                const area = $('#fixtureArea');
+                if (area) renderMatchList(area, rounds, showingGroup);
+            }
         }
-    }
 
-    function renderStandingsInline(qualifyCount, groupDone) {
-        const ptHTML = renderPointsTableHTML(qualifyCount);
-        let extra = '';
-        if (qualifyCount > 0 && groupDone && state.playoffRounds.length > 0) {
-            extra = `<div style="margin-top:12px;text-align:center;">
+        function renderStandingsInline(qualifyCount, groupDone) {
+            const ptHTML = renderPointsTableHTML(qualifyCount);
+            let extra = '';
+            if (qualifyCount > 0 && groupDone && state.playoffRounds.length > 0) {
+                extra = `<div style="margin-top:12px;text-align:center;">
                 <button class="btn btn-primary btn-small" onclick="switchTab('playoff')">VIEW PLAYOFFS →</button>
             </div>`;
-        }
-        return `<div class="scroll-area">${ptHTML}</div>${extra}`;
-    }
-
-    function switchTab(tab) {
-        state.viewTab = tab;
-        saveTourney();
-        render();
-    }
-
-    function renderMatchList(area, rounds, allowDraw) {
-        if (!rounds || rounds.length === 0) {
-            area.innerHTML = '<div class="bye-card">NO MATCHES YET</div>';
-            return;
+            }
+            return `<div class="scroll-area">${ptHTML}</div>${extra}`;
         }
 
-        rounds.forEach((round, ri) => {
-            const div = document.createElement('div');
-            div.className = 'bracket-round';
-            const isActive = isRoundActive(rounds, ri);
-            div.innerHTML = `<div class="round-badge ${isActive ? 'active' : ''}">${round.name}</div>`;
+        function switchTab(tab) {
+            state.viewTab = tab;
+            saveTourney();
+            render();
+        }
 
-            round.matches.forEach((m, mi) => {
-                if (m.isBye) {
-                    const bye = document.createElement('div');
-                    bye.className = 'bye-card';
-                    bye.textContent = `${m.p1 || '?'} — BYE (advances)`;
-                    div.appendChild(bye);
-                    return;
-                }
+        function renderMatchList(area, rounds, allowDraw) {
+            if (!rounds || rounds.length === 0) {
+                area.innerHTML = '<div class="bye-card">NO MATCHES YET</div>';
+                return;
+            }
 
-                const isCurrent = isActive && !m.winner && isNextMatchInRound(rounds, ri, mi);
-                const mc = document.createElement('div');
-                mc.className = `match-card ${m.winner ? 'completed' : ''} ${isCurrent ? 'current' : ''}`;
+            rounds.forEach((round, ri) => {
+                const div = document.createElement('div');
+                div.className = 'bracket-round';
+                const isActive = isRoundActive(rounds, ri);
+                div.innerHTML = `<div class="round-badge ${isActive ? 'active' : ''}">${round.name}</div>`;
 
-                let p1Class = '', p2Class = '';
-                if (m.winner === 'DRAW') { p1Class = 'drawn'; p2Class = 'drawn'; }
-                else if (m.winner === m.p1) { p1Class = 'winner'; p2Class = 'loser'; }
-                else if (m.winner === m.p2) { p1Class = 'loser'; p2Class = 'winner'; }
+                round.matches.forEach((m, mi) => {
+                    if (m.isBye) {
+                        const bye = document.createElement('div');
+                        bye.className = 'bye-card';
+                        bye.textContent = `${m.p1 || '?'} — BYE (advances)`;
+                        div.appendChild(bye);
+                        return;
+                    }
 
-                const stageKey = (rounds === state.groupRounds) ? 'group' : 'playoff';
+                    const isCurrent = isActive && !m.winner && isNextMatchInRound(rounds, ri, mi);
+                    const mc = document.createElement('div');
+                    mc.className = `match-card ${m.winner ? 'completed' : ''} ${isCurrent ? 'current' : ''}`;
 
-                mc.innerHTML = `
+                    let p1Class = '', p2Class = '';
+                    if (m.winner === 'DRAW') { p1Class = 'drawn'; p2Class = 'drawn'; }
+                    else if (m.winner === m.p1) { p1Class = 'winner'; p2Class = 'loser'; }
+                    else if (m.winner === m.p2) { p1Class = 'loser'; p2Class = 'winner'; }
+
+                    const stageKey = (rounds === state.groupRounds) ? 'group' : 'playoff';
+
+                    mc.innerHTML = `
                 <div class="match-header">
                     <span>MATCH ${mi + 1}</span>
                     <span>${m.winner ? '✓ DONE' : (isCurrent ? '● NEXT' : '—')}</span>
@@ -1538,170 +1650,195 @@
                     <button class="btn btn-secondary" onclick="quickResult('${stageKey}',${ri},${mi},'p2')">${esc(m.p2)}</button>
                 </div>
                 ` : ''}`;
-                div.appendChild(mc);
+                    div.appendChild(mc);
+                });
+
+                area.appendChild(div);
             });
-
-            area.appendChild(div);
-        });
-    }
-
-    function isRoundActive(rounds, ri) {
-        for (let r = 0; r < ri; r++) {
-            if (rounds[r].matches.some(m => !m.winner && !m.isBye)) return false;
         }
-        return rounds[ri].matches.some(m => !m.winner && !m.isBye);
-    }
 
-    function isNextMatchInRound(rounds, ri, mi) {
-        for (let i = 0; i < rounds[ri].matches.length; i++) {
-            const m = rounds[ri].matches[i];
-            if (!m.winner && !m.isBye) return i === mi;
+        function isRoundActive(rounds, ri) {
+            for (let r = 0; r < ri; r++) {
+                if (rounds[r].matches.some(m => !m.winner && !m.isBye)) return false;
+            }
+            return rounds[ri].matches.some(m => !m.winner && !m.isBye);
         }
-        return false;
-    }
 
-    function onResetTourney() {
-        confirmDialog(
-            'RESET TOURNAMENT',
-            'All tournament progress will be lost. Your player names will be kept. Continue?',
-            '🔄',
-            resetTourney
-        );
-    }
-
-    /* ════════════════════════════════
-       MATCH ACTIONS
-    ════════════════════════════════ */
-    function getRounds(stageKey) {
-        return stageKey === 'group' ? state.groupRounds : state.playoffRounds;
-    }
-
-    function startMatch(stageKey, ri, mi) {
-        state.currentStage = stageKey;
-        state.currentRound = ri;
-        state.currentMatch = mi;
-        state.phase = 'clock';
-        saveTourney();
-        render();
-    }
-
-    function quickResult(stageKey, ri, mi, result) {
-        const rounds = getRounds(stageKey);
-        const m = rounds[ri].matches[mi];
-        if (result === 'p1') m.winner = m.p1;
-        else if (result === 'p2') m.winner = m.p2;
-        else m.winner = 'DRAW';
-
-        if (stageKey === 'playoff') advanceKnockout(ri, mi);
-        checkGroupComplete();
-        saveTourney();
-        render();
-    }
-
-    function advanceKnockout(ri, mi) {
-        const rounds = state.playoffRounds;
-        const match = rounds[ri].matches[mi];
-        if (!match.winner || match.winner === 'DRAW') return;
-
-        if (ri + 1 < rounds.length) {
-            const nextMatchIdx = Math.floor(mi / 2);
-            const nextMatch = rounds[ri + 1].matches[nextMatchIdx];
-            if (mi % 2 === 0) nextMatch.p1 = match.winner;
-            else nextMatch.p2 = match.winner;
+        function isNextMatchInRound(rounds, ri, mi) {
+            for (let i = 0; i < rounds[ri].matches.length; i++) {
+                const m = rounds[ri].matches[i];
+                if (!m.winner && !m.isBye) return i === mi;
+            }
+            return false;
         }
-    }
 
-    function checkGroupComplete() {
-        if (state.format === 'knockout' || state.format === 'roundrobin') return;
-        const groupDone = state.groupRounds.every(r => r.matches.every(m => m.winner));
-        if (groupDone && state.playoffRounds.length === 0) {
-            generatePlayoffsFromGroup();
+        function onResetTourney() {
+            confirmDialog(
+                'RESET TOURNAMENT',
+                'All tournament progress will be lost. Your player names will be kept. Continue?',
+                '🔄',
+                resetTourney
+            );
         }
-    }
 
-    function generatePlayoffsFromGroup() {
-        const standings = getSortedStandings();
-        const qualifyCount = state.format === 'top2' ? 2 : Math.min(4, state.players.length);
-        const qualified = standings.slice(0, qualifyCount).map(([name]) => name);
+        /* ════════════════════════════════
+           MATCH ACTIONS
+        ════════════════════════════════ */
+        function getRounds(stageKey) {
+            return stageKey === 'group' ? state.groupRounds : state.playoffRounds;
+        }
 
-        if (qualifyCount === 2) {
-            // Final only
-            state.playoffRounds = [{
-                name: 'FINAL',
-                matches: [{
-                    p1: qualified[0], p2: qualified[1],
-                    winner: null, isBye: false, time1Used: 0, time2Used: 0
-                }]
-            }];
-        } else {
-            // Semi-finals + Final
-            state.playoffRounds = [
-                {
-                    name: 'SEMI-FINALS',
-                    matches: [
-                        { p1: qualified[0], p2: qualified[3], winner: null, isBye: false, time1Used: 0, time2Used: 0 },
-                        { p1: qualified[1], p2: qualified[2], winner: null, isBye: false, time1Used: 0, time2Used: 0 }
-                    ]
-                },
-                {
-                    name: 'FINAL',
-                    matches: [
-                        { p1: null, p2: null, winner: null, isBye: false, time1Used: 0, time2Used: 0 }
-                    ]
+        function startMatch(stageKey, ri, mi) {
+            state.currentStage = stageKey;
+            state.currentRound = ri;
+            state.currentMatch = mi;
+            state.phase = 'clock';
+            saveTourney();
+            render();
+        }
+
+        function quickResult(stageKey, ri, mi, result) {
+            const rounds = getRounds(stageKey);
+            const m = rounds[ri].matches[mi];
+            if (result === 'p1') m.winner = m.p1;
+            else if (result === 'p2') m.winner = m.p2;
+            else m.winner = 'DRAW';
+
+            if (stageKey === 'playoff') advanceKnockout(ri, mi);
+            checkGroupComplete();
+            saveTourney();
+            render();
+        }
+
+        function advanceKnockout(ri, mi) {
+            const rounds = state.playoffRounds;
+            const match = rounds[ri].matches[mi];
+            if (!match.winner || match.winner === 'DRAW') return;
+
+            if (ri + 1 < rounds.length) {
+                const nextMatch = rounds[ri + 1].matches[0];
+                if (state.format === 'top3') {
+                    // In top3, semi winner goes to p2 of final (#1 is already p1)
+                    nextMatch.p2 = match.winner;
+                } else {
+                    const nextMatchIdx = Math.floor(mi / 2);
+                    const nm = rounds[ri + 1].matches[nextMatchIdx];
+                    if (mi % 2 === 0) nm.p1 = match.winner;
+                    else nm.p2 = match.winner;
                 }
-            ];
+            }
         }
 
-        state.viewTab = 'playoff';
-        saveTourney();
-    }
-
-    /* ════════════════════════════════
-       STANDINGS SCREEN
-    ════════════════════════════════ */
-    function renderStandings() {
-        // This is used if phase === 'standings' (fallback)
-        state.phase = 'fixtures';
-        state.viewTab = 'standings';
-        saveTourney();
-        render();
-    }
-
-    function goChampion() {
-        state.phase = 'champion';
-        saveTourney();
-        render();
-    }
-
-    /* ════════════════════════════════
-       CHESS CLOCK (DGT)
-    ════════════════════════════════ */
-    let clockInterval = null;
-    let clockData = null;
-
-    function renderClock() {
-        document.body.classList.add('clock-mode');
-        const rounds = getRounds(state.currentStage);
-        const m = rounds[state.currentRound].matches[state.currentMatch];
-
-        if (!clockData) {
-            const totalMs = state.timeMinutes * 60 * 1000;
-            clockData = {
-                p1: m.p1,
-                p2: m.p2,
-                time1: totalMs,
-                time2: totalMs,
-                initial: totalMs,
-                turn: null,
-                running: false,
-                moves1: 0,
-                moves2: 0,
-                flagged: null,
-                increment: state.incrementSec * 1000
-            };
+        function checkGroupComplete() {
+            if (state.format === 'knockout' || state.format === 'roundrobin') return;
+            const groupDone = state.groupRounds.every(r => r.matches.every(m => m.winner));
+            if (groupDone && state.playoffRounds.length === 0) {
+                generatePlayoffsFromGroup();
+            }
         }
 
-        APP.innerHTML = `
+        function generatePlayoffsFromGroup() {
+            const standings = getSortedStandings();
+            let qualifyCount;
+            if (state.format === 'top2') qualifyCount = 2;
+            else if (state.format === 'top3') qualifyCount = Math.min(3, state.players.length);
+            else qualifyCount = Math.min(4, state.players.length);
+            const qualified = standings.slice(0, qualifyCount).map(([name]) => name);
+
+            if (qualifyCount === 2) {
+                // Final only
+                state.playoffRounds = [{
+                    name: 'FINAL',
+                    matches: [{
+                        p1: qualified[0], p2: qualified[1],
+                        winner: null, isBye: false, time1Used: 0, time2Used: 0
+                    }]
+                }];
+            } else if (state.format === 'top3') {
+                // #1 goes to Final directly, #2 vs #3 in Semi
+                state.playoffRounds = [
+                    {
+                        name: 'SEMI-FINAL',
+                        matches: [
+                            { p1: qualified[1], p2: qualified[2], winner: null, isBye: false, time1Used: 0, time2Used: 0 }
+                        ]
+                    },
+                    {
+                        name: 'FINAL',
+                        matches: [
+                            { p1: qualified[0], p2: null, winner: null, isBye: false, time1Used: 0, time2Used: 0 }
+                        ]
+                    }
+                ];
+            } else {
+                // Semi-finals + Final (top4)
+                state.playoffRounds = [
+                    {
+                        name: 'SEMI-FINALS',
+                        matches: [
+                            { p1: qualified[0], p2: qualified[3], winner: null, isBye: false, time1Used: 0, time2Used: 0 },
+                            { p1: qualified[1], p2: qualified[2], winner: null, isBye: false, time1Used: 0, time2Used: 0 }
+                        ]
+                    },
+                    {
+                        name: 'FINAL',
+                        matches: [
+                            { p1: null, p2: null, winner: null, isBye: false, time1Used: 0, time2Used: 0 }
+                        ]
+                    }
+                ];
+            }
+
+            state.viewTab = 'playoff';
+            saveTourney();
+        }
+
+        /* ════════════════════════════════
+           STANDINGS SCREEN
+        ════════════════════════════════ */
+        function renderStandings() {
+            // This is used if phase === 'standings' (fallback)
+            state.phase = 'fixtures';
+            state.viewTab = 'standings';
+            saveTourney();
+            render();
+        }
+
+        function goChampion() {
+            state.phase = 'champion';
+            saveTourney();
+            render();
+        }
+
+        /* ════════════════════════════════
+           CHESS CLOCK (DGT)
+        ════════════════════════════════ */
+        let clockInterval = null;
+        let clockData = null;
+
+        function renderClock() {
+            document.body.classList.add('clock-mode');
+            const rounds = getRounds(state.currentStage);
+            const m = rounds[state.currentRound].matches[state.currentMatch];
+
+            if (!clockData) {
+                const totalMs = state.timeMinutes * 60 * 1000;
+                clockData = {
+                    p1: m.p1,
+                    p2: m.p2,
+                    time1: totalMs,
+                    time2: totalMs,
+                    initial: totalMs,
+                    turn: null,
+                    running: false,
+                    moves1: 0,
+                    moves2: 0,
+                    flagged: null,
+                    increment: state.incrementSec * 1000
+                };
+            }
+
+            APP.innerHTML = `
         <div class="card">
           <div class="clock-container">
             <div class="clock-half top black-side ${clockData.turn === 2 ? 'active-turn' : 'inactive'} ${clockData.flagged === 2 ? 'flagged' : ''}"
@@ -1727,120 +1864,120 @@
             </div>
           </div>
         </div>`;
-    }
-
-    function clockTap(player) {
-        if (clockData.flagged) return;
-
-        if (clockData.turn === null) {
-            clockData.turn = player === 1 ? 2 : 1;
-            clockData.running = true;
-            if (player === 1) clockData.moves1++;
-            else clockData.moves2++;
-            startClockInterval();
-            requestWakeLock();
-            render();
-            return;
         }
 
-        if (!clockData.running) return;
-        if (clockData.turn !== player) return;
+        function clockTap(player) {
+            if (clockData.flagged) return;
 
-        if (clockData.increment > 0) {
-            if (player === 1) clockData.time1 += clockData.increment;
-            else clockData.time2 += clockData.increment;
-        }
-
-        if (player === 1) { clockData.moves1++; clockData.turn = 2; }
-        else { clockData.moves2++; clockData.turn = 1; }
-
-        render();
-    }
-
-    function startClockInterval() {
-        if (clockInterval) clearInterval(clockInterval);
-        let lastTick = performance.now();
-        clockInterval = setInterval(() => {
-            if (!clockData || !clockData.running || clockData.flagged) return;
-            const now = performance.now();
-            const delta = now - lastTick;
-            lastTick = now;
-
-            if (clockData.turn === 1) {
-                clockData.time1 -= delta;
-                if (clockData.time1 <= 0) {
-                    clockData.time1 = 0;
-                    clockData.flagged = 1;
-                    clockData.running = false;
-                    clearInterval(clockInterval);
-                    render();
-                    return;
-                }
-                const el = $('#time1');
-                if (el) el.textContent = formatClockTime(clockData.time1);
-            } else if (clockData.turn === 2) {
-                clockData.time2 -= delta;
-                if (clockData.time2 <= 0) {
-                    clockData.time2 = 0;
-                    clockData.flagged = 2;
-                    clockData.running = false;
-                    clearInterval(clockInterval);
-                    render();
-                    return;
-                }
-                const el = $('#time2');
-                if (el) el.textContent = formatClockTime(clockData.time2);
+            if (clockData.turn === null) {
+                clockData.turn = player === 1 ? 2 : 1;
+                clockData.running = true;
+                if (player === 1) clockData.moves1++;
+                else clockData.moves2++;
+                startClockInterval();
+                requestWakeLock();
+                render();
+                return;
             }
-        }, 50);
-    }
 
-    function togglePause() {
-        if (clockData.flagged) return;
-        if (clockData.turn === null) return;
-        clockData.running = !clockData.running;
-        if (clockData.running) startClockInterval();
-        else clearInterval(clockInterval);
-        render();
-    }
+            if (!clockData.running) return;
+            if (clockData.turn !== player) return;
 
-    function endClockMatch() {
-        clearInterval(clockInterval);
-        clockInterval = null;
-        state.phase = 'result';
-        saveTourney();
-        render();
-    }
+            if (clockData.increment > 0) {
+                if (player === 1) clockData.time1 += clockData.increment;
+                else clockData.time2 += clockData.increment;
+            }
 
-    function formatClockTime(ms) {
-        if (ms <= 0) return '0:00.0';
-        const totalSec = Math.floor(ms / 1000);
-        const tenths = Math.floor((ms % 1000) / 100);
-        const mins = Math.floor(totalSec / 60);
-        const secs = totalSec % 60;
-        if (mins < 1) return `0:${String(secs).padStart(2, '0')}.${tenths}`;
-        return `${mins}:${String(secs).padStart(2, '0')}`;
-    }
+            if (player === 1) { clockData.moves1++; clockData.turn = 2; }
+            else { clockData.moves2++; clockData.turn = 1; }
 
-    function playIcon() {
-        return `<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>`;
-    }
-    function pauseIcon() {
-        return `<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>`;
-    }
-    function stopIcon() {
-        return `<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>`;
-    }
+            render();
+        }
 
-    /* ════════════════════════════════
-       RESULT SELECTION
-    ════════════════════════════════ */
-    function renderResult() {
-        const rounds = getRounds(state.currentStage);
-        const m = rounds[state.currentRound].matches[state.currentMatch];
-        const flagged = clockData ? clockData.flagged : null;
-        const allowDraw = (state.currentStage === 'group');
+        function startClockInterval() {
+            if (clockInterval) clearInterval(clockInterval);
+            let lastTick = performance.now();
+            clockInterval = setInterval(() => {
+                if (!clockData || !clockData.running || clockData.flagged) return;
+                const now = performance.now();
+                const delta = now - lastTick;
+                lastTick = now;
 
-        APP.innerHTML = `
+                if (clockData.turn === 1) {
+                    clockData.time1 -= delta;
+                    if (clockData.time1 <= 0) {
+                        clockData.time1 = 0;
+                        clockData.flagged = 1;
+                        clockData.running = false;
+                        clearInterval(clockInterval);
+                        render();
+                        return;
+                    }
+                    const el = $('#time1');
+                    if (el) el.textContent = formatClockTime(clockData.time1);
+                } else if (clockData.turn === 2) {
+                    clockData.time2 -= delta;
+                    if (clockData.time2 <= 0) {
+                        clockData.time2 = 0;
+                        clockData.flagged = 2;
+                        clockData.running = false;
+                        clearInterval(clockInterval);
+                        render();
+                        return;
+                    }
+                    const el = $('#time2');
+                    if (el) el.textContent = formatClockTime(clockData.time2);
+                }
+            }, 50);
+        }
+
+        function togglePause() {
+            if (clockData.flagged) return;
+            if (clockData.turn === null) return;
+            clockData.running = !clockData.running;
+            if (clockData.running) startClockInterval();
+            else clearInterval(clockInterval);
+            render();
+        }
+
+        function endClockMatch() {
+            clearInterval(clockInterval);
+            clockInterval = null;
+            state.phase = 'result';
+            saveTourney();
+            render();
+        }
+
+        function formatClockTime(ms) {
+            if (ms <= 0) return '0:00.0';
+            const totalSec = Math.floor(ms / 1000);
+            const tenths = Math.floor((ms % 1000) / 100);
+            const mins = Math.floor(totalSec / 60);
+            const secs = totalSec % 60;
+            if (mins < 1) return `0:${String(secs).padStart(2, '0')}.${tenths}`;
+            return `${mins}:${String(secs).padStart(2, '0')}`;
+        }
+
+        function playIcon() {
+            return `<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>`;
+        }
+        function pauseIcon() {
+            return `<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>`;
+        }
+        function stopIcon() {
+            return `<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>`;
+        }
+
+        /* ════════════════════════════════
+           RESULT SELECTION
+        ════════════════════════════════ */
+        function renderResult() {
+            const rounds = getRounds(state.currentStage);
+            const m = rounds[state.currentRound].matches[state.currentMatch];
+            const flagged = clockData ? clockData.flagged : null;
+            const allowDraw = (state.currentStage === 'group');
+
+            APP.innerHTML = `
         <div class="card">
           <div class="screen-title">MATCH RESULT</div>
           <div class="screen-sub">${esc(m.p1)} vs ${esc(m.p2)}</div>
@@ -1867,59 +2004,59 @@
             <button class="btn btn-primary btn-block" onclick="submitResult('p2')">♚ ${esc(m.p2)} WINS</button>
           </div>
         </div>`;
-    }
-
-    function submitResult(result) {
-        const rounds = getRounds(state.currentStage);
-        const ri = state.currentRound;
-        const mi = state.currentMatch;
-        const m = rounds[ri].matches[mi];
-
-        if (result === 'p1') m.winner = m.p1;
-        else if (result === 'p2') m.winner = m.p2;
-        else m.winner = 'DRAW';
-
-        // Record time used from clock
-        if (clockData) {
-            m.time1Used = clockData.initial - clockData.time1;
-            m.time2Used = clockData.initial - clockData.time2;
         }
 
-        if (state.currentStage === 'playoff') advanceKnockout(ri, mi);
-        checkGroupComplete();
+        function submitResult(result) {
+            const rounds = getRounds(state.currentStage);
+            const ri = state.currentRound;
+            const mi = state.currentMatch;
+            const m = rounds[ri].matches[mi];
 
-        clockData = null;
-        state.phase = 'fixtures';
-        saveTourney();
-        render();
-    }
+            if (result === 'p1') m.winner = m.p1;
+            else if (result === 'p2') m.winner = m.p2;
+            else m.winner = 'DRAW';
 
-    /* ════════════════════════════════
-       CHAMPION SCREEN
-    ════════════════════════════════ */
-    function renderChampion() {
-        const isRR = state.format === 'roundrobin';
+            // Record time used from clock
+            if (clockData) {
+                m.time1Used = clockData.initial - clockData.time1;
+                m.time2Used = clockData.initial - clockData.time2;
+            }
 
-        if (isRR) {
-            renderRRChampion();
-            return;
-        }
+            if (state.currentStage === 'playoff') advanceKnockout(ri, mi);
+            checkGroupComplete();
 
-        // Knockout / Top2 / Top4: champion is final winner
-        const finalRound = state.playoffRounds[state.playoffRounds.length - 1];
-        const champ = finalRound ? finalRound.matches[0].winner : null;
-
-        if (!champ || champ === 'DRAW') {
+            clockData = null;
             state.phase = 'fixtures';
             saveTourney();
             render();
-            return;
         }
 
-        const qualifyCount = state.format === 'top2' ? 2 : (state.format === 'top4' ? 4 : 0);
-        const hasPtsTable = state.format !== 'knockout';
+        /* ════════════════════════════════
+           CHAMPION SCREEN
+        ════════════════════════════════ */
+        function renderChampion() {
+            const isRR = state.format === 'roundrobin';
 
-        APP.innerHTML = `
+            if (isRR) {
+                renderRRChampion();
+                return;
+            }
+
+            // Knockout / Top2 / Top4: champion is final winner
+            const finalRound = state.playoffRounds[state.playoffRounds.length - 1];
+            const champ = finalRound ? finalRound.matches[0].winner : null;
+
+            if (!champ || champ === 'DRAW') {
+                state.phase = 'fixtures';
+                saveTourney();
+                render();
+                return;
+            }
+
+            const qualifyCount = state.format === 'top2' ? 2 : (state.format === 'top3' ? 3 : (state.format === 'top4' ? 4 : 0));
+            const hasPtsTable = state.format !== 'knockout';
+
+            APP.innerHTML = `
         <div class="card" style="text-align:center;">
           <div class="trophy">🏆</div>
           <div class="screen-sub">TOURNAMENT CHAMPION</div>
@@ -1939,13 +2076,13 @@
             <button class="btn btn-primary" onclick="onNewTourney()">NEW TOURNAMENT</button>
           </div>
         </div>`;
-    }
+        }
 
-    function renderRRChampion() {
-        const standings = getSortedStandings();
-        const champ = standings[0];
+        function renderRRChampion() {
+            const standings = getSortedStandings();
+            const champ = standings[0];
 
-        APP.innerHTML = `
+            APP.innerHTML = `
         <div class="card">
           <div class="trophy" style="text-align:center;">🏆</div>
           <div class="screen-title" style="text-align:center;">FINAL STANDINGS</div>
@@ -1958,59 +2095,59 @@
             <button class="btn btn-primary" onclick="onNewTourney()">NEW TOURNAMENT</button>
           </div>
         </div>`;
-    }
-
-    function onNewTourney() {
-        confirmDialog(
-            'NEW TOURNAMENT',
-            'Start a fresh tournament? Player names will be preserved for next time.',
-            '♚',
-            resetTourney
-        );
-    }
-
-    /* ════════════════════════════════
-       UTILITIES
-    ════════════════════════════════ */
-    function esc(s) {
-        if (!s) return '';
-        const d = document.createElement('div');
-        d.textContent = s;
-        return d.innerHTML;
-    }
-
-    /* ════════════════════════════════
-       INIT & EVENT LISTENERS
-    ════════════════════════════════ */
-    let wakeLock = null;
-    async function requestWakeLock() {
-        try {
-            if ('wakeLock' in navigator) wakeLock = await navigator.wakeLock.request('screen');
-        } catch (e) {}
-    }
-
-    document.addEventListener('keydown', (e) => {
-        if (state.phase === 'clock' && e.code === 'Space') {
-            e.preventDefault();
-            togglePause();
         }
-    });
 
-    window.addEventListener('beforeunload', (e) => {
-        if (clockData && clockData.running) {
-            e.preventDefault();
-            e.returnValue = '';
+        function onNewTourney() {
+            confirmDialog(
+                'NEW TOURNAMENT',
+                'Start a fresh tournament? Player names will be preserved for next time.',
+                '♚',
+                resetTourney
+            );
         }
-    });
 
-    // Boot
-    render();
-    if (state.phase === 'clock') {
-        clockData = null;
-        state.phase = 'fixtures';
-        saveTourney();
+        /* ════════════════════════════════
+           UTILITIES
+        ════════════════════════════════ */
+        function esc(s) {
+            if (!s) return '';
+            const d = document.createElement('div');
+            d.textContent = s;
+            return d.innerHTML;
+        }
+
+        /* ════════════════════════════════
+           INIT & EVENT LISTENERS
+        ════════════════════════════════ */
+        let wakeLock = null;
+        async function requestWakeLock() {
+            try {
+                if ('wakeLock' in navigator) wakeLock = await navigator.wakeLock.request('screen');
+            } catch (e) { }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (state.phase === 'clock' && e.code === 'Space') {
+                e.preventDefault();
+                togglePause();
+            }
+        });
+
+        window.addEventListener('beforeunload', (e) => {
+            if (clockData && clockData.running) {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        });
+
+        // Boot
         render();
-    }
+        if (state.phase === 'clock') {
+            clockData = null;
+            state.phase = 'fixtures';
+            saveTourney();
+            render();
+        }
     </script>
 </body>
 
